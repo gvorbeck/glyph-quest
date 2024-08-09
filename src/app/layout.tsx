@@ -5,8 +5,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./globals.css";
-import { CssBaseline } from "@mui/material";
 import { AuthProvider } from "@/context/AuthContext";
+import ThemeRegistry from "@/components/ThemeRegistry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CssBaseline />
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </AuthProvider>
       </body>
     </html>
   );
