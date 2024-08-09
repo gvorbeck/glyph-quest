@@ -3,10 +3,15 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ReactNode } from "react";
+import { amber } from "@mui/material/colors";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: amber,
+    secondary: {
+      main: "#ffd180",
+    },
   },
 });
 
