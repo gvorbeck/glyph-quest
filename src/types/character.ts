@@ -1,6 +1,10 @@
+export type AbilityLongName = "Strength" | "Dexterity" | "Will";
+
+export type AbilityShortName = "STR" | "DEX" | "WIL";
+
 export interface Ability {
-  long: string;
-  short: string;
+  long: AbilityLongName;
+  short: AbilityShortName;
   value: number | null;
 }
 
