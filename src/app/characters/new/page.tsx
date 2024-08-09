@@ -1,5 +1,4 @@
-// app/characters/new/page.tsx
-import CharacterForm from "../../../components/CharacterForm";
+import CharacterForm from "@/components/CharacterForm/CharacterForm";
 
 export default function CharacterFormPage() {
   return (
