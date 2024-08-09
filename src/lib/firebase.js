@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -34,4 +41,17 @@ const auth = getAuth();
 // Initialize Firebase Storage
 const storage = getStorage();
 
-export { app, analytics, db, auth, storage, ref, uploadBytes };
+export {
+  app,
+  analytics,
+  db,
+  auth,
+  storage,
+  ref,
+  uploadBytes,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+};
