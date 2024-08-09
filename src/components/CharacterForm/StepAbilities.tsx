@@ -33,10 +33,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
   character,
   setCharacter,
 }) => {
-  const [value, setValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
   };
 
   const TabPanel = (props: TabPanelProps) => {
@@ -55,10 +56,6 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
     );
   };
 
-  const handleAllClick = () => {
-    console.log("handleAllClick");
-  };
-
   const createData = (die: number, str: string, dex: string, wil: string) => ({
     die,
     str,
@@ -75,20 +72,59 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
     createData(6, "+0", "+1", "+2"),
   ];
 
+  const selectAbilitySet = (index: number) => {
+    setCharacter((prevCharacter) => {
+      return {
+        ...prevCharacter,
+        abilities: {
+          str: {
+            ...prevCharacter.abilities.str,
+            value: +rows[index - 1].str,
+          },
+          dex: {
+            ...prevCharacter.abilities.dex,
+            value: +rows[index - 1].dex,
+          },
+          wil: {
+            ...prevCharacter.abilities.wil,
+            value: +rows[index - 1].wil,
+          },
+        },
+      };
+    });
+  };
+
+  const handleGroupRollAllClick = () => {
+    const value = rollDice();
+    setSelectedRow(value);
+    selectAbilitySet(value);
+  };
+
+  const handleGroupTableRowClick = (die: number) => {
+    setSelectedRow(die);
+    selectAbilitySet(die);
+  };
+
+  const handleGroupInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSelectedRow(+value);
+    selectAbilitySet(+value);
+  };
+
   return (
     <>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value={tabValue}
+        onChange={handleTabChange}
         aria-label="Types of ability rolls"
       >
         <Tab label="Group Ability Rolls" />
         <Tab label="Individual Ability Rolls" />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tabValue} index={0}>
         <Box className="flex flex-col gap-4">
           <Box className="flex items-center gap-4">
-            <Button variant="contained" onClick={handleAllClick}>
+            <Button variant="contained" onClick={handleGroupRollAllClick}>
               Roll All Abilities
             </Button>
             <TextField
@@ -101,6 +137,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
               InputLabelProps={{
                 shrink: true,
               }}
+              value={selectedRow || ""}
+              onChange={handleGroupInputChange}
             />
           </Box>
           <TableContainer component={Paper}>
@@ -115,7 +153,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
               </TableHead>
               <TableBody>
                 {rows.map((row) => (
-                  <TableRow key={row.die}>
+                  <TableRow
+                    key={row.die}
+                    onClick={() => handleGroupTableRowClick(row.die)}
+                    className={selectedRow === row.die ? "bg-gray-200" : ""}
+                  >
                     <TableCell>{row.die}</TableCell>
                     <TableCell>{row.str}</TableCell>
                     <TableCell>{row.dex}</TableCell>
@@ -127,7 +169,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
           </TableContainer>
         </Box>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tabValue} index={1}>
         Item Two
       </TabPanel>
     </>

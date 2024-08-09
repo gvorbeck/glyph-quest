@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Character } from "@/types/character";
 import { useAuth } from "@/context/AuthContext";
@@ -29,7 +29,7 @@ const characterBlank: Character = {
       value: null,
     },
     wil: {
-      long: "Willpower",
+      long: "Will",
       short: "WIL",
       value: null,
     },
@@ -89,6 +89,10 @@ export default function CharacterForm() {
       setError("Failed to create character.");
     }
   };
+
+  useEffect(() => {
+    console.log(character);
+  }, [character]);
 
   return (
     <Stepper activeStep={activeStep} orientation="vertical">
