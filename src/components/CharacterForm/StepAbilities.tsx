@@ -1,7 +1,7 @@
 "use client";
 
 import { Character } from "@/types/character";
-import { rollDice } from "@/utils/utils";
+import { getModifier, rollDice } from "@/utils/utils";
 import {
   Box,
   Button,
@@ -15,11 +15,11 @@ import {
   TableRow,
   Tabs,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 
 type StepAbilityProps = {
-  character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
@@ -29,12 +29,12 @@ interface TabPanelProps {
   value: number;
 }
 
-const StepAbilities: React.FC<StepAbilityProps> = ({
-  character,
-  setCharacter,
-}) => {
+const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
   const [tabValue, setTabValue] = useState(0);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [str, setStr] = useState<number | null>(null);
+  const [dex, setDex] = useState<number | null>(null);
+  const [wil, setWil] = useState<number | null>(null);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -100,6 +100,26 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
     selectAbilitySet(value);
   };
 
+  const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
+    const value = getModifier(rollDice());
+    console.log(value);
+    if (ability === "str") setStr(value);
+    if (ability === "dex") setDex(value);
+    if (ability === "wil") setWil(value);
+    setCharacter((prevCharacter) => {
+      return {
+        ...prevCharacter,
+        abilities: {
+          ...prevCharacter.abilities,
+          [ability]: {
+            ...prevCharacter.abilities[ability],
+            value,
+          },
+        },
+      };
+    });
+  };
+
   const handleGroupTableRowClick = (die: number) => {
     setSelectedRow(die);
     selectAbilitySet(die);
@@ -109,6 +129,28 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
     const { value } = e.target;
     setSelectedRow(+value);
     selectAbilitySet(+value);
+  };
+
+  const handleIndInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ability: "str" | "dex" | "wil"
+  ) => {
+    const { value } = e.target;
+    if (ability === "str") setStr(+value);
+    if (ability === "dex") setDex(+value);
+    if (ability === "wil") setWil(+value);
+    setCharacter((prevCharacter) => {
+      return {
+        ...prevCharacter,
+        abilities: {
+          ...prevCharacter.abilities,
+          [ability]: {
+            ...prevCharacter.abilities[ability],
+            value: +value,
+          },
+        },
+      };
+    });
   };
 
   return (
@@ -137,7 +179,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
               InputLabelProps={{
                 shrink: true,
               }}
-              value={selectedRow || ""}
+              value={selectedRow !== null ? selectedRow : ""}
               onChange={handleGroupInputChange}
             />
           </Box>
@@ -156,7 +198,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
                   <TableRow
                     key={row.die}
                     onClick={() => handleGroupTableRowClick(row.die)}
-                    className={selectedRow === row.die ? "bg-gray-200" : ""}
+                    className={
+                      selectedRow === row.die
+                        ? "bg-gray-200 cursor-pointer"
+                        : "cursor-pointer"
+                    }
                   >
                     <TableCell>{row.die}</TableCell>
                     <TableCell>{row.str}</TableCell>
@@ -170,7 +216,104 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
         </Box>
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        Item Two
+        <Box className="flex flex-col gap-4">
+          <Typography variant="body2">
+            If you want your abilities to be more randomized (and possibly
+            unbalanced), the GM may also allow you to roll 1d for each ability
+            separately.
+          </Typography>
+          <Box className="flex gap-4">
+            <TableContainer component={Paper} className="w-fit">
+              <Table aria-label="ability table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>1d</TableCell>
+                    <TableCell>Ability Score</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>1-2</TableCell>
+                    <TableCell>+0</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>3-5</TableCell>
+                    <TableCell>+1</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>6</TableCell>
+                    <TableCell>+2</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Box className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <Button
+                  variant="contained"
+                  onClick={() => handleIndRollClick("str")}
+                >
+                  Roll STR
+                </Button>
+                <TextField
+                  className="pr-8"
+                  label="Strength"
+                  type="number"
+                  InputProps={{
+                    inputProps: { min: 0, max: 2 },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={str !== null ? str : ""}
+                  onChange={(e) => handleIndInputChange(e, "str")}
+                />
+              </div>
+              <div className="flex gap-4">
+                <Button
+                  variant="contained"
+                  onClick={() => handleIndRollClick("dex")}
+                >
+                  Roll DEX
+                </Button>
+                <TextField
+                  className="pr-8"
+                  label="Dexterity"
+                  type="number"
+                  InputProps={{
+                    inputProps: { min: 0, max: 2 },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={dex !== null ? dex : ""}
+                  onChange={(e) => handleIndInputChange(e, "dex")}
+                />
+              </div>
+              <div className="flex gap-4">
+                <Button
+                  variant="contained"
+                  onClick={() => handleIndRollClick("wil")}
+                >
+                  Roll WIL
+                </Button>
+                <TextField
+                  className="pr-8"
+                  label="Will"
+                  type="number"
+                  InputProps={{
+                    inputProps: { min: 0, max: 2 },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={wil !== null ? wil : ""}
+                  onChange={(e) => handleIndInputChange(e, "wil")}
+                />
+              </div>
+            </Box>
+          </Box>
+        </Box>
       </TabPanel>
     </>
   );
