@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { auth } from "../lib/firebase";
-import { User, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import CharacterList from "../components/CharacterList";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
@@ -10,13 +10,21 @@ import SignUp from "../components/SignUp";
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
+
     return () => unsubscribe();
   }, []);
+
+  if (!isMounted) {
+    return null; // Avoid rendering on server-side to prevent mismatches
+  }
 
   if (user) {
     return (
