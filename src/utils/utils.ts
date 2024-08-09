@@ -7,3 +7,10 @@ export const rollDice: (numDice?: number) => number = (numDice = 1) => {
   }
   return total;
 };
+
+export const getModifier: (ability: number) => number = (ability) => {
+  if (ability < 3) return 0;
+  if (ability < 6) return 1;
+  if (ability >= 6) return 2;
+  return 0;
+};
