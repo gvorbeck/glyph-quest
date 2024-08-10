@@ -1,3 +1,4 @@
+// Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 
 export const rollDice: (numDice?: number) => number = (numDice = 1) => {
@@ -8,6 +9,7 @@ export const rollDice: (numDice?: number) => number = (numDice = 1) => {
   return total;
 };
 
+// Stats
 export const getModifier: (ability: number) => number = (ability) => {
   if (ability < 3) return 0;
   if (ability < 6) return 1;
