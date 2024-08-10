@@ -213,7 +213,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
         id="tabpanel-1"
         aria-labelledby="tab-1"
       >
-        <Box className="flex flex-col gap-4">
+        <Box className="flex flex-col gap-4 mt-4">
           <Typography variant="body2">
             If you want your abilities to be more randomized (and possibly
             unbalanced), the GM may also allow you to roll 1d for each ability
