@@ -35,6 +35,8 @@ const characterBlank: Character = {
       value: null,
     },
   },
+  health: 4,
+  feature: null,
 };
 
 export default function CharacterForm() {
@@ -57,7 +59,9 @@ export default function CharacterForm() {
     {
       label: "Feature",
       description: "Your PC begins with one of the following features",
-      content: <StepFeature />,
+      content: (
+        <StepFeature character={character} setCharacter={setCharacter} />
+      ),
     },
   ];
 
