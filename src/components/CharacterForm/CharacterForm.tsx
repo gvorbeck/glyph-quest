@@ -69,32 +69,43 @@ export default function CharacterForm() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleCreateCharacter = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!user) {
-      setError("You must be logged in to create a character.");
-      return;
-    }
-
-    try {
-      const userCharactersCollection = collection(
-        db,
-        "users",
-        user.uid,
-        "characters"
+  const isDisabled = () => {
+    if (activeStep === 0) {
+      return (
+        character.abilities.str.value === null ||
+        character.abilities.dex.value === null ||
+        character.abilities.wil.value === null
       );
-      const docRef = await addDoc(userCharactersCollection, {
-        ...character,
-        // Add other character fields here
-      });
-
-      router.push(`/characters/${docRef.id}`);
-    } catch (err) {
-      setError("Failed to create character.");
     }
+    return false;
   };
+
+  // const handleCreateCharacter = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setError("");
+
+  //   if (!user) {
+  //     setError("You must be logged in to create a character.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const userCharactersCollection = collection(
+  //       db,
+  //       "users",
+  //       user.uid,
+  //       "characters"
+  //     );
+  //     const docRef = await addDoc(userCharactersCollection, {
+  //       ...character,
+  //       // Add other character fields here
+  //     });
+
+  //     router.push(`/characters/${docRef.id}`);
+  //   } catch (err) {
+  //     setError("Failed to create character.");
+  //   }
+  // };
 
   useEffect(() => {
     console.log(character);
@@ -118,7 +129,11 @@ export default function CharacterForm() {
               <Typography>{step.description}</Typography>
               <Box>{step.content}</Box>
               <Box>
-                <Button variant="contained" onClick={handleNext}>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  disabled={isDisabled()}
+                >
                   {index === steps.length - 1 ? "Finish" : "Continue"}
                 </Button>
                 <Button disabled={index === 0} onClick={handleBack}>
