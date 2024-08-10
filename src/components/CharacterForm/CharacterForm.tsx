@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import StepAbilities from "./StepAbilities";
 import StepFeature from "./StepFeature";
+import StepInventory from "./StepInventory";
 
 const characterBlank: Character = {
   abilities: {
@@ -61,6 +62,14 @@ export default function CharacterForm() {
       description: "Your PC begins with one of the following features",
       content: (
         <StepFeature character={character} setCharacter={setCharacter} />
+      ),
+    },
+    {
+      label: "Inventory",
+      description:
+        "Record the location of all items, armor, and weapons on your character. Items can be stored in the following locations: hands, worn, belt, or in a backpack. Belts can hold up to two items, while backpacks can carry whatever a typical backpack could reasonably fit. PCs start with the following equipment: light armor (+1 armor), a shield (+1 armor, 1 hand), and two weapons.",
+      content: (
+        <StepInventory character={character} setCharacter={setCharacter} />
       ),
     },
   ];
