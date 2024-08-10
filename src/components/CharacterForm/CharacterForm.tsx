@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import StepAbilities from "./StepAbilities";
+import StepFeature from "./StepFeature";
 
 const characterBlank: Character = {
   abilities: {
@@ -49,12 +50,14 @@ export default function CharacterForm() {
       label: "Abilities",
       description:
         "Your PC has 3 abilities: Strength, Dexterity, and Will. Roll 1d to find their starting values, or simply choose a row (with GM permission). You may raise one of your PC's abilities by one point at levels 2, 4, and 6. A PC's abilities may never be raised higher than +4.",
-      content: <StepAbilities setCharacter={setCharacter} />,
+      content: (
+        <StepAbilities character={character} setCharacter={setCharacter} />
+      ),
     },
     {
       label: "Feature",
       description: "Your PC begins with one of the following features",
-      content: <p>Health</p>,
+      content: <StepFeature />,
     },
   ];
 
