@@ -46,15 +46,27 @@ type StepAbilityProps = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
+const findAbilityIndex = (character: Character) => {
+  const { str, dex, wil } = character.abilities;
+  const index = rows.findIndex(
+    (row) =>
+      +row.str === str.value && +row.dex === dex.value && +row.wil === wil.value
+  );
+  return index >= 0 ? index + 1 : null;
+};
+
 const StepAbilities: React.FC<StepAbilityProps> = ({
   character,
   setCharacter,
 }) => {
   const [tabValue, setTabValue] = useState(0);
-  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [selectedRow, setSelectedRow] = useState<number | null>(
+    findAbilityIndex(character)
+  );
   const [str, setStr] = useState<number | null>(character.abilities.str.value);
   const [dex, setDex] = useState<number | null>(character.abilities.dex.value);
   const [wil, setWil] = useState<number | null>(character.abilities.wil.value);
+  console.log("row:", findAbilityIndex(character));
 
   // Event handler for tab change
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
