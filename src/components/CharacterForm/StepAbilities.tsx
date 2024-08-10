@@ -42,15 +42,19 @@ const rows = [
 ];
 
 type StepAbilityProps = {
+  character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
+const StepAbilities: React.FC<StepAbilityProps> = ({
+  character,
+  setCharacter,
+}) => {
   const [tabValue, setTabValue] = useState(0);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
-  const [str, setStr] = useState<number | null>(null);
-  const [dex, setDex] = useState<number | null>(null);
-  const [wil, setWil] = useState<number | null>(null);
+  const [str, setStr] = useState<number | null>(character.abilities.str.value);
+  const [dex, setDex] = useState<number | null>(character.abilities.dex.value);
+  const [wil, setWil] = useState<number | null>(character.abilities.wil.value);
 
   // Event handler for tab change
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -60,6 +64,9 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
   // Select ability set based on the index
   const selectAbilitySet = (index: number) => {
     const selectedRowData = rows[index - 1];
+    setStr(+selectedRowData.str);
+    setDex(+selectedRowData.dex);
+    setWil(+selectedRowData.wil);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
       abilities: {
@@ -133,6 +140,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
     ability: "str" | "dex" | "wil"
   ) => {
     const value = +e.target.value;
+    setSelectedRow(null);
     setSpecificAbility(ability, value);
   };
 
