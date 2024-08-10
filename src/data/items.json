@@ -1,0 +1,295 @@
+[
+  {
+    "name": "Animal Scent",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Bear Trap",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Bedroll",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Caltrops",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Chain",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "amount": "10 ft.",
+    "location": null
+  },
+  {
+    "name": "Chalk",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Chisel",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Crowbar",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Fishing Net",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Glass Marbles",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Glue",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Grappling Hook",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Grease",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Hacksaw",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Hammer",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Hand drill",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Horn",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Iron spikes",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Iron tongs",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Lantern and Oil",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Large Sack",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Lockpicks",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "amount": 3,
+    "location": null
+  },
+  {
+    "name": "Manacles",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Medicine",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "amount": 3,
+    "location": null
+  },
+  {
+    "name": "Metal file",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Rations",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "amount": 3,
+    "location": null
+  },
+  {
+    "name": "Rope",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "amount": "50 ft.",
+    "location": null
+  },
+  {
+    "name": "Steel wire",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Shovel",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Steel mirror",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Ten Foot Pole",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Tinderbox",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Torch",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Vial of Acid",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Vial of Poison",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  },
+  {
+    "name": "Waterskin",
+    "type": "item",
+    "hands": 1,
+    "value": null,
+    "starter": true,
+    "location": null
+  }
+]
