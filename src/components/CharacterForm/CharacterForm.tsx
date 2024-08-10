@@ -106,16 +106,18 @@ export default function CharacterForm() {
             {step.label}
           </StepLabel>
           <StepContent>
-            <Typography>{step.description}</Typography>
-            <Box>{step.content}</Box>
-            <Box>
-              <Button variant="contained" onClick={handleNext}>
-                {index === steps.length - 1 ? "Finish" : "Continue"}
-              </Button>
-              <Button disabled={index === 0} onClick={handleBack}>
-                Back
-              </Button>
-            </Box>
+            <div className="flex flex-col gap-4">
+              <Typography>{step.description}</Typography>
+              <Box>{step.content}</Box>
+              <Box>
+                <Button variant="contained" onClick={handleNext}>
+                  {index === steps.length - 1 ? "Finish" : "Continue"}
+                </Button>
+                <Button disabled={index === 0} onClick={handleBack}>
+                  Back
+                </Button>
+              </Box>
+            </div>
           </StepContent>
         </Step>
       ))}
