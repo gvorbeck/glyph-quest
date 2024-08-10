@@ -166,7 +166,8 @@ const StepInventory: React.FC<StepInventoryProps> = ({
             disabled={
               leftChecked.length === 0 ||
               right.length >= 6 ||
-              leftChecked.length > 6
+              leftChecked.length > 6 ||
+              leftChecked.length + right.length > 6
             }
             color="primary"
             aria-label="move selected right"
