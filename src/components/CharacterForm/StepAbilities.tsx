@@ -36,6 +36,9 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
   const [dex, setDex] = useState<number | null>(null);
   const [wil, setWil] = useState<number | null>(null);
 
+  const unselectedRowClasses = "cursor-pointer";
+  const selectedRowClasses = "bg-amber/50 " + unselectedRowClasses;
+
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -100,12 +103,13 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
     selectAbilitySet(value);
   };
 
-  const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
-    const value = getModifier(rollDice());
-    console.log(value);
-    if (ability === "str") setStr(value);
-    if (ability === "dex") setDex(value);
-    if (ability === "wil") setWil(value);
+  const setSpecificAbility = (
+    ability: "str" | "dex" | "wil",
+    value: number
+  ) => {
+    if (ability === "str") setStr(+value);
+    if (ability === "dex") setDex(+value);
+    if (ability === "wil") setWil(+value);
     setCharacter((prevCharacter) => {
       return {
         ...prevCharacter,
@@ -118,6 +122,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
         },
       };
     });
+  };
+
+  const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
+    const value = getModifier(rollDice());
+    setSpecificAbility(ability, value);
   };
 
   const handleGroupTableRowClick = (die: number) => {
@@ -136,21 +145,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
     ability: "str" | "dex" | "wil"
   ) => {
     const { value } = e.target;
-    if (ability === "str") setStr(+value);
-    if (ability === "dex") setDex(+value);
-    if (ability === "wil") setWil(+value);
-    setCharacter((prevCharacter) => {
-      return {
-        ...prevCharacter,
-        abilities: {
-          ...prevCharacter.abilities,
-          [ability]: {
-            ...prevCharacter.abilities[ability],
-            value: +value,
-          },
-        },
-      };
-    });
+    setSpecificAbility(ability, +value);
   };
 
   return (
@@ -200,8 +195,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
                     onClick={() => handleGroupTableRowClick(row.die)}
                     className={
                       selectedRow === row.die
-                        ? "bg-gray-200 cursor-pointer"
-                        : "cursor-pointer"
+                        ? selectedRowClasses
+                        : unselectedRowClasses
                     }
                   >
                     <TableCell>{row.die}</TableCell>
