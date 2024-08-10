@@ -89,7 +89,8 @@ const StepInventory: React.FC<StepInventoryProps> = ({
   const customList = (
     title: React.ReactNode,
     items: readonly Item[],
-    hideCheckAll?: boolean
+    hideCheckAll?: boolean,
+    isChosen?: boolean
   ) => (
     <Card>
       <CardHeader
@@ -113,16 +114,11 @@ const StepInventory: React.FC<StepInventoryProps> = ({
           )
         }
         title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
+        subheader={`${numberOfChecked(items)} selected`}
       />
       <Divider />
       <List
-        sx={{
-          width: 200,
-          height: 230,
-          bgcolor: "background.paper",
-          overflow: "auto",
-        }}
+        className="h-[230px] overflow-auto"
         dense
         component="div"
         role="list"
@@ -149,6 +145,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
                 primary={item.name}
                 secondary={item.amount ? item.amount : null}
               />
+              {isChosen && <div>chosen dropdown</div>}
             </ListItemButton>
           );
         })}
@@ -160,7 +157,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
     <div className="flex flex-col gap-4">
       <div>{customList("Choices", left, true)}</div>
       <div>
-        <div className="flex gap-4">
+        <div className="flex justify-center gap-4">
           <IconButton
             onClick={handleCheckedRight}
             disabled={
@@ -170,20 +167,20 @@ const StepInventory: React.FC<StepInventoryProps> = ({
               leftChecked.length + right.length > 6
             }
             color="primary"
-            aria-label="move selected right"
+            aria-label="move selected down"
           >
             <KeyboardArrowDownIcon />
           </IconButton>
           <Button
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
-            aria-label="move selected left"
+            aria-label="move selected up"
           >
             <KeyboardArrowUpIcon />
           </Button>
         </div>
       </div>
-      <div>{customList("Chosen", right)}</div>
+      <div>{customList("Chosen", right, false, true)}</div>
     </div>
   );
 };
