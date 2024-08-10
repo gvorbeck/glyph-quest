@@ -17,17 +17,33 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
+
+// Constants for CSS classes
+const UNSELECTED_ROW_CLASSES = "cursor-pointer";
+const SELECTED_ROW_CLASSES = "bg-amber/50 cursor-pointer";
+
+// Utility function to create data rows
+const createData = (die: number, str: string, dex: string, wil: string) => ({
+  die,
+  str,
+  dex,
+  wil,
+});
+
+// Predefined rows data
+const rows = [
+  createData(1, "+2", "+1", "+0"),
+  createData(2, "+2", "+0", "+1"),
+  createData(3, "+1", "+2", "+0"),
+  createData(4, "+0", "+2", "+1"),
+  createData(5, "+1", "+0", "+2"),
+  createData(6, "+0", "+1", "+2"),
+];
 
 type StepAbilityProps = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
 
 const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
   const [tabValue, setTabValue] = useState(0);
@@ -36,116 +52,88 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
   const [dex, setDex] = useState<number | null>(null);
   const [wil, setWil] = useState<number | null>(null);
 
-  const unselectedRowClasses = "cursor-pointer";
-  const selectedRowClasses = "bg-amber/50 " + unselectedRowClasses;
-
+  // Event handler for tab change
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  const TabPanel = (props: TabPanelProps) => {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-      </div>
-    );
-  };
-
-  const createData = (die: number, str: string, dex: string, wil: string) => ({
-    die,
-    str,
-    dex,
-    wil,
-  });
-
-  const rows = [
-    createData(1, "+2", "+1", "+0"),
-    createData(2, "+2", "+0", "+1"),
-    createData(3, "+1", "+2", "+0"),
-    createData(4, "+0", "+2", "+1"),
-    createData(5, "+1", "+0", "+2"),
-    createData(6, "+0", "+1", "+2"),
-  ];
-
+  // Select ability set based on the index
   const selectAbilitySet = (index: number) => {
-    setCharacter((prevCharacter) => {
-      return {
-        ...prevCharacter,
-        abilities: {
-          str: {
-            ...prevCharacter.abilities.str,
-            value: +rows[index - 1].str,
-          },
-          dex: {
-            ...prevCharacter.abilities.dex,
-            value: +rows[index - 1].dex,
-          },
-          wil: {
-            ...prevCharacter.abilities.wil,
-            value: +rows[index - 1].wil,
-          },
+    const selectedRowData = rows[index - 1];
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      abilities: {
+        str: {
+          ...prevCharacter.abilities.str,
+          value: +selectedRowData.str,
         },
-      };
-    });
+        dex: {
+          ...prevCharacter.abilities.dex,
+          value: +selectedRowData.dex,
+        },
+        wil: {
+          ...prevCharacter.abilities.wil,
+          value: +selectedRowData.wil,
+        },
+      },
+    }));
   };
 
+  // Handle group roll click
   const handleGroupRollAllClick = () => {
     const value = rollDice();
     setSelectedRow(value);
     selectAbilitySet(value);
   };
 
+  // Set a specific ability value
   const setSpecificAbility = (
     ability: "str" | "dex" | "wil",
     value: number
   ) => {
-    if (ability === "str") setStr(+value);
-    if (ability === "dex") setDex(+value);
-    if (ability === "wil") setWil(+value);
-    setCharacter((prevCharacter) => {
-      return {
-        ...prevCharacter,
-        abilities: {
-          ...prevCharacter.abilities,
-          [ability]: {
-            ...prevCharacter.abilities[ability],
-            value,
-          },
+    if (ability === "str") setStr(value);
+    if (ability === "dex") setDex(value);
+    if (ability === "wil") setWil(value);
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      abilities: {
+        ...prevCharacter.abilities,
+        [ability]: {
+          ...prevCharacter.abilities[ability],
+          value,
         },
-      };
-    });
+      },
+    }));
   };
 
+  // Handle individual roll click
   const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
     const value = getModifier(rollDice());
     setSpecificAbility(ability, value);
   };
 
+  // Handle group table row click
   const handleGroupTableRowClick = (die: number) => {
     setSelectedRow(die);
     selectAbilitySet(die);
   };
 
-  const handleGroupInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setSelectedRow(+value);
-    selectAbilitySet(+value);
+  // Handle input change for group roll
+  const handleGroupInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = +e.target.value;
+    setSelectedRow(value);
+    selectAbilitySet(value);
   };
 
+  // Handle input change for individual ability
   const handleIndInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ability: "str" | "dex" | "wil"
   ) => {
-    const { value } = e.target;
-    setSpecificAbility(ability, +value);
+    const value = +e.target.value;
+    setSpecificAbility(ability, value);
   };
 
   return (
@@ -158,9 +146,14 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
         <Tab label="Group Ability Rolls" />
         <Tab label="Individual Ability Rolls" />
       </Tabs>
-      <TabPanel value={tabValue} index={0}>
+      <Box
+        role="tabpanel"
+        hidden={tabValue !== 0}
+        id="tabpanel-0"
+        aria-labelledby="tab-0"
+      >
         <Box className="flex flex-col gap-4">
-          <Box className="flex items-center gap-4">
+          <Box className="flex items-center gap-4 mt-4">
             <Button variant="contained" onClick={handleGroupRollAllClick}>
               Roll All Abilities
             </Button>
@@ -168,12 +161,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
               className="pr-8"
               label="Ability Roll"
               type="number"
-              InputProps={{
-                inputProps: { min: 1, max: 6 },
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
+              InputProps={{ inputProps: { min: 1, max: 6 } }}
+              InputLabelProps={{ shrink: true }}
               value={selectedRow !== null ? selectedRow : ""}
               onChange={handleGroupInputChange}
             />
@@ -195,8 +184,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
                     onClick={() => handleGroupTableRowClick(row.die)}
                     className={
                       selectedRow === row.die
-                        ? selectedRowClasses
-                        : unselectedRowClasses
+                        ? SELECTED_ROW_CLASSES
+                        : UNSELECTED_ROW_CLASSES
                     }
                   >
                     <TableCell>{row.die}</TableCell>
@@ -209,8 +198,13 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
             </Table>
           </TableContainer>
         </Box>
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
+      </Box>
+      <Box
+        role="tabpanel"
+        hidden={tabValue !== 1}
+        id="tabpanel-1"
+        aria-labelledby="tab-1"
+      >
         <Box className="flex flex-col gap-4">
           <Typography variant="body2">
             If you want your abilities to be more randomized (and possibly
@@ -254,12 +248,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
                   className="pr-8"
                   label="Strength"
                   type="number"
-                  InputProps={{
-                    inputProps: { min: 0, max: 2 },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputProps={{ inputProps: { min: 0, max: 2 } }}
+                  InputLabelProps={{ shrink: true }}
                   value={str !== null ? str : ""}
                   onChange={(e) => handleIndInputChange(e, "str")}
                 />
@@ -275,12 +265,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
                   className="pr-8"
                   label="Dexterity"
                   type="number"
-                  InputProps={{
-                    inputProps: { min: 0, max: 2 },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputProps={{ inputProps: { min: 0, max: 2 } }}
+                  InputLabelProps={{ shrink: true }}
                   value={dex !== null ? dex : ""}
                   onChange={(e) => handleIndInputChange(e, "dex")}
                 />
@@ -296,12 +282,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
                   className="pr-8"
                   label="Will"
                   type="number"
-                  InputProps={{
-                    inputProps: { min: 0, max: 2 },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputProps={{ inputProps: { min: 0, max: 2 } }}
+                  InputLabelProps={{ shrink: true }}
                   value={wil !== null ? wil : ""}
                   onChange={(e) => handleIndInputChange(e, "wil")}
                 />
@@ -309,7 +291,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({ setCharacter }) => {
             </Box>
           </Box>
         </Box>
-      </TabPanel>
+      </Box>
     </>
   );
 };
