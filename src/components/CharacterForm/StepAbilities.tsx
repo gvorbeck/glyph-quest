@@ -66,7 +66,6 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
   const [str, setStr] = useState<number | null>(character.abilities.str.value);
   const [dex, setDex] = useState<number | null>(character.abilities.dex.value);
   const [wil, setWil] = useState<number | null>(character.abilities.wil.value);
-  console.log("row:", findAbilityIndex(character));
 
   // Event handler for tab change
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {

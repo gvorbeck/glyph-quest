@@ -81,6 +81,9 @@ export default function CharacterForm() {
         character.abilities.wil.value === null
       );
     }
+    if (activeStep === 1) {
+      return character.feature === null || character.feature === "path";
+    }
     return false;
   };
 
