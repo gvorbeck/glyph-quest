@@ -10,9 +10,11 @@ export type TypeOption =
   | "hireling"
   | string;
 
+export type Location = "hands" | "belt" | "worn" | "backpack" | "" | string;
+
 export type Item = {
   hands: number | null;
-  location: "hands" | "belt" | "worn" | "backpack" | null;
+  location: Location;
   name: string;
   type: TypeOption;
   value: number | null;

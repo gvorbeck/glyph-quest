@@ -7,14 +7,18 @@ import {
   Divider,
   IconButton,
   List,
+  ListItem,
   ListItemButton,
   ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState } from "react";
 import items from "@/data/items.json";
-import { Item } from "@/types/items";
+import { Item, Location } from "@/types/items";
 
 type StepInventoryProps = {
   character: Character;
@@ -94,6 +98,23 @@ const StepInventory: React.FC<StepInventoryProps> = ({
     }));
   };
 
+  const handleLocationChange = (
+    event: SelectChangeEvent<Location>,
+    item: Item
+  ) => {
+    const { value } = event.target;
+    const charItem = character.items.find((i) => i.name === item.name);
+    const otherItems = character.items.filter((i) => i.name !== item.name);
+    if (charItem) {
+      charItem.location = value;
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: [...otherItems, charItem],
+      }));
+    }
+    console.log(value);
+  };
+
   const customList = (
     title: React.ReactNode,
     items: readonly Item[],
@@ -135,26 +156,37 @@ const StepInventory: React.FC<StepInventoryProps> = ({
           const labelId = `transfer-list-all-item-${item.name}-label`;
 
           return (
-            <ListItemButton
-              key={item.name}
-              role="listitem"
-              onClick={handleToggle(item)}
-            >
-              <Checkbox
-                checked={checked.indexOf(item) !== -1}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{
-                  "aria-labelledby": labelId,
-                }}
-              />
-              <ListItemText
-                id={labelId}
-                primary={item.name}
-                secondary={item.amount ? item.amount : null}
-              />
-              {isChosen && <div>chosen dropdown</div>}
-            </ListItemButton>
+            <ListItem key={item.name}>
+              <ListItemButton role="listitem" onClick={handleToggle(item)}>
+                <Checkbox
+                  checked={checked.indexOf(item) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{
+                    "aria-labelledby": labelId,
+                  }}
+                />
+                <ListItemText
+                  id={labelId}
+                  primary={item.name}
+                  secondary={item.amount ? item.amount : null}
+                />
+              </ListItemButton>
+              {isChosen && (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={item.location}
+                  label="Location"
+                  onChange={(e) => handleLocationChange(e, item)}
+                >
+                  <MenuItem value="hands">Hands</MenuItem>
+                  <MenuItem value="belt">Belt</MenuItem>
+                  <MenuItem value="worn">Worn</MenuItem>
+                  <MenuItem value="backpack">Backpack</MenuItem>
+                </Select>
+              )}
+            </ListItem>
           );
         })}
       </List>
