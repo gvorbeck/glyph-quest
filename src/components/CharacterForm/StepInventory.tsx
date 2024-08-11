@@ -1,6 +1,5 @@
 import { Character } from "@/types/character";
 import {
-  Alert,
   Button,
   Card,
   CardHeader,
@@ -19,10 +18,12 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState } from "react";
 import items from "@/data/items.json";
 import { Item, Location } from "@/types/items";
+import InventoryErrors from "./InventoryErrors";
 
 type StepInventoryProps = {
   character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
+  setError: React.Dispatch<React.SetStateAction<number>>;
 };
 
 function not(a: readonly Item[], b: readonly Item[]) {
@@ -41,24 +42,10 @@ const getStartItems = () => {
   return items.filter((item: Item) => item.starter);
 };
 
-const handsError = (items: readonly Item[]) => {
-  const hands = items.reduce((acc, item) => {
-    if (item.location === "hands" && item.hands) {
-      return acc + item.hands;
-    }
-    return acc;
-  }, 0);
-  return hands > 2;
-};
-
-const beltError = (items: readonly Item[]) => {
-  const belt = items.filter((item) => item.location === "belt");
-  return belt.length > 2;
-};
-
 const StepInventory: React.FC<StepInventoryProps> = ({
   character,
   setCharacter,
+  setError,
 }) => {
   const [checked, setChecked] = useState<readonly Item[]>([]);
   const [left, setLeft] = useState<readonly Item[]>(getStartItems);
@@ -239,16 +226,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
         </div>
       </div>
       <div>{customList("Chosen", right, false, true)}</div>
-      {handsError(character.items) && (
-        <Alert severity="error">
-          There are too many items in your character's hands.
-        </Alert>
-      )}
-      {beltError(character.items) && (
-        <Alert severity="error">
-          There are too many items on your character's belt.
-        </Alert>
-      )}
+      <InventoryErrors items={character.items} setError={setError} />
     </div>
   );
 };

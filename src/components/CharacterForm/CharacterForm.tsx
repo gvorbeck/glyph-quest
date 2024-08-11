@@ -45,7 +45,7 @@ export default function CharacterForm() {
   // const [name, setName] = useState("");
   const [character, setCharacter] = useState<Character>(characterBlank);
   const [activeStep, setActiveStep] = useState(0);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<number>(0);
   const { user } = useAuth();
   const router = useRouter();
 
@@ -68,9 +68,13 @@ export default function CharacterForm() {
     {
       label: "Inventory",
       description:
-        "Record the location of all items, armor, and weapons on your character. Items can be stored in the following locations: hands, worn, belt, or in a backpack. Belts can hold up to two items, while backpacks can carry whatever a typical backpack could reasonably fit. PCs start with the following equipment: light armor (+1 armor), a shield (+1 armor, 1 hand), and two weapons.",
+        "Choose six items. Record the location of all items, armor, and weapons on your character. Items can be stored in the following locations: hands, worn, belt, or in a backpack. Belts can hold up to two items, while backpacks can carry whatever a typical backpack could reasonably fit. PCs start with the following equipment: light armor (+1 armor), a shield (+1 armor, 1 hand), and two weapons.",
       content: (
-        <StepInventory character={character} setCharacter={setCharacter} />
+        <StepInventory
+          character={character}
+          setCharacter={setCharacter}
+          setError={setError}
+        />
       ),
     },
   ];
@@ -95,7 +99,10 @@ export default function CharacterForm() {
       return character.feature === null || character.feature === "path";
     }
     if (activeStep === 2) {
-      return character.items.find((item) => item.location === "") !== undefined;
+      return (
+        character.items.find((item) => item.location === "") !== undefined ||
+        error > 0
+      );
     }
     return false;
   };
