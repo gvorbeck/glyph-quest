@@ -38,6 +38,7 @@ const characterBlank: Character = {
   },
   health: 4,
   feature: null,
+  items: [],
 };
 
 export default function CharacterForm() {

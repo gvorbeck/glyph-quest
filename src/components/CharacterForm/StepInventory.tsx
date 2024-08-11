@@ -74,16 +74,24 @@ const StepInventory: React.FC<StepInventoryProps> = ({
     }
   };
 
-  const handleCheckedRight = () => {
+  const handleCheckedAdd = () => {
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: right.concat(leftChecked),
+    }));
   };
 
-  const handleCheckedLeft = () => {
+  const handleCheckedRemove = () => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: not(right, rightChecked),
+    }));
   };
 
   const customList = (
@@ -159,7 +167,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
       <div>
         <div className="flex justify-center gap-4">
           <IconButton
-            onClick={handleCheckedRight}
+            onClick={handleCheckedAdd}
             disabled={
               leftChecked.length === 0 ||
               right.length >= 6 ||
@@ -172,7 +180,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
             <KeyboardArrowDownIcon />
           </IconButton>
           <Button
-            onClick={handleCheckedLeft}
+            onClick={handleCheckedRemove}
             disabled={rightChecked.length === 0}
             aria-label="move selected up"
           >

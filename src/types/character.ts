@@ -1,3 +1,5 @@
+import { Item } from "./items";
+
 export type AbilityLongName = "Strength" | "Dexterity" | "Will";
 
 export type AbilityShortName = "STR" | "DEX" | "WIL";
@@ -26,4 +28,5 @@ export interface Character {
   };
   health: number;
   feature: Feature;
+  items: Item[];
 }
