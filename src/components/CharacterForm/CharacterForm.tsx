@@ -94,6 +94,9 @@ export default function CharacterForm() {
     if (activeStep === 1) {
       return character.feature === null || character.feature === "path";
     }
+    if (activeStep === 2) {
+      return character.items.find((item) => item.location === "") !== undefined;
+    }
     return false;
   };
 
