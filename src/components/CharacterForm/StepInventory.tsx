@@ -1,11 +1,11 @@
 import { Character } from "@/types/character";
 import {
+  Alert,
   Button,
   Card,
   CardHeader,
   Checkbox,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -39,6 +39,21 @@ function union(a: readonly Item[], b: readonly Item[]) {
 
 const getStartItems = () => {
   return items.filter((item: Item) => item.starter);
+};
+
+const handsError = (items: readonly Item[]) => {
+  const hands = items.reduce((acc, item) => {
+    if (item.location === "hands" && item.hands) {
+      return acc + item.hands;
+    }
+    return acc;
+  }, 0);
+  return hands > 2;
+};
+
+const beltError = (items: readonly Item[]) => {
+  const belt = items.filter((item) => item.location === "belt");
+  return belt.length > 2;
 };
 
 const StepInventory: React.FC<StepInventoryProps> = ({
@@ -198,7 +213,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
       <div>{customList("Choices", left, true)}</div>
       <div>
         <div className="flex justify-center gap-4">
-          <IconButton
+          <Button
             onClick={handleCheckedAdd}
             disabled={
               leftChecked.length === 0 ||
@@ -206,21 +221,34 @@ const StepInventory: React.FC<StepInventoryProps> = ({
               leftChecked.length > 6 ||
               leftChecked.length + right.length > 6
             }
-            color="primary"
+            variant="contained"
             aria-label="move selected down"
+            startIcon={<KeyboardArrowDownIcon />}
           >
-            <KeyboardArrowDownIcon />
-          </IconButton>
+            Add
+          </Button>
           <Button
             onClick={handleCheckedRemove}
             disabled={rightChecked.length === 0}
             aria-label="move selected up"
+            variant="contained"
+            startIcon={<KeyboardArrowUpIcon />}
           >
-            <KeyboardArrowUpIcon />
+            Remove
           </Button>
         </div>
       </div>
       <div>{customList("Chosen", right, false, true)}</div>
+      {handsError(character.items) && (
+        <Alert severity="error">
+          There are too many items in your character's hands.
+        </Alert>
+      )}
+      {beltError(character.items) && (
+        <Alert severity="error">
+          There are too many items on your character's belt.
+        </Alert>
+      )}
     </div>
   );
 };
