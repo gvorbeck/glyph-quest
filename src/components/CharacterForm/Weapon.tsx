@@ -14,20 +14,18 @@ import InventoryLocationSelect from "./InventoryLocationSelect";
 type WeaponProps = {
   id: number;
   weapon: Item;
-  character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const Weapon: React.FC<WeaponProps> = ({
-  id,
-  weapon,
-  character,
-  setCharacter,
-}) => {
+const Weapon: React.FC<WeaponProps> = ({ id, weapon, setCharacter }) => {
   const [locked, setLocked] = useState<boolean>(false);
-  const [name, setName] = useState<string>("");
-  const [type, setType] = useState<WeaponTypes>("light-weapon");
-  const [location, setLocation] = useState<Location>("belt");
+  const [name, setName] = useState<string>(weapon?.name || "");
+  const [type, setType] = useState<WeaponTypes>(
+    (weapon?.type as WeaponTypes) || "light-weapon"
+  );
+  const [location, setLocation] = useState<Location>(
+    weapon?.location || "belt"
+  );
 
   const handleTypeChange = (event: SelectChangeEvent<WeaponTypes>) => {
     setType(event.target.value as WeaponTypes);
@@ -66,7 +64,7 @@ const Weapon: React.FC<WeaponProps> = ({
     <div className="flex gap-4">
       <TextField
         id={`weapon-${id}`}
-        label="Weapon"
+        label="Starting Weapon"
         variant="outlined"
         disabled={locked}
         value={name}

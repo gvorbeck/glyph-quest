@@ -3,6 +3,7 @@ export type WeaponTypes = "heavy-weapon" | "light-weapon" | "ranged-weapon";
 export type TypeOption =
   | WeaponTypes
   | "armor"
+  | "shield"
   | "item"
   | "animal"
   | "transport"

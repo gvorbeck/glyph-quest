@@ -17,6 +17,17 @@ export const WEAPONTYPES = {
   ranged: { value: "ranged-weapon", label: "Ranged Weapon" },
 };
 
+export const ITEMTYPES = {
+  armor: {
+    value: "armor",
+    label: "Armor",
+  },
+  shield: {
+    value: "shield",
+    label: "Shield",
+  },
+};
+
 export const INVENTORYLOCATIONS = {
   hands: {
     value: "hands",

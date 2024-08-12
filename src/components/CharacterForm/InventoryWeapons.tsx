@@ -15,7 +15,7 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
   const weapons = getWeapons(character.items);
   console.log("weapons", weapons);
   return (
-    <>
+    <div>
       <Typography variant="h3">Weapons</Typography>
       <Typography variant="body1">PCs start with two weapons.</Typography>
       <List>
@@ -42,15 +42,13 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
         id={1}
         weapon={weapons[0] || undefined}
         setCharacter={setCharacter}
-        character={character}
       />
       <Weapon
         id={2}
         weapon={weapons[1] || undefined}
-        character={character}
         setCharacter={setCharacter}
       />
-    </>
+    </div>
   );
 };
 

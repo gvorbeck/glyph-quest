@@ -22,6 +22,8 @@ export const getModifier: (ability: number) => number = (ability) => {
 // Items
 export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
   items
-) => {
-  return items.filter((item: Item) => item.type.includes("weapon"));
-};
+) => items.filter((item: Item) => item.type.includes("weapon"));
+
+export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
+  items
+) => items.find((item) => item.type === "armor" && item.location === "worn");

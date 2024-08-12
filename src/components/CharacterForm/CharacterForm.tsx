@@ -17,6 +17,7 @@ import {
 import StepAbilities from "./StepAbilities";
 import StepFeature from "./StepFeature";
 import StepInventory from "./StepInventory";
+import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 
 const characterBlank: Character = {
   abilities: {
@@ -38,7 +39,24 @@ const characterBlank: Character = {
   },
   health: 4,
   feature: null,
-  items: [],
+  items: [
+    {
+      name: "Lightz Armor",
+      hands: 1,
+      location: INVENTORYLOCATIONS.worn.value,
+      type: ITEMTYPES.armor.value,
+      value: null,
+      armor: 1,
+    },
+    {
+      hands: 1,
+      location: INVENTORYLOCATIONS.hands.value,
+      name: "Shield",
+      type: ITEMTYPES.shield.value,
+      value: null,
+      armor: 1,
+    },
+  ],
 };
 
 export default function CharacterForm() {
@@ -139,39 +157,42 @@ export default function CharacterForm() {
   }, [character]);
 
   return (
-    <Stepper activeStep={activeStep} orientation="vertical">
-      {steps.map((step, index) => (
-        <Step key={step.label}>
-          <StepLabel
-            optional={
-              index === 2 ? (
-                <Typography variant="caption">Last step</Typography>
-              ) : null
-            }
-          >
-            {step.label}
-          </StepLabel>
-          <StepContent>
-            <div className="flex flex-col gap-4">
-              <Typography>{step.description}</Typography>
-              <Box>{step.content}</Box>
-              <Box>
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  disabled={isDisabled()}
-                >
-                  {index === steps.length - 1 ? "Finish" : "Continue"}
-                </Button>
-                <Button disabled={index === 0} onClick={handleBack}>
-                  Back
-                </Button>
-              </Box>
-            </div>
-          </StepContent>
-        </Step>
-      ))}
-    </Stepper>
+    <>
+      <p>make better components. standardize coomponent jsx</p>
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps.map((step, index) => (
+          <Step key={step.label}>
+            <StepLabel
+              optional={
+                index === 2 ? (
+                  <Typography variant="caption">Last step</Typography>
+                ) : null
+              }
+            >
+              {step.label}
+            </StepLabel>
+            <StepContent>
+              <div className="flex flex-col gap-4">
+                <Typography>{step.description}</Typography>
+                <Box>{step.content}</Box>
+                <Box>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    disabled={isDisabled()}
+                  >
+                    {index === steps.length - 1 ? "Finish" : "Continue"}
+                  </Button>
+                  <Button disabled={index === 0} onClick={handleBack}>
+                    Back
+                  </Button>
+                </Box>
+              </div>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+    </>
     // <form onSubmit={handleCreateCharacter}>
     //   {/* <input
     //     type="text"
