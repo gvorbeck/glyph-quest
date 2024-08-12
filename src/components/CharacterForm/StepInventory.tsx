@@ -20,7 +20,6 @@ import { Item, Location } from "@/types/items";
 import InventoryErrors from "./InventoryErrors";
 import InventoryWeapons from "./InventoryWeapons";
 import InventoryLocationSelect from "./InventoryLocationSelect";
-import { getWeapons } from "@/utils/utils";
 
 type StepInventoryProps = {
   character: Character;
@@ -52,10 +51,6 @@ const StepInventory: React.FC<StepInventoryProps> = ({
   const [checked, setChecked] = useState<readonly Item[]>([]);
   const [left, setLeft] = useState<readonly Item[]>(getStartItems);
   const [right, setRight] = useState<readonly Item[]>([]);
-  const [weapons, setWeapons] = useState<readonly Item[]>(
-    getWeapons(character.items)
-  );
-  console.log("weapons", weapons);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -227,7 +222,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
           </div>
         </div>
         <div>{customList("Chosen", right, false, true)}</div>
-        <InventoryWeapons weapons={weapons} />
+        <InventoryWeapons character={character} setCharacter={setCharacter} />
         <InventoryErrors items={character.items} setError={setError} />
       </div>
     </>

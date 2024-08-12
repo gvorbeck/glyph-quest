@@ -1,12 +1,19 @@
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import Weapon from "./Weapon";
-import { Item } from "@/types/items";
+import { Character } from "@/types/character";
+import { getWeapons } from "@/utils/utils";
 
 type InventoryWeaponsProps = {
-  weapons: readonly Item[];
+  character: Character;
+  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({ weapons }) => {
+const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
+  character,
+  setCharacter,
+}) => {
+  const weapons = getWeapons(character.items);
+  console.log("weapons", weapons);
   return (
     <>
       <Typography variant="h3">Weapons</Typography>
@@ -31,8 +38,18 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({ weapons }) => {
           </ListItemText>
         </ListItem>
       </List>
-      <Weapon id={1} weapon={weapons[0]} setCharacter={setCHaracter} />
-      <Weapon id={2} weapon={weapons[1]} />
+      <Weapon
+        id={1}
+        weapon={weapons[0] || undefined}
+        setCharacter={setCharacter}
+        character={character}
+      />
+      <Weapon
+        id={2}
+        weapon={weapons[1] || undefined}
+        character={character}
+        setCharacter={setCharacter}
+      />
     </>
   );
 };

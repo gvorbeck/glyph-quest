@@ -14,10 +14,16 @@ import InventoryLocationSelect from "./InventoryLocationSelect";
 type WeaponProps = {
   id: number;
   weapon: Item;
+  character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
+const Weapon: React.FC<WeaponProps> = ({
+  id,
+  weapon,
+  character,
+  setCharacter,
+}) => {
   const [locked, setLocked] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<WeaponTypes>("light-weapon");
@@ -32,9 +38,13 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
   };
 
   const handleAddRemoveClick = () => {
-    setLocked((prevLocked) => !preLocked);
+    setLocked((prevLocked) => !prevLocked);
     if (locked) {
       // Remove weapon
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: prevCharacter.items.filter((item) => item.name !== name),
+      }));
     } else {
       // Add weapon
       const weapon: Item = {
@@ -47,7 +57,7 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
       };
       setCharacter((prevCharacter) => ({
         ...prevCharacter,
-        inventory: [...prevCharacter.inventory, weapon],
+        items: [...prevCharacter.items, weapon],
       }));
     }
   };
@@ -88,8 +98,7 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
       />
       <Button
         variant="contained"
-        onClick={}
-        // onClick={() => setLocked(!locked)}
+        onClick={handleAddRemoveClick}
         disabled={name === ""}
       >
         {locked ? "Remove" : "Add"}
