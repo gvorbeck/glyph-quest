@@ -17,13 +17,24 @@ const InventoryArmor: React.FC<InventoryArmorProps> = ({
   const armor = getWornArmor(character.items);
 
   const handleArmorLocationChange = (event: SelectChangeEvent<string>) => {
-    const armor = character.items.find((item) => item.type === "armor");
-    const otherItems = character.items.filter((item) => item.type !== "armor");
-    if (armor) {
-      armor.location = event.target.value as Location;
+    const armorIndex = character.items.findIndex(
+      (item) => item.type === "armor"
+    );
+    if (armorIndex !== -1) {
+      const updatedArmor = {
+        ...character.items[armorIndex],
+        location: event.target.value as Location,
+      };
+
+      const updatedItems = [
+        ...character.items.slice(0, armorIndex),
+        updatedArmor,
+        ...character.items.slice(armorIndex + 1),
+      ];
+
       setCharacter((prevCharacter) => ({
         ...prevCharacter,
-        items: [...otherItems, armor],
+        items: updatedItems,
       }));
     }
   };
@@ -31,13 +42,24 @@ const InventoryArmor: React.FC<InventoryArmorProps> = ({
   const handleArmorNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const armor = character.items.find((item) => item.type === "armor");
-    const otherItems = character.items.filter((item) => item.type !== "armor");
-    if (armor) {
-      armor.name = event.target.value;
+    const armorIndex = character.items.findIndex(
+      (item) => item.type === "armor"
+    );
+    if (armorIndex !== -1) {
+      const updatedArmor = {
+        ...character.items[armorIndex],
+        name: event.target.value,
+      };
+
+      const updatedItems = [
+        ...character.items.slice(0, armorIndex),
+        updatedArmor,
+        ...character.items.slice(armorIndex + 1),
+      ];
+
       setCharacter((prevCharacter) => ({
         ...prevCharacter,
-        items: [...otherItems, armor],
+        items: updatedItems,
       }));
     }
   };

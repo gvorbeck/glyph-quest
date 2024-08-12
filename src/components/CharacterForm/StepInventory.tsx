@@ -21,6 +21,7 @@ import InventoryErrors from "./InventoryErrors";
 import InventoryWeapons from "./InventoryWeapons";
 import InventoryLocationSelect from "./InventoryLocationSelect";
 import InventoryArmor from "./InventoryArmor";
+import InventoryShield from "./InventoryShield";
 
 type StepInventoryProps = {
   character: Character;
@@ -225,6 +226,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
         <div>{customList("Chosen", right, false, true)}</div>
         <InventoryWeapons character={character} setCharacter={setCharacter} />
         <InventoryArmor character={character} setCharacter={setCharacter} />
+        <InventoryShield character={character} setCharacter={setCharacter} />
         <InventoryErrors items={character.items} setError={setError} />
       </div>
     </>
