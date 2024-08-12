@@ -1,3 +1,5 @@
+import { Item } from "@/types/items";
+
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 
@@ -15,4 +17,11 @@ export const getModifier: (ability: number) => number = (ability) => {
   if (ability < 6) return 1;
   if (ability >= 6) return 2;
   return 0;
+};
+
+// Items
+export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
+  items
+) => {
+  return items.filter((item: Item) => item.type.includes("weapon"));
 };

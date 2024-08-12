@@ -1,13 +1,16 @@
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import Weapon from "./Weapon";
+import { Item } from "@/types/items";
 
-type InventoryWeaponsProps = {};
+type InventoryWeaponsProps = {
+  weapons: readonly Item[];
+};
 
-const InventoryWeapons: React.FC<InventoryWeaponsProps> = () => {
+const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({ weapons }) => {
   return (
     <>
       <Typography variant="h3">Weapons</Typography>
-      <Typography variant="body1">PCs start with two weapons</Typography>
+      <Typography variant="body1">PCs start with two weapons.</Typography>
       <List>
         <ListItem>
           <ListItemText>
@@ -28,8 +31,8 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = () => {
           </ListItemText>
         </ListItem>
       </List>
-      <Weapon id={1} />
-      <Weapon id={2} />
+      <Weapon id={1} weapon={weapons[0]} />
+      <Weapon id={2} weapon={weapons[1]} />
     </>
   );
 };

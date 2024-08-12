@@ -9,9 +9,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  MenuItem,
-  Select,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -20,8 +19,8 @@ import items from "@/data/items.json";
 import { Item, Location } from "@/types/items";
 import InventoryErrors from "./InventoryErrors";
 import InventoryWeapons from "./InventoryWeapons";
-import { INVENTORYLOCATIONS } from "@/utils/constants";
 import InventoryLocationSelect from "./InventoryLocationSelect";
+import { getWeapons } from "@/utils/utils";
 
 type StepInventoryProps = {
   character: Character;
@@ -53,6 +52,10 @@ const StepInventory: React.FC<StepInventoryProps> = ({
   const [checked, setChecked] = useState<readonly Item[]>([]);
   const [left, setLeft] = useState<readonly Item[]>(getStartItems);
   const [right, setRight] = useState<readonly Item[]>([]);
+  const [weapons, setWeapons] = useState<readonly Item[]>(
+    getWeapons(character.items)
+  );
+  console.log("weapons", weapons);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -192,39 +195,42 @@ const StepInventory: React.FC<StepInventoryProps> = ({
   );
 
   return (
-    <div className="flex flex-col gap-4">
-      <div>{customList("Choices", left, true)}</div>
-      <div>
-        <div className="flex justify-center gap-4">
-          <Button
-            onClick={handleCheckedAdd}
-            disabled={
-              leftChecked.length === 0 ||
-              right.length >= 6 ||
-              leftChecked.length > 6 ||
-              leftChecked.length + right.length > 6
-            }
-            variant="contained"
-            aria-label="move selected down"
-            startIcon={<KeyboardArrowDownIcon />}
-          >
-            Add
-          </Button>
-          <Button
-            onClick={handleCheckedRemove}
-            disabled={rightChecked.length === 0}
-            aria-label="move selected up"
-            variant="contained"
-            startIcon={<KeyboardArrowUpIcon />}
-          >
-            Remove
-          </Button>
+    <>
+      <Typography variant="h3">Items</Typography>
+      <div className="flex flex-col gap-4">
+        <div>{customList("Choices", left, true)}</div>
+        <div>
+          <div className="flex justify-center gap-4">
+            <Button
+              onClick={handleCheckedAdd}
+              disabled={
+                leftChecked.length === 0 ||
+                right.length >= 6 ||
+                leftChecked.length > 6 ||
+                leftChecked.length + right.length > 6
+              }
+              variant="contained"
+              aria-label="move selected down"
+              startIcon={<KeyboardArrowDownIcon />}
+            >
+              Add
+            </Button>
+            <Button
+              onClick={handleCheckedRemove}
+              disabled={rightChecked.length === 0}
+              aria-label="move selected up"
+              variant="contained"
+              startIcon={<KeyboardArrowUpIcon />}
+            >
+              Remove
+            </Button>
+          </div>
         </div>
+        <div>{customList("Chosen", right, false, true)}</div>
+        <InventoryWeapons weapons={weapons} />
+        <InventoryErrors items={character.items} setError={setError} />
       </div>
-      <div>{customList("Chosen", right, false, true)}</div>
-      <InventoryWeapons />
-      <InventoryErrors items={character.items} setError={setError} />
-    </div>
+    </>
   );
 };
 
