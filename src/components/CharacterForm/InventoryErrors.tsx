@@ -1,4 +1,5 @@
 import { Item } from "@/types/items";
+import { INVENTORYLOCATIONS } from "@/utils/constants";
 import { Alert } from "@mui/material";
 import { useEffect } from "react";
 
@@ -9,7 +10,7 @@ type InventoryErrorsProps = {
 
 const handsError = (items: readonly Item[]) => {
   const hands = items.reduce((acc, item) => {
-    if (item.location === "hands" && item.hands) {
+    if (item.location === INVENTORYLOCATIONS.hands.value && item.hands) {
       return acc + item.hands;
     }
     return acc;
@@ -18,7 +19,9 @@ const handsError = (items: readonly Item[]) => {
 };
 
 const beltError = (items: readonly Item[]) => {
-  const belt = items.filter((item) => item.location === "belt");
+  const belt = items.filter(
+    (item) => item.location === INVENTORYLOCATIONS.belt.value
+  );
   return belt.length > 2;
 };
 

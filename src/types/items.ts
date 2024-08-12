@@ -11,7 +11,7 @@ export type TypeOption =
   | "hireling"
   | string;
 
-export type Location = "hands" | "belt" | "worn" | "backpack" | "" | string;
+export type Location = "hands" | "belt" | "worn" | "backpack" | undefined;
 
 export type Item = {
   hands: number | null;

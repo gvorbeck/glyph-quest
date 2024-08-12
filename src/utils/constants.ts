@@ -1,3 +1,5 @@
+import { Location } from "@/types/items";
+
 export const FEATURES = {
   attack: "attack-bonus",
   spell: "spell-slot",
@@ -30,19 +32,19 @@ export const ITEMTYPES = {
 
 export const INVENTORYLOCATIONS = {
   hands: {
-    value: "hands",
+    value: "hands" as Location,
     label: "Hands",
   },
   belt: {
-    value: "belt",
+    value: "belt" as Location,
     label: "Belt",
   },
   worn: {
-    value: "worn",
+    value: "worn" as Location,
     label: "Worn",
   },
   backpack: {
-    value: "backpack",
+    value: "backpack" as Location,
     label: "Backpack",
   },
 };

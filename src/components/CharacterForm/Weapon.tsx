@@ -24,7 +24,7 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon, setCharacter }) => {
     (weapon?.type as WeaponTypes) || "light-weapon"
   );
   const [location, setLocation] = useState<Location>(
-    weapon?.location || "belt"
+    weapon?.location || INVENTORYLOCATIONS.belt.value
   );
 
   const handleTypeChange = (event: SelectChangeEvent<WeaponTypes>) => {

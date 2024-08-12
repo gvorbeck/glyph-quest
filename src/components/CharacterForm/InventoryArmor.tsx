@@ -16,7 +16,7 @@ const InventoryArmor: React.FC<InventoryArmorProps> = ({
 }) => {
   const armor = getWornArmor(character.items);
 
-  const handleArmorLocationChange = (event: SelectChangeEvent<string>) => {
+  const handleArmorLocationChange = (event: SelectChangeEvent<Location>) => {
     const armorIndex = character.items.findIndex(
       (item) => item.type === "armor"
     );

@@ -4,7 +4,7 @@ import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 type InventoryLocationSelectProps = {
   id: string;
-  value: string;
+  value: any;
   onChange: (event: SelectChangeEvent<Location>) => void;
   disabled?: boolean;
 };

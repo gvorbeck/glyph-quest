@@ -18,6 +18,8 @@ import StepAbilities from "./StepAbilities";
 import StepFeature from "./StepFeature";
 import StepInventory from "./StepInventory";
 import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
+import StepDetails from "./StepDetails";
+import StepName from "./StepName";
 
 const characterBlank: Character = {
   abilities: {
@@ -95,6 +97,18 @@ export default function CharacterForm() {
         />
       ),
     },
+    {
+      label: "Details",
+      description: "Create your character's details.",
+      content: (
+        <StepDetails character={character} setCharacter={setCharacter} />
+      ),
+    },
+    {
+      label: "Name",
+      description: "Name your character.",
+      content: <StepName character={character} setCharacter={setCharacter} />,
+    },
   ];
 
   const handleNext = () => {
@@ -118,8 +132,8 @@ export default function CharacterForm() {
     }
     if (activeStep === 2) {
       return (
-        character.items.find((item) => item.location === "") !== undefined ||
-        error > 0
+        character.items.find((item) => item.location === undefined) !==
+          undefined || error > 0
       );
     }
     return false;
