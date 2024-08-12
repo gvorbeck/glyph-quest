@@ -9,9 +9,11 @@ import {
   Radio,
   RadioGroup,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
 type StepDetailsProps = {
   character: Character;
@@ -102,23 +104,63 @@ const sections: [string, string[]][] = [
 ];
 
 const StepDetails: React.FC<StepDetailsProps> = () => {
-  const handleRandomizeClick = (section: string[]) => {
-    console.log(section);
+  const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
+    {}
+  );
+
+  const [selectedRadio, setSelectedRadio] = useState<Record<string, string>>(
+    {}
+  );
+
+  const handleRandomizeClick = (
+    sectionItems: string[],
+    sectionName: string
+  ) => {
+    const randomValue =
+      sectionItems[
+        Math.floor(Math.random() * sectionItems.length)
+      ].toLowerCase();
+    setSelectedValues((prev) => ({
+      ...prev,
+      [sectionName]: randomValue,
+    }));
   };
+
+  const handleChange = (
+    sectionName: string,
+    event: SelectChangeEvent<string>
+  ) => {
+    setSelectedValues((prev) => ({
+      ...prev,
+      [sectionName]: event.target.value,
+    }));
+  };
+
+  const handleRadioChange = (
+    sectionName: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSelectedRadio((prev) => ({
+      ...prev,
+      [sectionName]: event.target.value,
+    }));
+  };
+
   return (
     <div className="flex flex-col gap-8">
-      {sections.map((section) => (
-        <FormControl>
+      {sections.map(([sectionName, sectionItems]) => (
+        <FormControl key={sectionName}>
           <FormLabel
-            id={`${section[0].toLowerCase()}-radio-buttons-group-label`}
+            id={`${sectionName.toLowerCase()}-radio-buttons-group-label`}
           >
-            {section[0]}
+            {sectionName}
           </FormLabel>
           <RadioGroup
-            aria-labelledby={`${section[0].toLowerCase()}-radio-buttons-group-label`}
+            aria-labelledby={`${sectionName.toLowerCase()}-radio-buttons-group-label`}
             defaultValue="random"
-            name="radio-buttons-group"
+            name={`${sectionName.toLowerCase()}-radio-buttons-group`}
             className="flex flex-col gap-4"
+            onChange={(e) => handleRadioChange(sectionName.toLowerCase(), e)}
           >
             <FormControlLabel
               value="random"
@@ -127,23 +169,40 @@ const StepDetails: React.FC<StepDetailsProps> = () => {
                 <div className="flex items-center gap-4">
                   <Button
                     variant="contained"
-                    onClick={() => handleRandomizeClick(section[1])}
+                    onClick={() =>
+                      handleRandomizeClick(
+                        sectionItems,
+                        sectionName.toLowerCase()
+                      )
+                    }
+                    disabled={
+                      selectedRadio[sectionName.toLowerCase()] !== "random"
+                    }
                   >
                     Randomize
                   </Button>
                   <FormControl>
-                    <InputLabel id="demo-simple-select-label">
-                      {section[0]}
+                    <InputLabel
+                      id={`${sectionName.toLowerCase()}-select-label`}
+                    >
+                      {sectionName}
                     </InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={section[1]}
-                      label={section[0]}
-                      // onChange={handleChange}
+                      labelId={`${sectionName.toLowerCase()}-select-label`}
+                      id={`${sectionName.toLowerCase()}-select`}
+                      value={selectedValues[sectionName.toLowerCase()] || ""}
+                      label={sectionName}
+                      onChange={(e) =>
+                        handleChange(sectionName.toLowerCase(), e)
+                      }
+                      disabled={
+                        selectedRadio[sectionName.toLowerCase()] !== "random"
+                      }
                     >
-                      {section[1].map((item) => (
-                        <MenuItem value={item.toLowerCase()}>{item}</MenuItem>
+                      {sectionItems.map((item) => (
+                        <MenuItem key={item} value={item.toLowerCase()}>
+                          {item}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -153,7 +212,14 @@ const StepDetails: React.FC<StepDetailsProps> = () => {
             <FormControlLabel
               value="manual"
               control={<Radio />}
-              label={<TextField label="Manual" />}
+              label={
+                <TextField
+                  label="Manual"
+                  disabled={
+                    selectedRadio[sectionName.toLowerCase()] !== "manual"
+                  }
+                />
+              }
             />
           </RadioGroup>
         </FormControl>
