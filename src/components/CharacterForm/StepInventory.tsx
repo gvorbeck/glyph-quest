@@ -19,6 +19,9 @@ import { useState } from "react";
 import items from "@/data/items.json";
 import { Item, Location } from "@/types/items";
 import InventoryErrors from "./InventoryErrors";
+import InventoryWeapons from "./InventoryWeapons";
+import { INVENTORYLOCATIONS } from "@/utils/constants";
+import InventoryLocationSelect from "./InventoryLocationSelect";
 
 type StepInventoryProps = {
   character: Character;
@@ -175,18 +178,11 @@ const StepInventory: React.FC<StepInventoryProps> = ({
                 />
               </ListItemButton>
               {isChosen && (
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                <InventoryLocationSelect
+                  id="items"
                   value={item.location}
-                  label="Location"
                   onChange={(e) => handleLocationChange(e, item)}
-                >
-                  <MenuItem value="hands">Hands</MenuItem>
-                  <MenuItem value="belt">Belt</MenuItem>
-                  <MenuItem value="worn">Worn</MenuItem>
-                  <MenuItem value="backpack">Backpack</MenuItem>
-                </Select>
+                />
               )}
             </ListItem>
           );
@@ -226,6 +222,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({
         </div>
       </div>
       <div>{customList("Chosen", right, false, true)}</div>
+      <InventoryWeapons />
       <InventoryErrors items={character.items} setError={setError} />
     </div>
   );

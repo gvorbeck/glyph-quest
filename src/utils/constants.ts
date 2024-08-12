@@ -7,3 +7,31 @@ export const FEATURES = {
   roofrunner: "path-roofrunner",
   shadowjack: "path-shadowjack",
 };
+
+export const WEAPONTYPES = {
+  light: {
+    value: "light-weapon",
+    label: "Light Weapon",
+  },
+  heavy: { value: "heavy-weapon", label: "Heavy Weapon" },
+  ranged: { value: "ranged-weapon", label: "Ranged Weapon" },
+};
+
+export const INVENTORYLOCATIONS = {
+  hands: {
+    value: "hands",
+    label: "Hands",
+  },
+  belt: {
+    value: "belt",
+    label: "Belt",
+  },
+  worn: {
+    value: "worn",
+    label: "Worn",
+  },
+  backpack: {
+    value: "backpack",
+    label: "Backpack",
+  },
+};

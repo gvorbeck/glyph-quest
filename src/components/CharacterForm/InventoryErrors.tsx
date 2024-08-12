@@ -1,5 +1,6 @@
 import { Item } from "@/types/items";
 import { Alert } from "@mui/material";
+import { useEffect } from "react";
 
 type InventoryErrorsProps = {
   items: readonly Item[];
@@ -25,15 +26,21 @@ const InventoryErrors: React.FC<InventoryErrorsProps> = ({
   items,
   setError,
 }) => {
-  setError(handsError(items) || beltError(items) ? 1 : 0);
+  const hasHandsError = handsError(items);
+  const hasBeltError = beltError(items);
+
+  useEffect(() => {
+    setError(hasHandsError || hasBeltError ? 1 : 0);
+  }, [hasHandsError, hasBeltError, setError]);
+
   return (
     <>
-      {handsError(items) && (
+      {hasHandsError && (
         <Alert severity="error">
           There are too many items in your character's hands.
         </Alert>
       )}
-      {beltError(items) && (
+      {hasBeltError && (
         <Alert severity="error">
           There are too many items on your character's belt.
         </Alert>
