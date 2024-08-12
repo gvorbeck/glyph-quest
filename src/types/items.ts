@@ -1,7 +1,7 @@
-export type Weapon = "heavy-weapon" | "light-weapon" | "ranged-weapon";
+export type WeaponTypes = "heavy-weapon" | "light-weapon" | "ranged-weapon";
 
 export type TypeOption =
-  | Weapon
+  | WeaponTypes
   | "armor"
   | "item"
   | "animal"

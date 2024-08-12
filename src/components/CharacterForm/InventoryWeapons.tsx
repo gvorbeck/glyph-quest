@@ -31,7 +31,7 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({ weapons }) => {
           </ListItemText>
         </ListItem>
       </List>
-      <Weapon id={1} weapon={weapons[0]} />
+      <Weapon id={1} weapon={weapons[0]} setCharacter={setCHaracter} />
       <Weapon id={2} weapon={weapons[1]} />
     </>
   );

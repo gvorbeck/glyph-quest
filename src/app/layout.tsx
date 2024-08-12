@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -7,8 +6,6 @@ import "@fontsource/roboto/700.css";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import ThemeRegistry from "@/components/ThemeRegistry";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Glyph Quest",
@@ -22,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <AuthProvider>
           <ThemeRegistry>{children}</ThemeRegistry>
         </AuthProvider>

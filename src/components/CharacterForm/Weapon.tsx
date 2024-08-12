@@ -1,4 +1,5 @@
-import { Item, Location, Weapon } from "@/types/items";
+import { Item, Location, WeaponTypes } from "@/types/items";
+import { Character } from "@/types/character";
 import { INVENTORYLOCATIONS, WEAPONTYPES } from "@/utils/constants";
 import {
   Button,
@@ -13,21 +14,44 @@ import InventoryLocationSelect from "./InventoryLocationSelect";
 type WeaponProps = {
   id: number;
   weapon: Item;
+  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
 const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
   const [locked, setLocked] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const [type, setType] = useState<Weapon>("light-weapon");
+  const [type, setType] = useState<WeaponTypes>("light-weapon");
   const [location, setLocation] = useState<Location>("belt");
 
-  const handleTypeChange = (event: SelectChangeEvent<Weapon>) => {
-    setType(event.target.value as Weapon);
+  const handleTypeChange = (event: SelectChangeEvent<WeaponTypes>) => {
+    setType(event.target.value as WeaponTypes);
   };
 
   const handleLocationChange = (event: SelectChangeEvent<Location>) => {
     setLocation(event.target.value as Location);
   };
+
+  const handleAddRemoveClick = () => {
+    setLocked((prevLocked) => !preLocked);
+    if (locked) {
+      // Remove weapon
+    } else {
+      // Add weapon
+      const weapon: Item = {
+        hands: type === WEAPONTYPES.light.value ? 1 : 2,
+        location,
+        name,
+        type,
+        value: null,
+        damage: type === WEAPONTYPES.heavy.value ? 1 : 0,
+      };
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        inventory: [...prevCharacter.inventory, weapon],
+      }));
+    }
+  };
+
   return (
     <div className="flex gap-4">
       <TextField
@@ -64,7 +88,8 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon }) => {
       />
       <Button
         variant="contained"
-        onClick={() => setLocked(!locked)}
+        onClick={}
+        // onClick={() => setLocked(!locked)}
         disabled={name === ""}
       >
         {locked ? "Remove" : "Add"}
