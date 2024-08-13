@@ -13,7 +13,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 type StepDetailsProps = {
   character: Character;
@@ -270,7 +270,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
     {}
   );
-
+  const [customValues, setCustomValues] = useState<Record<string, string>>({});
   const [selectedRadio, setSelectedRadio] = useState<Record<string, string>>(
     {}
   );
@@ -279,15 +279,18 @@ const StepDetails: React.FC<StepDetailsProps> = ({
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
       details: {
-        appearance: selectedValues.appearance || null,
-        physical: selectedValues.physical || null,
-        background: selectedValues.background || null,
-        clothing: selectedValues.clothing || null,
-        mannerism: selectedValues.mannerism || null,
-        personality: selectedValues.personality || null,
+        appearance:
+          customValues.appearance || selectedValues.appearance || null,
+        physical: customValues.physical || selectedValues.physical || null,
+        background:
+          customValues.background || selectedValues.background || null,
+        clothing: customValues.clothing || selectedValues.clothing || null,
+        mannerism: customValues.mannerism || selectedValues.mannerism || null,
+        personality:
+          customValues.personality || selectedValues.personality || null,
       },
     }));
-  }, [selectedValues]);
+  }, [selectedValues, customValues]);
 
   const handleRandomizeClick = (
     sectionItems: string[],
@@ -301,9 +304,13 @@ const StepDetails: React.FC<StepDetailsProps> = ({
       ...prev,
       [sectionName]: randomValue,
     }));
+    setCustomValues((prev) => ({
+      ...prev,
+      [sectionName]: "",
+    }));
   };
 
-  const handleChange = (
+  const handleSelectChange = (
     sectionName: string,
     event: SelectChangeEvent<string>
   ) => {
@@ -318,6 +325,16 @@ const StepDetails: React.FC<StepDetailsProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setSelectedRadio((prev) => ({
+      ...prev,
+      [sectionName]: event.target.value,
+    }));
+  };
+
+  const handleTextFieldChange = (
+    sectionName: string,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setCustomValues((prev) => ({
       ...prev,
       [sectionName]: event.target.value,
     }));
@@ -370,7 +387,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
                       value={selectedValues[sectionName.toLowerCase()] || ""}
                       label={sectionName}
                       onChange={(e) =>
-                        handleChange(sectionName.toLowerCase(), e)
+                        handleSelectChange(sectionName.toLowerCase(), e)
                       }
                       disabled={
                         selectedRadio[sectionName.toLowerCase()] !== "random"
@@ -392,6 +409,10 @@ const StepDetails: React.FC<StepDetailsProps> = ({
               label={
                 <TextField
                   label="Manual"
+                  value={customValues[sectionName.toLowerCase()] || ""}
+                  onChange={(e) =>
+                    handleTextFieldChange(sectionName.toLowerCase(), e)
+                  }
                   disabled={
                     selectedRadio[sectionName.toLowerCase()] !== "manual"
                   }
