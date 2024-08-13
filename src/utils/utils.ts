@@ -1,6 +1,10 @@
 import { Character, Feature } from "@/types/character";
 import { Item } from "@/types/items";
 
+// Misc
+const capitalize: (s: string) => string = (s) =>
+  s.charAt(0).toUpperCase() + s.slice(1);
+
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 

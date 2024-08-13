@@ -73,7 +73,6 @@ const characterBlank: Character = {
 };
 
 export default function CharacterForm() {
-  // const [name, setName] = useState("");
   const [character, setCharacter] = useState<Character>(characterBlank);
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState<number>(0);
@@ -155,7 +154,6 @@ export default function CharacterForm() {
 
   const handleCreateCharacter = async (e: React.FormEvent) => {
     e.preventDefault();
-    // setError("");
 
     if (!user) {
       console.error("You must be logged in to create a character.");
@@ -171,7 +169,6 @@ export default function CharacterForm() {
       );
       const docRef = await addDoc(userCharactersCollection, {
         ...character,
-        // Add other character fields here
       });
 
       router.push(`/characters/${docRef.id}`);
@@ -231,21 +228,5 @@ export default function CharacterForm() {
         ))}
       </Stepper>
     </>
-    // <form onSubmit={handleCreateCharacter}>
-    //   {/* <input
-    //     type="text"
-    //     placeholder="Character Name"
-    //     value={name}
-    //     onChange={(e) => setName(e.target.value)}
-    //     className="w-full p-2 border border-gray-300 rounded"
-    //   /> */}
-    //   {error && <p className="text-red-500">{error}</p>}
-    //   <button
-    //     type="submit"
-    //     className="w-full p-2 bg-blue-500 text-white rounded"
-    //   >
-    //     Create Character
-    //   </button>
-    // </form>
   );
 }

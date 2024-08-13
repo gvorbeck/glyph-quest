@@ -10,6 +10,7 @@ import SecondaryStats from "./SecondaryStats";
 import PrimaryStats from "./PrimaryStats";
 import Hero from "./Hero";
 import GQDivider from "./GQDivider";
+import Description from "./Description";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -45,6 +46,8 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
       <SecondaryStats character={character} xs={6} />
       <GQDivider />
       <Features features={character.feature!} xs={6} />
+      <Description details={character.details} xs={6} />
+      <GQDivider />
     </Grid>
   );
 }

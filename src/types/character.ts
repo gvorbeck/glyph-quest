@@ -30,11 +30,11 @@ export interface Character {
   items: Item[];
   details: {
     appearance: string | null;
-    physical: string | null;
     background: string | null;
     clothing: string | null;
-    personality: string | null;
     mannerism: string | null;
+    personality: string | null;
+    physical: string | null;
   };
   name: string;
   level: number;
