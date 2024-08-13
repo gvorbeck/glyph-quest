@@ -66,6 +66,24 @@ export const getFeatureTitle: (feature: Feature) => string = (feature) => {
   return "";
 };
 
+export const getFeatureText: (feature: Feature) => string = (feature) => {
+  switch (feature) {
+    case "attack-bonus":
+      return "+1 to all attack rolls.";
+    case "spell-slot":
+      return "+1 to spells cast per day.";
+    case "path-briarborn":
+      return "Advantage on Danger Rolls relating to: Tracking, foraging, survival.";
+    case "path-fingersmith":
+      return "Advantage on Danger Rolls relating to: Tinkering, picking locks or pockets.";
+    case "path-roofrunner":
+      return "Advantage on Danger Rolls relating to: Climbing, leaping, balancing.";
+    case "path-shadowjack":
+      return "Advantage on Danger Rolls relating to: Moving silently, hiding in shadows.";
+  }
+  return "";
+};
+
 // Items
 export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
   items

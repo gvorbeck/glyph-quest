@@ -1,5 +1,5 @@
 // app/characters/[id]/page.tsx
-import CharacterSheet from "../../../components/CharacterSheet";
+import CharacterSheet from "../../../components/CharacterSheet/CharacterSheet";
 
 export default function CharacterSheetPage({
   params,
