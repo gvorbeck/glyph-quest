@@ -29,4 +29,12 @@ export interface Character {
   health: number;
   feature: Feature;
   items: Item[];
+  details: {
+    appearance: string | null;
+    physical: string | null;
+    background: string | null;
+    clothing: string | null;
+    personality: string | null;
+    mannerism: string | null;
+  };
 }

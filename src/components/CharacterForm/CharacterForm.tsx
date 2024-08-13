@@ -59,6 +59,14 @@ const characterBlank: Character = {
       armor: 1,
     },
   ],
+  details: {
+    appearance: null,
+    background: null,
+    clothing: null,
+    mannerism: null,
+    personality: null,
+    physical: null,
+  },
 };
 
 export default function CharacterForm() {

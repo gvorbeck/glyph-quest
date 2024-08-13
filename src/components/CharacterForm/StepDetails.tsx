@@ -13,7 +13,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type StepDetailsProps = {
   character: Character;
@@ -263,7 +263,10 @@ const sections: [string, string[]][] = [
   ["Mannerism", mannerism],
 ];
 
-const StepDetails: React.FC<StepDetailsProps> = () => {
+const StepDetails: React.FC<StepDetailsProps> = ({
+  character,
+  setCharacter,
+}) => {
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
     {}
   );
@@ -271,6 +274,20 @@ const StepDetails: React.FC<StepDetailsProps> = () => {
   const [selectedRadio, setSelectedRadio] = useState<Record<string, string>>(
     {}
   );
+
+  useEffect(() => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      details: {
+        appearance: selectedValues.appearance || null,
+        physical: selectedValues.physical || null,
+        background: selectedValues.background || null,
+        clothing: selectedValues.clothing || null,
+        mannerism: selectedValues.mannerism || null,
+        personality: selectedValues.personality || null,
+      },
+    }));
+  }, [selectedValues]);
 
   const handleRandomizeClick = (
     sectionItems: string[],
@@ -336,7 +353,7 @@ const StepDetails: React.FC<StepDetailsProps> = () => {
                       )
                     }
                     disabled={
-                      selectedRadio[sectionName.toLowerCase()] !== "random"
+                      selectedRadio[sectionName.toLowerCase()] === "manual"
                     }
                   >
                     Randomize
