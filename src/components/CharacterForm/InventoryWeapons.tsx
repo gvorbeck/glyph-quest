@@ -13,7 +13,6 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
   setCharacter,
 }) => {
   const weapons = getWeapons(character.items);
-  console.log("weapons", weapons);
   return (
     <div>
       <Typography variant="h3">Weapons</Typography>

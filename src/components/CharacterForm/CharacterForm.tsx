@@ -43,7 +43,7 @@ const characterBlank: Character = {
   feature: null,
   items: [
     {
-      name: "Lightz Armor",
+      name: "Light Armor",
       hands: 1,
       location: INVENTORYLOCATIONS.worn.value,
       type: ITEMTYPES.armor.value,
@@ -67,6 +67,7 @@ const characterBlank: Character = {
     personality: null,
     physical: null,
   },
+  name: "",
 };
 
 export default function CharacterForm() {
@@ -144,35 +145,38 @@ export default function CharacterForm() {
           undefined || error > 0
       );
     }
+    if (activeStep === 4) {
+      return character.name === "";
+    }
     return false;
   };
 
-  // const handleCreateCharacter = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setError("");
+  const handleCreateCharacter = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // setError("");
 
-  //   if (!user) {
-  //     setError("You must be logged in to create a character.");
-  //     return;
-  //   }
+    if (!user) {
+      console.error("You must be logged in to create a character.");
+      return;
+    }
 
-  //   try {
-  //     const userCharactersCollection = collection(
-  //       db,
-  //       "users",
-  //       user.uid,
-  //       "characters"
-  //     );
-  //     const docRef = await addDoc(userCharactersCollection, {
-  //       ...character,
-  //       // Add other character fields here
-  //     });
+    try {
+      const userCharactersCollection = collection(
+        db,
+        "users",
+        user.uid,
+        "characters"
+      );
+      const docRef = await addDoc(userCharactersCollection, {
+        ...character,
+        // Add other character fields here
+      });
 
-  //     router.push(`/characters/${docRef.id}`);
-  //   } catch (err) {
-  //     setError("Failed to create character.");
-  //   }
-  // };
+      router.push(`/characters/${docRef.id}`);
+    } catch (err) {
+      console.error("Failed to create character.");
+    }
+  };
 
   useEffect(() => {
     console.log(character);
@@ -198,13 +202,23 @@ export default function CharacterForm() {
                 <Typography>{step.description}</Typography>
                 <Box>{step.content}</Box>
                 <Box>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    disabled={isDisabled()}
-                  >
-                    {index === steps.length - 1 ? "Finish" : "Continue"}
-                  </Button>
+                  {index === steps.length - 1 ? (
+                    <Button
+                      variant="contained"
+                      onClick={handleCreateCharacter}
+                      disabled={isDisabled()}
+                    >
+                      Finish
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      disabled={isDisabled()}
+                    >
+                      Continue
+                    </Button>
+                  )}
                   <Button disabled={index === 0} onClick={handleBack}>
                     Back
                   </Button>

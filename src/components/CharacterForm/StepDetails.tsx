@@ -389,7 +389,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
                         handleSelectChange(sectionName.toLowerCase(), e)
                       }
                       disabled={
-                        selectedRadio[sectionName.toLowerCase()] !== "random"
+                        selectedRadio[sectionName.toLowerCase()] === "manual"
                       }
                     >
                       {sectionItems.map((item) => (

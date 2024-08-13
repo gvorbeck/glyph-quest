@@ -21,7 +21,7 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
       if (docSnap.exists()) {
         setCharacter(docSnap.data());
       } else {
-        console.log("No such document!");
+        console.error("No such document!");
       }
     };
 

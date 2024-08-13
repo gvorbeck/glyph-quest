@@ -78,9 +78,10 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
+    const nonItems = character.items.filter((item) => item.type !== "item");
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      items: right.concat(leftChecked),
+      items: [...right.concat(leftChecked), ...nonItems],
     }));
   };
 
@@ -88,9 +89,10 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
+    const nonItems = character.items.filter((item) => item.type !== "item");
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      items: not(right, rightChecked),
+      items: [...not(right, rightChecked), ...nonItems],
     }));
   };
 

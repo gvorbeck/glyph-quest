@@ -37,4 +37,5 @@ export interface Character {
     personality: string | null;
     mannerism: string | null;
   };
+  name: string;
 }
