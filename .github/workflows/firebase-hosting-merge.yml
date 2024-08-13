@@ -15,35 +15,35 @@ env:
   NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
 
-jobs:
-  build_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build and Deploy
-        run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CODEX_QUEST }}"
-          channelId: live
-          projectId: glyph-quest
+# jobs:
+#   build_and_deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Build and Deploy
+#         run: npm ci && npm run build
+#       - uses: FirebaseExtended/action-hosting-deploy@v0
+#         with:
+#           repoToken: "${{ secrets.GITHUB_TOKEN }}"
+#           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CODEX_QUEST }}"
+#           channelId: live
+#           projectId: glyph-quest
 # name: Deploy to Firebase Hosting on merge
 # on:
 #   push:
 #     branches:
 #       - main
-# jobs:
-#   build_and_deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - run: npm ci
-#       - uses: FirebaseExtended/action-hosting-deploy@v0
-#         with:
-#           repoToken: ${{ secrets.GITHUB_TOKEN }}
-#           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLYPH_QUEST }}
-#           channelId: live
-#           projectId: glyph-quest
-#         env:
-#           FIREBASE_CLI_EXPERIMENTS: webframeworks
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLYPH_QUEST }}
+          channelId: live
+          projectId: glyph-quest
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
