@@ -68,6 +68,8 @@ const characterBlank: Character = {
     physical: null,
   },
   name: "",
+  level: 1,
+  xp: 0,
 };
 
 export default function CharacterForm() {
@@ -137,7 +139,7 @@ export default function CharacterForm() {
       );
     }
     if (activeStep === 1) {
-      return character.feature === null || character.feature === "path";
+      return character.feature === null || character.feature[0] === "path";
     }
     if (activeStep === 2) {
       return (

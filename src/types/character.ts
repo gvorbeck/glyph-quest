@@ -17,8 +17,7 @@ export type Feature =
   | "path-briarborn"
   | "path-fingersmith"
   | "path-roofrunner"
-  | "path-shadowjack"
-  | null;
+  | "path-shadowjack";
 
 export interface Character {
   abilities: {
@@ -27,7 +26,7 @@ export interface Character {
     wil: Ability;
   };
   health: number;
-  feature: Feature;
+  feature: Feature[] | null;
   items: Item[];
   details: {
     appearance: string | null;
@@ -38,4 +37,6 @@ export interface Character {
     mannerism: string | null;
   };
   name: string;
+  level: number;
+  xp: number;
 }

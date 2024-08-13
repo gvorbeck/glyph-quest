@@ -36,16 +36,16 @@ const StepFeature: React.FC<StepFeatureProps> = ({
     setPath(null);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      feature: value as Feature,
+      feature: [value] as Feature[],
     }));
   };
 
   const onPathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setPath(value as Feature);
+    setPath([value] as Feature[]);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      feature: value as Feature,
+      feature: [value] as Feature[],
     }));
   };
 
