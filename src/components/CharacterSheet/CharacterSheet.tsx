@@ -6,11 +6,19 @@ import { useAuth } from "../../context/AuthContext";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import { Character } from "@/types/character";
 import Features from "./Features";
-import SecondaryStats from "./SecondaryStats";
-import PrimaryStats from "./PrimaryStats";
 import Hero from "./Hero";
 import GQDivider from "./GQDivider";
 import Description from "./Description";
+import Stats from "./Stats";
+import {
+  DirectionsRun,
+  Favorite,
+  FitnessCenter,
+  MilitaryTech,
+  Psychology,
+  Shield,
+} from "@mui/icons-material";
+import { getArmorRating, getAttackBonus } from "@/utils/utils";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -38,12 +46,48 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
 
   if (!character) return <p>Loading character...</p>;
 
+  const primaryStats = [
+    {
+      icon: <FitnessCenter />,
+      primary: character.abilities.str.short,
+      secondary: character.abilities.str.value,
+    },
+    {
+      icon: <DirectionsRun />,
+      primary: character.abilities.dex.short,
+      secondary: character.abilities.dex.value,
+    },
+    {
+      icon: <Psychology />,
+      primary: character.abilities.wil.short,
+      secondary: character.abilities.wil.value,
+    },
+  ];
+
+  const secondaryStats = [
+    {
+      icon: <MilitaryTech />,
+      primary: "Attack",
+      secondary: `+${getAttackBonus(character)}`,
+    },
+    {
+      icon: <Shield />,
+      primary: "Armor",
+      secondary: getArmorRating(character),
+    },
+    {
+      icon: <Favorite />,
+      primary: "Health",
+      secondary: character.health,
+    },
+  ];
+
   return (
     <Grid container spacing={2}>
       <Hero character={character} />
       <GQDivider />
-      <PrimaryStats character={character} xs={6} />
-      <SecondaryStats character={character} xs={6} />
+      <Stats stats={primaryStats} xs={6} />
+      <Stats stats={secondaryStats} xs={6} />
       <GQDivider />
       <Features features={character.feature!} xs={6} />
       <Description details={character.details} xs={6} />
