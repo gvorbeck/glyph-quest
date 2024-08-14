@@ -51,66 +51,83 @@ const StepFeature: React.FC<StepFeatureProps> = ({
     }));
   };
 
+  const features = [
+    {
+      value: FEATURES.attack,
+      label: "+1 attack bonus (add 1 to all attack rolls).",
+    },
+    {
+      value: FEATURES.spell,
+      label: "1 spell slot (cast one spell per day).",
+    },
+    {
+      value: FEATURES.path,
+      label: "A single path (gain advantage on related danger rolls).",
+    },
+  ];
+
+  const paths = [
+    {
+      value: FEATURES.briarborn,
+      label: "Briarborn: Tracking, foraging, survival.",
+    },
+    {
+      value: FEATURES.fingersmith,
+      label: "Fingersmith: Tinkering, picking locks or pockets.",
+    },
+    {
+      value: FEATURES.roofrunner,
+      label: "Roofrunner: Climbing, leaping, balancing.",
+    },
+    {
+      value: FEATURES.shadowjack,
+      label: "Shadowjack: Moving silently, hiding in shadows.",
+    },
+  ];
+
+  const radioGroups = [
+    {
+      id: "feature",
+      label: "Features",
+      onChange: onFeatureChange,
+      value: feature,
+      options: features,
+      className: "",
+    },
+    {
+      id: "path",
+      label: "Paths",
+      onChange: onPathChange,
+      value: path,
+      options: paths,
+      className: feature !== FEATURES.path ? "hidden" : "",
+    },
+  ];
+
   return (
     <Box className="flex flex-col gap-4">
-      <FormControl>
-        <FormLabel id="feature-radio-buttons-group">Features</FormLabel>
-        <RadioGroup
-          aria-labelledby="feature-radio-buttons-group"
-          name="radio-buttons-group"
-          onChange={onFeatureChange}
-          value={feature}
-        >
-          {/* DRY! */}
-          <FormControlLabel
-            value={FEATURES.attack}
-            control={<Radio />}
-            label="+1 attack bonus (add 1 to all attack rolls)."
-          />
-          <FormControlLabel
-            value={FEATURES.spell}
-            control={<Radio />}
-            label="1 spell slot (cast one spell per day)."
-          />
-          <FormControlLabel
-            value={FEATURES.path}
-            control={<Radio />}
-            label="A single path
-(gain advantage on related danger rolls)."
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl className={feature !== FEATURES.path ? "hidden" : ""}>
-        <FormLabel id="path-radio-buttons-group">Paths</FormLabel>
-        <RadioGroup
-          aria-labelledby="path-radio-buttons-group"
-          name="radio-buttons-group"
-          onChange={onPathChange}
-          value={path}
-        >
-          {/* DRY! */}
-          <FormControlLabel
-            value={FEATURES.briarborn}
-            control={<Radio />}
-            label="Briarborn: Tracking, foraging, survival."
-          />
-          <FormControlLabel
-            value={FEATURES.fingersmith}
-            control={<Radio />}
-            label="Fingersmith: Tinkering, picking locks or pockets."
-          />
-          <FormControlLabel
-            value={FEATURES.roofrunner}
-            control={<Radio />}
-            label="Roofrunner: Climbing, leaping, balancing."
-          />
-          <FormControlLabel
-            value={FEATURES.shadowjack}
-            control={<Radio />}
-            label="Shadowjack: Moving silently, hiding in shadows."
-          />
-        </RadioGroup>
-      </FormControl>
+      {radioGroups.map((radioGroup) => (
+        <FormControl key={radioGroup.id} className={radioGroup.className}>
+          <FormLabel id={`${radioGroup.id}-radio-buttons-group`}>
+            {radioGroup.label}
+          </FormLabel>
+          <RadioGroup
+            aria-labelledby={`${radioGroup.id}-radio-buttons-group`}
+            name={`${radioGroup.id}-radio-buttons-group`}
+            onChange={radioGroup.onChange}
+            value={radioGroup.value}
+          >
+            {radioGroup.options.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                value={option.value}
+                control={<Radio />}
+                label={option.label}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      ))}
       {character.feature?.[0] === "spell-slot" && (
         <SpellGenerator
           instruction="Generate your first spell."
