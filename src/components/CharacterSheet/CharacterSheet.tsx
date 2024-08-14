@@ -19,7 +19,6 @@ import {
   Shield,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
-import { documentId } from "firebase/firestore";
 
 interface CharacterSheetProps {
   characterId: string;
