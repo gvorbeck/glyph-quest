@@ -9,7 +9,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useState } from "react";
-import SpellGenerator from "../SpellGenerator";
+import SpellGenerator from "./SpellGenerator";
 
 type StepFeatureProps = {
   character: Character;

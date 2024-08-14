@@ -1,5 +1,15 @@
+import {
+  etherealEffects,
+  etherealElements,
+  etherealForms,
+  physicalEffects,
+  physicalElements,
+  physicalForms,
+} from "@/data/spellNames";
+import { db } from "@/lib/firebase";
 import { Character, Feature } from "@/types/character";
 import { Item } from "@/types/items";
+import { doc, updateDoc } from "firebase/firestore";
 
 // Misc
 const capitalize: (s: string) => string = (s) =>
@@ -36,7 +46,6 @@ export const getModifier: (ability: number) => number = (ability) => {
 };
 
 export const getAttackBonus: (character: Character) => number = (character) => {
-  console.log(character);
   if (character.feature && character.feature.length > 0) {
     return character.feature.reduce((acc, feature) => {
       if (feature === "attack-bonus") return acc + 1;
@@ -107,3 +116,81 @@ export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
 export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
   items
 ) => items.find((item) => item.type === "armor" && item.location === "worn");
+
+// Spells
+const spellNames = [
+  [
+    [physicalEffects, physicalForms],
+    [etherealElements, physicalForms],
+  ],
+  [
+    [physicalEffects, etherealForms],
+    [etherealElements, etherealForms],
+  ],
+  [
+    [etherealEffects, physicalForms],
+    [physicalEffects, physicalElements],
+  ],
+  [
+    [etherealEffects, etherealForms],
+    [physicalEffects, etherealElements],
+  ],
+  [
+    [physicalElements, physicalForms],
+    [etherealEffects, physicalElements],
+  ],
+  [
+    [physicalElements, etherealForms],
+    [etherealEffects, etherealElements],
+  ],
+];
+
+export const getSpellName = (dice: number[]): string => {
+  const [firstDie, secondDie] = dice;
+  const rowIndex = firstDie - 1;
+  const columnIndex = secondDie > 3 ? 1 : 0;
+
+  const [firstOptions, secondOptions] = spellNames[rowIndex][columnIndex];
+  const firstWord =
+    firstOptions[Math.floor(Math.random() * firstOptions.length)];
+  const secondWord =
+    secondOptions[Math.floor(Math.random() * secondOptions.length)];
+
+  return `${firstWord} ${secondWord}`;
+};
+
+// Firestore
+type UpdatePayload = {
+  collection: string;
+  docId: string;
+  subCollection?: string;
+  subDocId?: string;
+  data: any;
+};
+
+export const updateDocument = async ({
+  collection,
+  docId,
+  subCollection,
+  subDocId,
+  data,
+}: UpdatePayload) => {
+  if (!docId) {
+    console.error("Document ID is undefined");
+    return;
+  }
+
+  let docRef;
+  if (subCollection && subDocId) {
+    docRef = doc(db, collection, docId, subCollection, subDocId);
+  } else {
+    docRef = doc(db, collection, docId);
+  }
+
+  try {
+    await updateDoc(docRef, data);
+  } catch (error) {
+    console.warn(data);
+    console.error("Error updating document: ", error);
+  }
+};

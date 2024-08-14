@@ -23,8 +23,8 @@ const Stats: React.FC<StatsProps> = ({ xs, stats }) => {
     <Grid xs={xs}>
       <Paper className="p-4">
         <List>
-          {stats.map((stat) => (
-            <ListItem>
+          {stats.map((stat, index) => (
+            <ListItem key={index}>
               {stat.icon && <ListItemIcon>{stat.icon}</ListItemIcon>}
               <ListItemText primary={stat.primary} secondary={stat.secondary} />
             </ListItem>

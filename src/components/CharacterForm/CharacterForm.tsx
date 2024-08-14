@@ -20,6 +20,7 @@ import StepInventory from "./StepInventory";
 import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 import StepDetails from "./StepDetails";
 import StepName from "./StepName";
+import { Location } from "@/types/items";
 
 const characterBlank: Character = {
   abilities: {
@@ -150,7 +151,7 @@ export default function CharacterForm() {
     // Inventory
     if (activeStep === 2) {
       return (
-        character.items.find((item) => item.location === undefined) !==
+        character.items.find((item) => item.location === ("" as Location)) !==
           undefined || error > 0
       );
     }

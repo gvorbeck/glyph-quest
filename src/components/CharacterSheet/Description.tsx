@@ -16,7 +16,6 @@ type DescriptionProps = {
 
 const Description: React.FC<DescriptionProps> = ({ details, xs }) => {
   const detailsArr = Object.keys(details).sort();
-  console.log("detailsArr:", detailsArr);
   return (
     <Grid xs={xs}>
       <Paper className="p-4">

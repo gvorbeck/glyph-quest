@@ -18,7 +18,8 @@ import {
   Psychology,
   Shield,
 } from "@mui/icons-material";
-import { getArmorRating, getAttackBonus } from "@/utils/utils";
+import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
+import { documentId } from "firebase/firestore";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -28,6 +29,9 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
   const [character, setCharacter] = useState<Character | null>(null);
   const { user } = useAuth();
 
+  /**
+   * * Get character data from Firestore
+   */
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!user) return;
@@ -43,6 +47,22 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
 
     fetchCharacter();
   }, [user, characterId]);
+
+  /**
+   * * Update Firestore document when character state changes
+   */
+  useEffect(() => {
+    console.log(character);
+    if (!user || !character) return;
+    // update Firestore document
+    updateDocument({
+      collection: "users",
+      docId: user.uid,
+      subCollection: "characters",
+      subDocId: characterId,
+      data: { ...character },
+    });
+  }, [character]);
 
   if (!character) return <p>Loading character...</p>;
 
@@ -89,7 +109,13 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
       <Stats stats={primaryStats} xs={6} />
       <Stats stats={secondaryStats} xs={6} />
       <GQDivider />
-      <Features features={character.feature!} xs={6} />
+      <Features
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+        xs={6}
+      />
       <Description details={character.details} xs={6} />
       <GQDivider />
     </Grid>
