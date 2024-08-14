@@ -9,6 +9,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useState } from "react";
+import SpellGenerator from "../SpellGenerator";
 
 type StepFeatureProps = {
   character: Character;
@@ -37,6 +38,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
       feature: [value] as Feature[],
+      spells: [],
     }));
   };
 
@@ -59,6 +61,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
           onChange={onFeatureChange}
           value={feature}
         >
+          {/* DRY! */}
           <FormControlLabel
             value={FEATURES.attack}
             control={<Radio />}
@@ -85,6 +88,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
           onChange={onPathChange}
           value={path}
         >
+          {/* DRY! */}
           <FormControlLabel
             value={FEATURES.briarborn}
             control={<Radio />}
@@ -107,6 +111,13 @@ const StepFeature: React.FC<StepFeatureProps> = ({
           />
         </RadioGroup>
       </FormControl>
+      {character.feature?.[0] === "spell-slot" && (
+        <SpellGenerator
+          instruction="Generate your first spell."
+          character={character}
+          setCharacter={setCharacter}
+        />
+      )}
     </Box>
   );
 };

@@ -8,12 +8,23 @@ const capitalize: (s: string) => string = (s) =>
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 
-export const rollDice: (numDice?: number) => number = (numDice = 1) => {
-  let total = 0;
-  for (let i = 0; i < numDice; i++) {
-    total += rollDie();
+export const rollDice: (
+  numDice?: number,
+  arr?: boolean
+) => number | number[] = (numDice = 1, arr = false) => {
+  if (!arr) {
+    let total = 0;
+    for (let i = 0; i < numDice; i++) {
+      total += rollDie();
+    }
+    return total;
+  } else {
+    const rolls = [];
+    for (let i = 0; i < numDice; i++) {
+      rolls.push(rollDie());
+    }
+    return rolls;
   }
-  return total;
 };
 
 // Stats

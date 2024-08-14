@@ -70,6 +70,7 @@ const characterBlank: Character = {
   name: "",
   level: 1,
   xp: 0,
+  spells: [],
 };
 
 export default function CharacterForm() {
@@ -130,6 +131,7 @@ export default function CharacterForm() {
   };
 
   const isDisabled = () => {
+    // Abilities
     if (activeStep === 0) {
       return (
         character.abilities.str.value === null ||
@@ -137,15 +139,22 @@ export default function CharacterForm() {
         character.abilities.wil.value === null
       );
     }
+    // Feature
     if (activeStep === 1) {
-      return character.feature === null || character.feature[0] === "path";
+      return (
+        character.feature === null ||
+        character.feature[0] === "path" ||
+        (character.feature[0] === "spell-slot" && !character.spells.length)
+      );
     }
+    // Inventory
     if (activeStep === 2) {
       return (
         character.items.find((item) => item.location === undefined) !==
           undefined || error > 0
       );
     }
+    // Name
     if (activeStep === 4) {
       return character.name === "";
     }

@@ -19,6 +19,11 @@ export type Feature =
   | "path-roofrunner"
   | "path-shadowjack";
 
+export type Spell = {
+  name: string;
+  description: string;
+};
+
 export interface Character {
   abilities: {
     str: Ability;
@@ -39,4 +44,5 @@ export interface Character {
   name: string;
   level: number;
   xp: number;
+  spells: Spell[];
 }
