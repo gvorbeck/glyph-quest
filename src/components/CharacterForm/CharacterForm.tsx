@@ -48,7 +48,6 @@ const characterBlank: Character = {
       hands: 1,
       location: INVENTORYLOCATIONS.worn.value,
       type: ITEMTYPES.armor.value as TypeOption,
-      value: null,
       armor: 1,
     },
     {
@@ -56,7 +55,6 @@ const characterBlank: Character = {
       location: INVENTORYLOCATIONS.hands.value,
       name: "Shield",
       type: ITEMTYPES.shield.value as TypeOption,
-      value: null,
       armor: 1,
     },
   ],
@@ -72,6 +70,7 @@ const characterBlank: Character = {
   level: 1,
   xp: 0,
   spells: [],
+  gold: 0,
 };
 
 export default function CharacterForm() {

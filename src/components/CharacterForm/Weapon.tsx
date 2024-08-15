@@ -50,7 +50,6 @@ const Weapon: React.FC<WeaponProps> = ({ id, weapon, setCharacter }) => {
         location,
         name,
         type,
-        value: null,
         damage: type === WEAPONTYPES.heavy.value ? 1 : 0,
       };
       setCharacter((prevCharacter) => ({

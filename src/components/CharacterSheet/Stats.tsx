@@ -16,11 +16,12 @@ type Stat = {
 type StatsProps = {
   stats: Stat[];
   xs?: number;
+  className?: string;
 };
 
-const Stats: React.FC<StatsProps> = ({ xs, stats }) => {
+const Stats: React.FC<StatsProps> = ({ xs, stats, className }) => {
   return (
-    <Grid xs={xs}>
+    <Grid xs={xs} className={className}>
       <Paper className="p-4">
         <List>
           {stats.map((stat, index) => (

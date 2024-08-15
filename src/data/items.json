@@ -3,7 +3,6 @@
     "name": "Animal Scent",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -11,7 +10,6 @@
     "name": "Bear Trap",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -19,7 +17,6 @@
     "name": "Bedroll",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -27,7 +24,6 @@
     "name": "Caltrops",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -35,7 +31,6 @@
     "name": "Chain",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "amount": "10 ft.",
     "location": ""
@@ -44,7 +39,6 @@
     "name": "Chalk",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -52,7 +46,6 @@
     "name": "Chisel",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -60,7 +53,6 @@
     "name": "Crowbar",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -68,7 +60,6 @@
     "name": "Fishing Net",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -76,7 +67,6 @@
     "name": "Glass Marbles",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -84,7 +74,6 @@
     "name": "Glue",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -92,7 +81,6 @@
     "name": "Grappling Hook",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -100,7 +88,6 @@
     "name": "Grease",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -108,7 +95,6 @@
     "name": "Hacksaw",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -116,7 +102,6 @@
     "name": "Hammer",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -124,7 +109,6 @@
     "name": "Hand drill",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -132,7 +116,6 @@
     "name": "Horn",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -140,7 +123,6 @@
     "name": "Iron spikes",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -148,7 +130,6 @@
     "name": "Iron tongs",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -156,7 +137,6 @@
     "name": "Lantern and Oil",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -164,7 +144,6 @@
     "name": "Large Sack",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -172,7 +151,6 @@
     "name": "Lockpicks",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "amount": 3,
     "location": ""
@@ -181,7 +159,6 @@
     "name": "Manacles",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -189,7 +166,6 @@
     "name": "Medicine",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "amount": 3,
     "location": ""
@@ -198,7 +174,6 @@
     "name": "Metal file",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -206,7 +181,6 @@
     "name": "Rations",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "amount": 3,
     "location": ""
@@ -215,7 +189,6 @@
     "name": "Rope",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "amount": "50 ft.",
     "location": ""
@@ -224,7 +197,6 @@
     "name": "Steel wire",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -232,7 +204,6 @@
     "name": "Shovel",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -240,7 +211,6 @@
     "name": "Steel mirror",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -248,7 +218,6 @@
     "name": "Ten Foot Pole",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -256,7 +225,6 @@
     "name": "Tinderbox",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -264,7 +232,6 @@
     "name": "Torch",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -272,7 +239,6 @@
     "name": "Vial of Acid",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -280,7 +246,6 @@
     "name": "Vial of Poison",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   },
@@ -288,7 +253,6 @@
     "name": "Waterskin",
     "type": "item",
     "hands": 1,
-    "value": null,
     "starter": true,
     "location": ""
   }

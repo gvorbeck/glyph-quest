@@ -116,7 +116,12 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
       spacing={2}
       className="bg-sheet-hero bg-contain bg-no-repeat bg-darkGray"
     >
-      <Hero character={character} />
+      <Hero
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
       <GQDivider />
       <Stats stats={primaryStats} xs={6} />
       <Stats stats={secondaryStats} xs={6} />

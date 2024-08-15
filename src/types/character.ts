@@ -45,4 +45,5 @@ export interface Character {
   level: number;
   xp: number;
   spells: Spell[];
+  gold: number;
 }

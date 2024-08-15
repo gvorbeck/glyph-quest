@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Container,
@@ -16,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { User } from "firebase/auth";
 import Link from "next/link";
-import { Casino } from "@mui/icons-material";
+import { Castle } from "@mui/icons-material";
 
 type SiteHeaderProps = {
   user: User | null;
@@ -91,7 +90,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
               ))}
             </Menu>
           </Box>
-          <Casino
+          <Castle
             className="text-amber"
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
           />
