@@ -6,6 +6,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import CharacterList from "../components/CharacterList";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
+import SiteHeader from "@/components/SiteHeader";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -29,6 +30,7 @@ export default function HomePage() {
   if (user) {
     return (
       <main className="container mx-auto p-4">
+        <SiteHeader />
         <h1 className="text-3xl font-bold">Your Characters</h1>
         <CharacterList />
       </main>
