@@ -1,5 +1,12 @@
 import { Character } from "@/types/character";
-import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import Stats from "./Stats";
 import { Grade, TrendingUp } from "@mui/icons-material";
@@ -18,7 +25,14 @@ const Hero: React.FC<HeroProps> = ({ character }) => {
     {
       icon: <TrendingUp />,
       primary: "XP",
-      secondary: character.xp,
+      secondary: (
+        <TextField
+          size="small"
+          type="number"
+          className="[&_input]:!text-sm [&_input]:py-1"
+          value={character.xp}
+        />
+      ),
     },
   ];
 

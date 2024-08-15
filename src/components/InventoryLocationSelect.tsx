@@ -23,6 +23,7 @@ const InventoryLocationSelect: React.FC<InventoryLocationSelectProps> = ({
         label="Location"
         onChange={onChange}
         disabled={disabled}
+        size="small"
       >
         <MenuItem value={INVENTORYLOCATIONS.hands.value}>
           {INVENTORYLOCATIONS.hands.label}

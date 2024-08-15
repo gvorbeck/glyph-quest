@@ -1,6 +1,6 @@
 import { Character } from "@/types/character";
 import { Typography } from "@mui/material";
-import InventoryErrors from "./InventoryErrors";
+import InventoryErrors from "../InventoryErrors";
 import InventoryWeapons from "./InventoryWeapons";
 import InventoryArmor from "./InventoryArmor";
 import InventoryShield from "./InventoryShield";

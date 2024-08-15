@@ -100,8 +100,8 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
   // Handle group roll click
   const handleGroupRollAllClick = () => {
     const value = rollDice();
-    setSelectedRow(value);
-    selectAbilitySet(value);
+    setSelectedRow(value as number);
+    selectAbilitySet(value as number);
   };
 
   // Set a specific ability value
@@ -126,7 +126,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({
 
   // Handle individual roll click
   const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
-    const value = getModifier(rollDice());
+    const value = getModifier(rollDice() as number);
     setSpecificAbility(ability, value);
   };
 

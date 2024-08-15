@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import InventoryLocationSelect from "./InventoryLocationSelect";
+import InventoryLocationSelect from "../InventoryLocationSelect";
 
 type WeaponProps = {
   id: number;

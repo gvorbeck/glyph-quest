@@ -10,7 +10,7 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 type Stat = {
   icon?: React.ReactNode;
   primary: string;
-  secondary: number | string | null;
+  secondary: any;
 };
 
 type StatsProps = {
@@ -25,7 +25,11 @@ const Stats: React.FC<StatsProps> = ({ xs, stats }) => {
         <List>
           {stats.map((stat, index) => (
             <ListItem key={index}>
-              {stat.icon && <ListItemIcon>{stat.icon}</ListItemIcon>}
+              {stat.icon && (
+                <ListItemIcon className="[&_svg]:fill-amber">
+                  {stat.icon}
+                </ListItemIcon>
+              )}
               <ListItemText primary={stat.primary} secondary={stat.secondary} />
             </ListItem>
           ))}

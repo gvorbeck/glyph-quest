@@ -1,6 +1,6 @@
 import { Character } from "@/types/character";
 import { SelectChangeEvent, Typography } from "@mui/material";
-import InventoryLocationSelect from "./InventoryLocationSelect";
+import InventoryLocationSelect from "../InventoryLocationSelect";
 import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 import { Location } from "@/types/items";
 

@@ -1,7 +1,7 @@
 import { Character } from "@/types/character";
 import { getWornArmor } from "@/utils/utils";
 import { SelectChangeEvent, TextField, Typography } from "@mui/material";
-import InventoryLocationSelect from "./InventoryLocationSelect";
+import InventoryLocationSelect from "../InventoryLocationSelect";
 import { INVENTORYLOCATIONS } from "@/utils/constants";
 import { Location } from "@/types/items";
 

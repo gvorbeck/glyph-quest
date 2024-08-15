@@ -19,6 +19,8 @@ import {
   Shield,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
+import { TextField } from "@mui/material";
+import Inventory from "./Inventory";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -97,7 +99,14 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
     {
       icon: <Favorite />,
       primary: "Health",
-      secondary: character.health,
+      secondary: (
+        <TextField
+          size="small"
+          type="number"
+          className="[&_input]:!text-sm [&_input]:py-1"
+          value={character.health}
+        />
+      ),
     },
   ];
 
@@ -115,8 +124,15 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
         }
         xs={6}
       />
-      <Description details={character.details} xs={6} />
+      <Inventory
+        xs={6}
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
       <GQDivider />
+      <Description details={character.details} xs={6} />
     </Grid>
   );
 }

@@ -10,7 +10,7 @@ import {
   ListItemText,
   SelectChangeEvent,
 } from "@mui/material";
-import InventoryLocationSelect from "./InventoryLocationSelect";
+import InventoryLocationSelect from "../InventoryLocationSelect";
 import { Item, Location } from "@/types/items";
 import { Character } from "@/types/character";
 import { useState } from "react";
