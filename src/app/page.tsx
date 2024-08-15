@@ -29,11 +29,13 @@ export default function HomePage() {
 
   if (user) {
     return (
-      <main className="container mx-auto p-4">
-        <SiteHeader />
-        <h1 className="text-3xl font-bold">Your Characters</h1>
-        <CharacterList />
-      </main>
+      <>
+        <SiteHeader user={user} />
+        <main className="container mx-auto">
+          <h1 className="text-3xl font-bold">Your Characters</h1>
+          <CharacterList />
+        </main>
+      </>
     );
   }
 
