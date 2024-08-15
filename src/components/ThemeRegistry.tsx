@@ -10,7 +10,7 @@ const darkTheme = createTheme({
     mode: "dark",
     primary: amber,
     secondary: {
-      main: "#ffd180",
+      main: "#242120",
     },
   },
 });

@@ -39,7 +39,12 @@ const Hero: React.FC<HeroProps> = ({ character }) => {
   return (
     <>
       <Grid xs={8} className="flex flex-col gap-4">
-        <Typography variant="h2">{character.name}</Typography>
+        <Typography
+          variant="h2"
+          className="font-jaini-purva text-amber pl-4 text-7xl"
+        >
+          {character.name}
+        </Typography>
       </Grid>
       <Stats xs={4} stats={stats} />
     </>

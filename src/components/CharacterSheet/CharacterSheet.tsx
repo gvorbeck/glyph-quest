@@ -111,7 +111,11 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
   ];
 
   return (
-    <Grid container spacing={2}>
+    <Grid
+      container
+      spacing={2}
+      className="bg-sheet-hero bg-contain bg-no-repeat bg-darkGray"
+    >
       <Hero character={character} />
       <GQDivider />
       <Stats stats={primaryStats} xs={6} />

@@ -31,9 +31,8 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  console.log("user", user);
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="bg-darkGray">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
