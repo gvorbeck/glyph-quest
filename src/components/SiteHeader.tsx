@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { User } from "firebase/auth";
 import Link from "next/link";
+import { Casino } from "@mui/icons-material";
 
 type SiteHeaderProps = {
   user: User | null;
@@ -90,24 +91,26 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Casino
+            className="text-amber"
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          />
           <Typography
             variant="h5"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
+            className="mr-1 font-jaini-purva"
             sx={{
-              mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            Glyph.Quest
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

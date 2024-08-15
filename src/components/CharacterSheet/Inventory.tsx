@@ -53,8 +53,10 @@ const Inventory: React.FC<InventoryProps> = ({
 
   return (
     <Grid xs={xs}>
-      <Paper className="p-4">
-        <Typography variant="h3">Inventory</Typography>
+      <Paper className="p-4 flex flex-col gap-4">
+        <Typography variant="h3" className="font-jaini-purva">
+          Inventory
+        </Typography>
         <InventoryErrors items={inventory} setError={setError} />
         <List>
           {inventory.map((item, index) => (

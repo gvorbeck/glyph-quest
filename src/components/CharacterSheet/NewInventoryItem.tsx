@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, MenuItem } from "@mui/material";
+import { TextField, Button, MenuItem, Typography } from "@mui/material";
 import { Item, Location, TypeOption } from "@/types/items";
 import { Character } from "@/types/character";
 
@@ -14,7 +14,6 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
     location: undefined,
     name: "",
     type: "item",
-    value: null,
     amount: "",
     armor: undefined,
     damage: undefined,
@@ -40,6 +39,9 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
 
   return (
     <form noValidate autoComplete="off">
+      <Typography variant="h4" className="font-jaini-purva">
+        Add Item
+      </Typography>
       <TextField
         label="Name"
         name="name"
@@ -57,7 +59,9 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
         fullWidth
         margin="normal"
       >
-        <MenuItem value="weapon">Weapon</MenuItem>
+        <MenuItem value="light-weapon">Light Weapon</MenuItem>
+        <MenuItem value="heavy-weapon">Heavy Weapon</MenuItem>
+        <MenuItem value="ranged-weapon">Ranged Weapon</MenuItem>
         <MenuItem value="armor">Armor</MenuItem>
         <MenuItem value="shield">Shield</MenuItem>
         <MenuItem value="item">Item</MenuItem>
@@ -74,17 +78,29 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
         onChange={handleChange}
         fullWidth
         margin="normal"
+        defaultValue={"backpack"}
       >
         <MenuItem value="hands">Hands</MenuItem>
         <MenuItem value="belt">Belt</MenuItem>
         <MenuItem value="worn">Worn</MenuItem>
         <MenuItem value="backpack">Backpack</MenuItem>
       </TextField>
+      {newItem.type === "armor" && (
+        <TextField
+          label="Armor"
+          name="armor"
+          type="number"
+          value={newItem.armor ?? ""}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+      )}
       <TextField
-        label="Value"
-        name="value"
+        label="Damage"
+        name="damage"
         type="number"
-        value={newItem.value ?? ""}
+        value={newItem.damage ?? ""}
         onChange={handleChange}
         fullWidth
         margin="normal"
@@ -93,24 +109,6 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
         label="Amount"
         name="amount"
         value={newItem.amount ?? ""}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Armor"
-        name="armor"
-        type="number"
-        value={newItem.armor ?? ""}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Damage"
-        name="damage"
-        type="number"
-        value={newItem.damage ?? ""}
         onChange={handleChange}
         fullWidth
         margin="normal"

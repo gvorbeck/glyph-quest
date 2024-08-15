@@ -18,10 +18,10 @@ export type Item = {
   location: Location;
   name: string;
   type: TypeOption;
-  value: number | null;
   amount?: number | string;
   armor?: number;
   damage?: number;
   detail?: string;
   starter?: boolean;
+  value?: number;
 };
