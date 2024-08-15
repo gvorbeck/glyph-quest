@@ -20,7 +20,7 @@ import StepInventory from "./StepInventory";
 import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 import StepDetails from "./StepDetails";
 import StepName from "./StepName";
-import { Location } from "@/types/items";
+import { Location, TypeOption } from "@/types/items";
 
 const characterBlank: Character = {
   abilities: {
@@ -47,7 +47,7 @@ const characterBlank: Character = {
       name: "Light Armor",
       hands: 1,
       location: INVENTORYLOCATIONS.worn.value,
-      type: ITEMTYPES.armor.value,
+      type: ITEMTYPES.armor.value as TypeOption,
       value: null,
       armor: 1,
     },
@@ -55,7 +55,7 @@ const characterBlank: Character = {
       hands: 1,
       location: INVENTORYLOCATIONS.hands.value,
       name: "Shield",
-      type: ITEMTYPES.shield.value,
+      type: ITEMTYPES.shield.value as TypeOption,
       value: null,
       armor: 1,
     },

@@ -9,7 +9,7 @@ export type TypeOption =
   | "transport"
   | "property"
   | "hireling"
-  | string;
+  | "other";
 
 export type Location = "hands" | "belt" | "worn" | "backpack" | undefined;
 

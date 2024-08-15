@@ -1,5 +1,6 @@
 import { Character } from "@/types/character";
 import {
+  Button,
   IconButton,
   List,
   ListItem,
@@ -14,6 +15,7 @@ import { Item, Location } from "@/types/items";
 import { Cancel } from "@mui/icons-material";
 import { useState } from "react";
 import InventoryErrors from "../InventoryErrors";
+import NewInventoryItem from "./NewInventoryItem";
 
 type InventoryProps = {
   xs?: number;
@@ -27,6 +29,7 @@ const Inventory: React.FC<InventoryProps> = ({
   setCharacter,
 }) => {
   const [error, setError] = useState<number>(0);
+  const [newFormOpen, setNewFormOpen] = useState<boolean>(false);
   console.log(error);
 
   const inventory = character.items.sort((a, b) =>
@@ -68,6 +71,20 @@ const Inventory: React.FC<InventoryProps> = ({
             </ListItem>
           ))}
         </List>
+        {!newFormOpen ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setNewFormOpen(true)}
+          >
+            Add Item
+          </Button>
+        ) : (
+          <NewInventoryItem
+            onClose={() => console.log("foo")}
+            setCharacter={setCharacter}
+          />
+        )}
       </Paper>
     </Grid>
   );
