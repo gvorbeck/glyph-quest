@@ -4,7 +4,6 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import Stats from "./Stats";
 import { Grade, Paid, TrendingUp } from "@mui/icons-material";
 import { useState } from "react";
-import LevelUpAbility from "./LevelUpAbility";
 import LevelUpChoice from "./LevelUpChoice";
 
 type HeroProps = {
@@ -73,12 +72,14 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
                   <LevelUpChoice
                     character={character}
                     setCharacter={setCharacter}
+                    handleClose={handleClose}
                     ability
                   />
                 ) : (
                   <LevelUpChoice
                     character={character}
                     setCharacter={setCharacter}
+                    handleClose={handleClose}
                   />
                 )}
                 {/* <Button

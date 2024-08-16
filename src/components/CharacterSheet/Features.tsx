@@ -1,4 +1,4 @@
-import { Character, Feature, Spell } from "@/types/character";
+import { Character } from "@/types/character";
 import {
   getFeatureText,
   getFeatureTitle,
@@ -11,7 +11,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Paper,
@@ -33,7 +32,7 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
   >({});
 
   const spellSlots =
-    character.feature?.reduce((acc, feature) => {
+    character.features?.reduce((acc, feature) => {
       if (feature === "spell-slot") {
         return acc + 1;
       }
@@ -127,7 +126,7 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
       <Paper className="p-4">
         <Typography variant="h3">Features</Typography>
         <List>
-          {character.feature?.map((feature, index) => (
+          {character.features?.map((feature, index) => (
             <ListItem key={index}>
               <ListItemText
                 primary={getFeatureTitle(feature)}
@@ -136,7 +135,7 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
             </ListItem>
           ))}
         </List>
-        {spellSlots && (
+        {!!spellSlots && (
           <div>
             <Typography variant="h3">Spells</Typography>
             <List className="mt-4">

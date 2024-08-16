@@ -32,7 +32,7 @@ export interface Character {
   };
   health: number;
   healthMax: number;
-  feature: Feature[] | null;
+  features: Feature[] | null;
   items: Item[];
   details: {
     appearance: string | null;

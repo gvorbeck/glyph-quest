@@ -42,7 +42,7 @@ const characterBlank: Character = {
   },
   health: 4,
   healthMax: 4,
-  feature: null,
+  features: null,
   items: [
     {
       name: "Light Armor",
@@ -142,10 +142,11 @@ export default function CharacterForm() {
     }
     // Feature
     if (activeStep === 1) {
+      console.log(character.features);
       return (
-        character.feature === null ||
-        character.feature[0] === "path" ||
-        (character.feature[0] === "spell-slot" && !character.spells.length)
+        character.features === null ||
+        character.features[0] === "path" ||
+        (character.features[0] === "spell-slot" && !character.spells.length)
       );
     }
     // Inventory

@@ -1,12 +1,19 @@
 import { ChangeEvent, useState } from "react";
 import GQRadioGroup from "../GQRadioGroup";
-import { Character } from "@/types/character";
+import { Character, Feature } from "@/types/character";
 import { FEATURES } from "@/utils/constants";
-import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import {
+  Button,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  capitalize,
+} from "@mui/material";
 
 type LevelUpChoice = {
   character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
+  handleClose: () => void;
   ability?: boolean;
 };
 
@@ -21,15 +28,18 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
   character,
   setCharacter,
   ability,
+  handleClose,
 }) => {
   const [choice, setChoice] = useState<string | null>(null);
+  const [abilityOption, setAbilityOption] = useState<string | null>(null);
+  const [pathOption, setPathOption] = useState<string | null>(null);
 
   const getAvailablePaths = (character: Character) => {
     // Destructure the FEATURES object to exclude path, spell, and attack
     const { path, spell, attack, ...options } = FEATURES;
 
     // Iterate over the character's features and remove any paths already chosen
-    character.feature?.forEach((chosenFeature) => {
+    character.features?.forEach((chosenFeature) => {
       for (const key in options) {
         if (options[key as keyof typeof options] === chosenFeature) {
           delete options[key as keyof typeof options];
@@ -37,29 +47,95 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
       }
     });
 
-    // Return the remaining available options
     return options;
   };
 
-  console.log(getAvailablePaths(character));
+  const pathOptions = Object.keys(getAvailablePaths(character)).map((path) => ({
+    label: capitalize(path),
+    value: path,
+  }));
 
-  const handleChoiceChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChoice(event.target.value);
+  const getNewFeatures = (value: string, pathOpt: string | null) => {
+    const newFeature: { features?: string[] } = {};
+    if (value === "attack-bonus") {
+      newFeature.features = character.features
+        ? [...character.features, FEATURES.attack]
+        : [FEATURES.attack];
+    }
+    if (value === "path" && pathOpt) {
+      newFeature.features = character.features
+        ? [...character.features, FEATURES[pathOpt as keyof typeof FEATURES]]
+        : [FEATURES[pathOpt as keyof typeof FEATURES]];
+    }
+    if (value === "spell-slot") {
+      newFeature.features = character.features
+        ? [...character.features, FEATURES.spell]
+        : [FEATURES.spell];
+    }
+
+    return newFeature;
   };
 
-  const handlePathChange = (event: ChangeEvent<HTMLInputElement>) => {};
+  const handleChoiceChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setChoice(value);
+    setPathOption(null);
+  };
+
+  const handlePathOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newPathOption = event.target.value;
+    setPathOption(newPathOption);
+  };
+
+  const handleAbilityOptionChange = (_: any, value: string | null) => {
+    setAbilityOption(value);
+  };
+
+  const handleEvenLevelUp = () => {
+    if (!abilityOption) return;
+
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      level: prevCharacter.level + 1,
+      healthMax: prevCharacter.healthMax + 2,
+      abilities: {
+        ...prevCharacter.abilities,
+        [abilityOption]: {
+          ...prevCharacter.abilities[
+            abilityOption as keyof Character["abilities"]
+          ],
+          value:
+            (prevCharacter.abilities[
+              abilityOption as keyof Character["abilities"]
+            ].value ?? 0) + 1,
+        },
+      },
+    }));
+
+    handleClose();
+  };
+
+  const handleOddLevelUp = () => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      level: prevCharacter.level + 1,
+      healthMax: prevCharacter.healthMax + 2,
+      features: getNewFeatures(choice as string, pathOption) as Feature[],
+    }));
+    handleClose();
+  };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 items-start">
       {ability ? (
-        <div className="flex flex-col gap-2">
+        <>
           <Typography variant="body1">
             Choose an ability to increase:
           </Typography>
           <ToggleButtonGroup
-            value={lvlUpContent.ability}
+            value={abilityOption}
             exclusive
-            onChange={handleAbilityChoice}
+            onChange={handleAbilityOptionChange}
             aria-label="ability choices"
           >
             <ToggleButton value="str" aria-label="strength">
@@ -72,7 +148,14 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
               WIL
             </ToggleButton>
           </ToggleButtonGroup>
-        </div>
+          <Button
+            variant="contained"
+            onClick={handleEvenLevelUp}
+            disabled={!abilityOption}
+          >
+            Level Up
+          </Button>
+        </>
       ) : (
         <>
           <GQRadioGroup
@@ -82,17 +165,22 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
             value={choice}
             onChange={handleChoiceChange}
           />
-          {choice === "attack-bonus" && <div>foo</div>}
           {choice === "path" && (
             <GQRadioGroup
               id="path"
               label="Path"
-              options={[]}
-              onChange={handlePathChange}
-              value={5}
+              options={pathOptions}
+              onChange={handlePathOptionChange}
+              value={pathOption}
             />
           )}
-          {choice === "spell-slot" && <div>baz</div>}
+          <Button
+            variant="contained"
+            onClick={handleOddLevelUp}
+            disabled={!choice || (choice === "path" && !pathOption)}
+          >
+            Level Up
+          </Button>
         </>
       )}
     </div>

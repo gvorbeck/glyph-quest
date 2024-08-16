@@ -18,10 +18,10 @@ type StepFeatureProps = {
 };
 
 const getStartingFeature = (character: Character) => {
-  if (character.feature?.includes("path")) {
+  if (character.features?.includes("path")) {
     return FEATURES.path;
   } else {
-    return character.feature;
+    return character.features;
   }
 };
 
@@ -30,7 +30,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
   setCharacter,
 }) => {
   const [feature, setFeature] = useState(getStartingFeature(character));
-  const [path, setPath] = useState(character.feature);
+  const [path, setPath] = useState(character.features);
 
   const onFeatureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -38,7 +38,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
     setPath(null);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      feature: [value] as Feature[],
+      features: [value] as Feature[],
       spells: [],
     }));
   };
@@ -48,7 +48,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
     setPath([value] as Feature[]);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      feature: [value] as Feature[],
+      features: [value] as Feature[],
     }));
   };
 
@@ -118,7 +118,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
           className={radioGroup.className}
         />
       ))}
-      {character.feature?.[0] === "spell-slot" && (
+      {character.features?.[0] === "spell-slot" && (
         <SpellGenerator
           instruction="Generate your first spell."
           character={character}
