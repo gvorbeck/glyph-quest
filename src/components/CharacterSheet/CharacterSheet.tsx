@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import { Character } from "@/types/character";
 import Features from "./Features";
 import Hero from "./Hero";
-import GQDivider from "./GQDivider";
+import GQDivider from "../GQDivider";
 import Description from "./Description";
 import Stats from "./Stats";
 import {
@@ -114,7 +114,7 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
     <Grid
       container
       spacing={2}
-      className="bg-sheet-hero bg-contain bg-no-repeat bg-darkGray"
+      className="bg-sheet-dwarf bg-contain bg-no-repeat bg-darkGray"
     >
       <Hero
         character={character}

@@ -21,6 +21,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "sheet-hero": "url('/images/hero.webp')",
+        "sheet-wizard": "url('/images/wizard.webp')",
+        "sheet-dwarf": "url('/images/dwarf.webp')",
+        "sheet-cleric": "url('/images/cleric.webp')",
       },
     },
   },
