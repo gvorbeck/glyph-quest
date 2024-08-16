@@ -1,30 +1,68 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
+import { Character } from "@/types/character";
+import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 
-type LevelUpAbilityProps = {};
-
-const LevelUpAbility: React.FC<LevelUpAbilityProps> = () => {
-  const [ability, setAbility] = useState<string>("");
-  const handleAbilityChoice = () => {
-    setAbility(ability);
+type LevelUpAbilityProps = {
+  lvlUpContent: {
+    payload: Character | null;
+    ability: keyof Character["abilities"] | null;
   };
+  setLvlUpContent: React.Dispatch<
+    React.SetStateAction<{
+      payload: Character | null;
+      ability: keyof Character["abilities"] | null;
+    }>
+  >;
+  character: Character;
+};
+
+const LevelUpAbility: React.FC<LevelUpAbilityProps> = ({
+  lvlUpContent,
+  setLvlUpContent,
+  character,
+}) => {
+  const handleAbilityChoice = (
+    _: any,
+    value: keyof Character["abilities"] | null
+  ) => {
+    if (!value) return;
+    setLvlUpContent({
+      ...lvlUpContent,
+      ability: value,
+      payload: {
+        ...character,
+        level: character.level + 1,
+        healthMax: character.healthMax + 2,
+        abilities: {
+          ...character.abilities,
+          [value]: {
+            ...character.abilities[value],
+            value: (character.abilities[value].value ?? 0) + 1,
+          },
+        },
+      },
+    });
+  };
+
   return (
-    <ToggleButtonGroup
-      value={ability}
-      exclusive
-      onChange={handleAbilityChoice}
-      aria-label="text alignment"
-    >
-      <ToggleButton value="left" aria-label="left aligned">
-        STR
-      </ToggleButton>
-      <ToggleButton value="center" aria-label="centered">
-        DEX
-      </ToggleButton>
-      <ToggleButton value="right" aria-label="right aligned">
-        WIL
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <div className="flex flex-col gap-2">
+      <Typography variant="body1">Choose an ability to increase:</Typography>
+      <ToggleButtonGroup
+        value={lvlUpContent.ability}
+        exclusive
+        onChange={handleAbilityChoice}
+        aria-label="ability choices"
+      >
+        <ToggleButton value="str" aria-label="strength">
+          STR
+        </ToggleButton>
+        <ToggleButton value="dex" aria-label="dexterity">
+          DEX
+        </ToggleButton>
+        <ToggleButton value="wil" aria-label="willpower">
+          WIL
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </div>
   );
 };
 

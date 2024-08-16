@@ -41,6 +41,7 @@ const characterBlank: Character = {
     },
   },
   health: 4,
+  healthMax: 4,
   feature: null,
   items: [
     {

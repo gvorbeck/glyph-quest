@@ -1,19 +1,11 @@
 import { Character } from "@/types/character";
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Modal,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import Stats from "./Stats";
 import { Grade, Paid, TrendingUp } from "@mui/icons-material";
 import { useState } from "react";
+import LevelUpAbility from "./LevelUpAbility";
+import LevelUpChoice from "./LevelUpChoice";
 
 type HeroProps = {
   character: Character;
@@ -22,6 +14,9 @@ type HeroProps = {
 
 const levelThresholds = [0, 2, 6, 12, 20, 30, 42];
 
+/**
+ * ! Turn this into tailwindcss classes
+ */
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -36,10 +31,18 @@ const style = {
 
 const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
   const [open, setOpen] = useState(false);
+  const [lvlUpContent, setLvlUpContent] = useState<{
+    payload: Character | null;
+    ability: keyof Character["abilities"] | null;
+  }>({
+    payload: null,
+    ability: null,
+  });
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const levelUp = () => {
+  const LevelUp = () => {
     let lvlUpBtn = false;
     if (character.xp >= levelThresholds[character.level]) {
       lvlUpBtn = true;
@@ -58,7 +61,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
               aria-labelledby="level-up-modal-title"
               aria-describedby="level-up-modal-description"
             >
-              <Box sx={style}>
+              <Box sx={style} className="flex flex-col gap-4">
                 <Typography
                   id="level-up-modal-title"
                   variant="h6"
@@ -66,7 +69,29 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
                 >
                   Level Up to Level {character.level + 1}!
                 </Typography>
-                {}
+                {(character.level + 1) % 2 === 0 ? (
+                  <LevelUpAbility
+                    lvlUpContent={lvlUpContent}
+                    setLvlUpContent={setLvlUpContent}
+                    character={character}
+                  />
+                ) : (
+                  <LevelUpChoice
+                    character={character}
+                    setCharacter={setCharacter}
+                  />
+                )}
+                {/* <Button
+                  variant="contained"
+                  onClick={() => {
+                    if (lvlUpContent.payload) {
+                      setCharacter(lvlUpContent.payload);
+                      handleClose();
+                    }
+                  }}
+                >
+                  Level Up
+                </Button> */}
               </Box>
             </Modal>
           </>
@@ -81,11 +106,12 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
       xp: parseInt(e.target.value),
     }));
   };
+
   const stats = [
     {
       icon: <Grade />,
       primary: "Level",
-      secondary: levelUp(),
+      secondary: <LevelUp />,
     },
     {
       icon: <TrendingUp />,

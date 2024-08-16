@@ -31,6 +31,7 @@ export interface Character {
     wil: Ability;
   };
   health: number;
+  healthMax: number;
   feature: Feature[] | null;
   items: Item[];
   details: {
