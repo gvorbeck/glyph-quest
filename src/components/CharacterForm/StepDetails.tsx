@@ -13,6 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
+import GQRadioGroup from "../GQRadioGroup";
 
 type StepDetailsProps = {
   character: Character;
@@ -342,23 +343,18 @@ const StepDetails: React.FC<StepDetailsProps> = ({
   return (
     <div className="flex flex-col gap-8">
       {sections.map(([sectionName, sectionItems]) => (
-        <FormControl key={sectionName}>
-          <FormLabel
-            id={`${sectionName.toLowerCase()}-radio-buttons-group-label`}
-          >
-            {sectionName}
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby={`${sectionName.toLowerCase()}-radio-buttons-group-label`}
-            defaultValue="random"
-            name={`${sectionName.toLowerCase()}-radio-buttons-group`}
-            className="flex flex-col gap-4"
-            onChange={(e) => handleRadioChange(sectionName.toLowerCase(), e)}
-          >
-            <FormControlLabel
-              value="random"
-              control={<Radio />}
-              label={
+        <GQRadioGroup
+          id={sectionName.toLowerCase()}
+          className="flex flex-col gap-4"
+          key={sectionName}
+          label={sectionName}
+          defaultValue="random"
+          value={null}
+          onChange={(e) => handleRadioChange(sectionName.toLowerCase(), e)}
+          options={[
+            {
+              value: "random",
+              label: (
                 <div className="flex items-center gap-4">
                   <Button
                     variant="contained"
@@ -400,12 +396,11 @@ const StepDetails: React.FC<StepDetailsProps> = ({
                     </Select>
                   </FormControl>
                 </div>
-              }
-            />
-            <FormControlLabel
-              value="manual"
-              control={<Radio />}
-              label={
+              ),
+            },
+            {
+              value: "manual",
+              label: (
                 <TextField
                   label="Manual"
                   value={customValues[sectionName.toLowerCase()] || ""}
@@ -416,10 +411,10 @@ const StepDetails: React.FC<StepDetailsProps> = ({
                     selectedRadio[sectionName.toLowerCase()] !== "manual"
                   }
                 />
-              }
-            />
-          </RadioGroup>
-        </FormControl>
+              ),
+            },
+          ]}
+        />
       ))}
     </div>
   );
