@@ -9,7 +9,7 @@ import {
 import { db } from "@/lib/firebase";
 import { Character, Feature } from "@/types/character";
 import { Item } from "@/types/items";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 // Misc
 export const capitalize: (s: string) => string = (s) =>
@@ -168,6 +168,12 @@ type UpdatePayload = {
   data: any;
 };
 
+type DeletePayload = {
+  collection: string;
+  docId: string;
+  uid: string;
+};
+
 export const updateDocument = async ({
   collection,
   docId,
@@ -192,5 +198,24 @@ export const updateDocument = async ({
   } catch (error) {
     console.warn(data);
     console.error("Error updating document: ", error);
+  }
+};
+
+export const deleteDocument = async ({
+  collection,
+  docId,
+  uid,
+}: DeletePayload) => {
+  if (!docId) {
+    console.error("Document ID is undefined");
+    return;
+  }
+
+  try {
+    const docRef = doc(db, `users/${uid}/${collection}/${docId}`);
+    await deleteDoc(docRef);
+    console.info(`Document ${docId} deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting document: ", error);
   }
 };
