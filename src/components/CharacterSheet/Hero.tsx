@@ -70,10 +70,10 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
                   Level Up to Level {character.level + 1}!
                 </Typography>
                 {(character.level + 1) % 2 === 0 ? (
-                  <LevelUpAbility
-                    lvlUpContent={lvlUpContent}
-                    setLvlUpContent={setLvlUpContent}
+                  <LevelUpChoice
                     character={character}
+                    setCharacter={setCharacter}
+                    ability
                   />
                 ) : (
                   <LevelUpChoice
