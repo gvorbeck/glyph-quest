@@ -25,9 +25,12 @@ const levelThresholds = [0, 2, 6, 12, 20, 30, 42];
 
 const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
   const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
+  const handleSettingsOpen = () => setSettingsOpen(true);
   const handleClose = () => setOpen(false);
+  const handleSettingsClose = () => setSettingsOpen(false);
 
   const LevelUp = () => {
     let lvlUpBtn = false;
@@ -121,12 +124,20 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
         <Tooltip title="Settings">
           <IconButton
             aria-label="close"
-            onClick={handleClose}
+            onClick={handleSettingsOpen}
             className="absolute bottom-0 left-4 bg-darkGray"
           >
             <SettingsIcon color="primary" />
           </IconButton>
         </Tooltip>
+        <GQModal
+          handleClose={handleSettingsClose}
+          id="settings"
+          open={settingsOpen}
+          title="Settings"
+        >
+          <div>foo</div>
+        </GQModal>
       </Grid>
       <Stats
         xs={4}

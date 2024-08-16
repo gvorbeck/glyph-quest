@@ -24,6 +24,15 @@ export type Spell = {
   description: string;
 };
 
+export type Settings = {
+  wallpaper:
+    | "sheet-hero"
+    | "sheet-wizard"
+    | "sheet-dwarf"
+    | "sheet-cleric"
+    | "sheet-ranger";
+};
+
 export interface Character {
   abilities: {
     str: Ability;
@@ -47,4 +56,5 @@ export interface Character {
   xp: number;
   spells: Spell[];
   gold: number;
+  settings: Settings;
 }

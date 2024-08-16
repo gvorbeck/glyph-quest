@@ -94,23 +94,22 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
             className="text-amber"
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
           />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            className="mr-1 font-jaini-purva"
-            sx={{
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Glyph.Quest
-          </Typography>
+          <Link href="/" className="font-jaini-purva">
+            <Typography
+              variant="h5"
+              noWrap
+              sx={{
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Glyph.Quest
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button

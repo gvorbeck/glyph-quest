@@ -42,8 +42,8 @@ export default function CharacterList() {
 
   return (
     <div className="grid gap-4">
-      {characters.map((character) => (
-        <div className="p-4 border border-gray-300 rounded">
+      {characters.map((character, index) => (
+        <div className="p-4 border border-gray-300 rounded" key={index}>
           <h2 className="text-xl font-bold">{character.name}</h2>
           {/* Add other character details here */}
           <Link key={character.id} href={`/characters/${character.id}`}>

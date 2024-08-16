@@ -72,6 +72,9 @@ const characterBlank: Character = {
   xp: 0,
   spells: [],
   gold: 0,
+  settings: {
+    wallpaper: "sheet-hero",
+  },
 };
 
 export default function CharacterForm() {
