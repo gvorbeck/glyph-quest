@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { db, collection, getDocs } from "../lib/firebase";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "@mui/material";
+import { deleteDocument } from "@/utils/utils";
 
 interface Character {
   id: string;
@@ -41,12 +43,25 @@ export default function CharacterList() {
   return (
     <div className="grid gap-4">
       {characters.map((character) => (
-        <Link key={character.id} href={`/characters/${character.id}`}>
-          <div className="p-4 border border-gray-300 rounded">
-            <h2 className="text-xl font-bold">{character.name}</h2>
-            {/* Add other character details here */}
-          </div>
-        </Link>
+        <div className="p-4 border border-gray-300 rounded">
+          <h2 className="text-xl font-bold">{character.name}</h2>
+          {/* Add other character details here */}
+          <Link key={character.id} href={`/characters/${character.id}`}>
+            <Button variant="contained">View Character</Button>
+          </Link>
+          <Button
+            variant="contained"
+            onClick={() =>
+              deleteDocument({
+                collection: "characters",
+                docId: character.id,
+                uid: user.uid,
+              })
+            }
+          >
+            Delete Character
+          </Button>
+        </div>
       ))}
     </div>
   );
