@@ -56,24 +56,20 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
   }));
 
   const getNewFeatures = (value: string, pathOpt: string | null) => {
-    const newFeature: { features?: string[] } = {};
+    const newFeatures: Feature[] = character.features
+      ? [...character.features]
+      : [];
     if (value === "attack-bonus") {
-      newFeature.features = character.features
-        ? [...character.features, FEATURES.attack]
-        : [FEATURES.attack];
+      newFeatures.push(FEATURES.attack as Feature);
     }
     if (value === "path" && pathOpt) {
-      newFeature.features = character.features
-        ? [...character.features, FEATURES[pathOpt as keyof typeof FEATURES]]
-        : [FEATURES[pathOpt as keyof typeof FEATURES]];
+      newFeatures.push(FEATURES[pathOpt as keyof typeof FEATURES] as Feature);
     }
     if (value === "spell-slot") {
-      newFeature.features = character.features
-        ? [...character.features, FEATURES.spell]
-        : [FEATURES.spell];
+      newFeatures.push(FEATURES.spell as Feature);
     }
 
-    return newFeature;
+    return newFeatures;
   };
 
   const handleChoiceChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +116,7 @@ const LevelUpChoice: React.FC<LevelUpChoice> = ({
       ...prevCharacter,
       level: prevCharacter.level + 1,
       healthMax: prevCharacter.healthMax + 2,
-      features: getNewFeatures(choice as string, pathOption) as Feature[],
+      features: getNewFeatures(choice as string, pathOption),
     }));
     handleClose();
   };

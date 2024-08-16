@@ -12,7 +12,7 @@ import { Item } from "@/types/items";
 import { doc, updateDoc } from "firebase/firestore";
 
 // Misc
-const capitalize: (s: string) => string = (s) =>
+export const capitalize: (s: string) => string = (s) =>
   s.charAt(0).toUpperCase() + s.slice(1);
 
 // Dice
@@ -46,8 +46,8 @@ export const getModifier: (ability: number) => number = (ability) => {
 };
 
 export const getAttackBonus: (character: Character) => number = (character) => {
-  if (character.feature && character.feature.length > 0) {
-    return character.feature.reduce((acc, feature) => {
+  if (character.features && character.features.length > 0) {
+    return character.features.reduce((acc, feature) => {
       if (feature === "attack-bonus") return acc + 1;
       return acc;
     }, 0);
