@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import SpellGenerator from "./SpellGenerator";
+import GQRadioGroup from "../GQRadioGroup";
 
 type StepFeatureProps = {
   character: Character;
@@ -107,26 +108,15 @@ const StepFeature: React.FC<StepFeatureProps> = ({
   return (
     <Box className="flex flex-col gap-4">
       {radioGroups.map((radioGroup) => (
-        <FormControl key={radioGroup.id} className={radioGroup.className}>
-          <FormLabel id={`${radioGroup.id}-radio-buttons-group`}>
-            {radioGroup.label}
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby={`${radioGroup.id}-radio-buttons-group`}
-            name={`${radioGroup.id}-radio-buttons-group`}
-            onChange={radioGroup.onChange}
-            value={radioGroup.value}
-          >
-            {radioGroup.options.map((option) => (
-              <FormControlLabel
-                key={option.value}
-                value={option.value}
-                control={<Radio />}
-                label={option.label}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
+        <GQRadioGroup
+          id={radioGroup.id}
+          key={radioGroup.id}
+          label={radioGroup.label}
+          onChange={radioGroup.onChange}
+          options={radioGroup.options}
+          value={radioGroup.value}
+          className={radioGroup.className}
+        />
       ))}
       {character.feature?.[0] === "spell-slot" && (
         <SpellGenerator

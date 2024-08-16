@@ -345,7 +345,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
       {sections.map(([sectionName, sectionItems]) => (
         <GQRadioGroup
           id={sectionName.toLowerCase()}
-          className="flex flex-col gap-4"
+          className="[&>div]:flex [&>div]:flex-col [&>div]:gap-4"
           key={sectionName}
           label={sectionName}
           defaultValue="random"

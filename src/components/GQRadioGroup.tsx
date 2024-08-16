@@ -10,7 +10,7 @@ type GQRadioGroupProps = {
   id: string;
   onChange: (event: any) => void;
   options: { value: string; label: any }[];
-  value: string | number | null;
+  value: any;
   defaultValue?: string;
   label?: string;
 };
@@ -19,7 +19,7 @@ const GQRadioGroup: React.FC<
   GQRadioGroupProps & React.ComponentPropsWithRef<"div">
 > = ({ id, label, defaultValue, options, value, onChange, className }) => {
   return (
-    <FormControl>
+    <FormControl className={className}>
       {label && (
         <FormLabel id={`${id}-radio-buttons-group-label`}>{label}</FormLabel>
       )}
@@ -29,7 +29,6 @@ const GQRadioGroup: React.FC<
         name={`${id}-radio-buttons-group`}
         value={value}
         onChange={onChange}
-        className={className}
       >
         {options.map((option) => (
           <FormControlLabel
