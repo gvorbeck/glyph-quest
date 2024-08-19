@@ -19,7 +19,9 @@ const StepInventory: React.FC<StepInventoryProps> = ({
 }) => {
   return (
     <>
-      <Typography variant="h3">Items</Typography>
+      <Typography variant="h3" className="font-jaini-purva">
+        Items
+      </Typography>
       <div className="flex flex-col gap-4">
         <InventoryItems character={character} setCharacter={setCharacter} />
         <InventoryWeapons character={character} setCharacter={setCharacter} />

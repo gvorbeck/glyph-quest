@@ -40,7 +40,9 @@ const InventoryShield: React.FC<InventoryShieldProps> = ({
   return (
     <div className="flex flex-col gap-4 items-start">
       <div>
-        <Typography variant="h3">{ITEMTYPES.shield.label}</Typography>
+        <Typography variant="h3" className="font-jaini-purva">
+          {ITEMTYPES.shield.label}
+        </Typography>
         <Typography variant="body1">
           PCs start with a shield (+1 armor, 1 hands). Select where it is
           located.

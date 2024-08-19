@@ -74,14 +74,21 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
     }
   };
 
+  const addToBackpack = (items: Item[]) =>
+    items.map((item) => ({
+      ...item,
+      location: "backpack",
+    }));
+
   const handleCheckedAdd = () => {
-    setRight(right.concat(leftChecked));
+    const backpack = addToBackpack(right.concat(leftChecked)) as Item[];
+    setRight(backpack);
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
     const nonItems = character.items.filter((item) => item.type !== "item");
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      items: [...right.concat(leftChecked), ...nonItems],
+      items: [...backpack, ...nonItems],
     }));
   };
 
@@ -117,12 +124,13 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
     const randomItems = getStartItems
       .sort(() => 0.5 - Math.random())
       .slice(0, 6);
+    const backpack = addToBackpack(randomItems) as Item[];
     setLeft(not(left, randomItems));
-    setRight(randomItems);
+    setRight(backpack);
     const nonItems = character.items.filter((item) => item.type !== "item");
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      items: [...randomItems, ...nonItems],
+      items: [...backpack, ...nonItems],
     }));
   };
 
@@ -165,7 +173,6 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
       >
         {items.map((item: Item) => {
           const labelId = `transfer-list-all-item-${item.name}-label`;
-
           return (
             <ListItem key={item.name}>
               <ListItemButton role="listitem" onClick={handleToggle(item)}>
@@ -198,11 +205,11 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
   );
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <Button
         variant="contained"
-        className="my-4"
         onClick={handleRandomItemsClick}
+        className="self-start"
       >
         Generate Random Items
       </Button>

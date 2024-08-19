@@ -66,8 +66,10 @@ const InventoryArmor: React.FC<InventoryArmorProps> = ({
 
   return (
     <div>
-      <Typography variant="h3">Armor</Typography>
-      <Typography variant="body1">
+      <Typography variant="h3" className="font-jaini-purva">
+        Armor
+      </Typography>
+      <Typography variant="body1" className="mb-4">
         PCs start with light armor (+1 armor) and a shield (+1 armor, 1 hand).
         Characters have a base armor rating of 6. Wearing light armor increases
         it to 7, and holding a shield in one hand increases it to 8.

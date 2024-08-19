@@ -15,7 +15,9 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
   const weapons = getWeapons(character.items);
   return (
     <div>
-      <Typography variant="h3">Weapons</Typography>
+      <Typography variant="h3" className="font-jaini-purva">
+        Weapons
+      </Typography>
       <Typography variant="body1">PCs start with two weapons.</Typography>
       <List>
         <ListItem>
@@ -37,16 +39,18 @@ const InventoryWeapons: React.FC<InventoryWeaponsProps> = ({
           </ListItemText>
         </ListItem>
       </List>
-      <Weapon
-        id={1}
-        weapon={weapons[0] || undefined}
-        setCharacter={setCharacter}
-      />
-      <Weapon
-        id={2}
-        weapon={weapons[1] || undefined}
-        setCharacter={setCharacter}
-      />
+      <div className="flex flex-col gap-4">
+        <Weapon
+          id={1}
+          weapon={weapons[0] || undefined}
+          setCharacter={setCharacter}
+        />
+        <Weapon
+          id={2}
+          weapon={weapons[1] || undefined}
+          setCharacter={setCharacter}
+        />
+      </div>
     </div>
   );
 };
