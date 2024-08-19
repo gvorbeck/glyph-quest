@@ -57,30 +57,18 @@ const StepName: React.FC<StepNameProps> = ({ character, setCharacter }) => {
         onChange={handleNameChange}
       />
       <div className="flex flex-wrap gap-2">
-        <Button
-          variant="contained"
-          onClick={() => handleFirstNameClick(maleFirstNames)}
-        >
+        <Button onClick={() => handleFirstNameClick(maleFirstNames)}>
           Male First Name
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => handleFirstNameClick(femaleFirstNames)}
-        >
+        <Button onClick={() => handleFirstNameClick(femaleFirstNames)}>
           Female First Name
         </Button>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button
-          variant="contained"
-          onClick={() => handleSurNameClick(upperclassSurnames)}
-        >
+        <Button onClick={() => handleSurNameClick(upperclassSurnames)}>
           Upperclass Surname
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => handleSurNameClick(lowerclassSurnames)}
-        >
+        <Button onClick={() => handleSurNameClick(lowerclassSurnames)}>
           Lowerclass Surname
         </Button>
       </div>
