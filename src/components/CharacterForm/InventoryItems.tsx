@@ -112,6 +112,20 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
     }
   };
 
+  const handleRandomItemsClick = () => {
+    // Get six random items
+    const randomItems = getStartItems
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 6);
+    setLeft(not(left, randomItems));
+    setRight(randomItems);
+    const nonItems = character.items.filter((item) => item.type !== "item");
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: [...randomItems, ...nonItems],
+    }));
+  };
+
   const customList = (
     title: React.ReactNode,
     items: readonly Item[],
@@ -185,6 +199,13 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
 
   return (
     <div>
+      <Button
+        variant="contained"
+        className="my-4"
+        onClick={handleRandomItemsClick}
+      >
+        Generate Random Items
+      </Button>
       <div>{customList("Choices", left, true)}</div>
       <div>
         <div className="flex justify-center gap-4">
