@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { auth } from "../lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Button, TextField } from "@mui/material";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -25,14 +26,14 @@ export default function SignUp() {
 
   return (
     <form onSubmit={handleSignUp} className="space-y-4">
-      <input
+      <TextField
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="w-full p-2 border border-gray-300 rounded"
       />
-      <input
+      <TextField
         type="password"
         placeholder="Password"
         value={password}
@@ -40,12 +41,13 @@ export default function SignUp() {
         className="w-full p-2 border border-gray-300 rounded"
       />
       {error && <p className="text-red-500">{error}</p>}
-      <button
+      <Button
+        variant="contained"
         type="submit"
         className="w-full p-2 bg-blue-500 text-white rounded"
       >
         Sign Up
-      </button>
+      </Button>
     </form>
   );
 }

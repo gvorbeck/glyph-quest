@@ -110,11 +110,23 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
     },
   ];
 
+  const backgroundClasses: Record<Character["settings"]["wallpaper"], string> =
+    {
+      "sheet-hero": "bg-sheet-hero",
+      "sheet-wizard": "bg-sheet-wizard",
+      "sheet-dwarf": "bg-sheet-dwarf",
+      "sheet-cleric": "bg-sheet-cleric",
+      "sheet-ranger": "bg-sheet-ranger",
+      "sheet-thief": "bg-sheet-thief",
+    };
+
   return (
     <Grid
       container
       spacing={2}
-      className="bg-sheet-dwarf bg-contain bg-no-repeat bg-darkGray"
+      className={`${
+        backgroundClasses[character.settings.wallpaper] || ""
+      } bg-contain bg-no-repeat bg-darkGray`}
     >
       <Hero
         character={character}

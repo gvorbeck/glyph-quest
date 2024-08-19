@@ -15,6 +15,7 @@ import { useState } from "react";
 import LevelUpChoice from "./LevelUpChoice";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GQModal from "../GQModal";
+import ModalSettings from "./ModalSettings";
 
 type HeroProps = {
   character: Character;
@@ -135,8 +136,9 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
           id="settings"
           open={settingsOpen}
           title="Settings"
+          width={600}
         >
-          <div>foo</div>
+          <ModalSettings character={character} setCharacter={setCharacter} />
         </GQModal>
       </Grid>
       <Stats

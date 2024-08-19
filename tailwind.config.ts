@@ -24,6 +24,8 @@ const config: Config = {
         "sheet-wizard": "url('/images/wizard.webp')",
         "sheet-dwarf": "url('/images/dwarf.webp')",
         "sheet-cleric": "url('/images/cleric.webp')",
+        "sheet-ranger": "url('/images/ranger.webp')",
+        "sheet-thief": "url('/images/thief.webp')",
       },
     },
   },

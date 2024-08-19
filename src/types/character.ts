@@ -30,7 +30,8 @@ export type Settings = {
     | "sheet-wizard"
     | "sheet-dwarf"
     | "sheet-cleric"
-    | "sheet-ranger";
+    | "sheet-ranger"
+    | "sheet-thief";
 };
 
 export interface Character {
