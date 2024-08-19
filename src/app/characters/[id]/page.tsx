@@ -25,7 +25,7 @@ export default function CharacterSheetPage({
   return (
     <>
       <SiteHeader user={user} />
-      <main className="container mx-auto p-4">
+      <main className="max-w-[1000px] mx-auto p-4">
         <CharacterSheet characterId={characterId} />
       </main>
     </>
