@@ -11,6 +11,16 @@ import { Character, Feature } from "@/types/character";
 import { Item } from "@/types/items";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
+/**
+ * * Table of Contents:
+ * * - Misc
+ * * - Dice
+ * * - Stats
+ * * - Items
+ * * - Spells
+ * * - Firestore
+ */
+
 // Misc
 export const capitalize: (s: string) => string = (s) =>
   s.charAt(0).toUpperCase() + s.slice(1);
@@ -35,6 +45,11 @@ export const rollDice: (
     }
     return rolls;
   }
+};
+
+export const rollTable: (table: string[]) => string = (table) => {
+  const index = Math.floor(Math.random() * table.length);
+  return table[index];
 };
 
 // Stats
