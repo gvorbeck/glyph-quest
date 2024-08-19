@@ -145,7 +145,6 @@ export default function CharacterForm() {
     }
     // Feature
     if (activeStep === 1) {
-      console.log(character.features);
       return (
         character.features === null ||
         character.features[0] === "path" ||

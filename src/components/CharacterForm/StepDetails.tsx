@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import GQRadioGroup from "../GQRadioGroup";
+import { rollTable } from "@/utils/utils";
 
 type StepDetailsProps = {
   character: Character;
@@ -296,10 +297,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
     sectionItems: string[],
     sectionName: string
   ) => {
-    const randomValue =
-      sectionItems[
-        Math.floor(Math.random() * sectionItems.length)
-      ].toLowerCase();
+    const randomValue = rollTable(sectionItems).toLowerCase();
     setSelectedValues((prev) => ({
       ...prev,
       [sectionName]: randomValue,
