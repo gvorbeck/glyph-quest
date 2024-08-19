@@ -387,6 +387,7 @@ const StepDetails: React.FC<StepDetailsProps> = ({
                       disabled={
                         selectedRadio[sectionName.toLowerCase()] === "manual"
                       }
+                      className="min-w-[100px]"
                     >
                       {sectionItems.map((item) => (
                         <MenuItem key={item} value={item.toLowerCase()}>
