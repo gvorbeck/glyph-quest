@@ -35,6 +35,7 @@ export type Settings = {
 };
 
 export interface Character {
+  id?: string;
   abilities: {
     str: Ability;
     dex: Ability;

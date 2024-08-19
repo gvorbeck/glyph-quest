@@ -4,8 +4,15 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./globals.css";
+import localFont from "next/font/local";
 import { AuthProvider } from "@/context/AuthContext";
 import ThemeRegistry from "@/components/ThemeRegistry";
+
+const Jaini = localFont({
+  src: "../../public/fonts/JainiPurva-Regular.ttf",
+  display: "swap",
+  variable: "--font-jaini-purva",
+});
 
 export const metadata: Metadata = {
   title: "Glyph Quest",
@@ -18,19 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Jaini+Purva&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${Jaini.variable}`}>
       <body>
         <AuthProvider>
           <ThemeRegistry>{children}</ThemeRegistry>

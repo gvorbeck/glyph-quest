@@ -93,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
         <TextField
           size="small"
           type="number"
-          className="[&_input]:!text-sm [&_input]:py-1"
+          className="[&_input]:text-sm [&_input]:py-1"
           value={character.xp}
           onChange={handleXPChange}
         />
@@ -106,7 +106,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
         <TextField
           size="small"
           type="number"
-          className="[&_input]:!text-sm [&_input]:py-1"
+          className="[&_input]:text-sm [&_input]:py-1"
           value={character.gold}
         />
       ),

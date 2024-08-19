@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  important: true,
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,10 +11,11 @@ const config: Config = {
     colors: {
       amber: "#ffc107",
       darkGray: "#242120",
+      white: "#ffffff",
     },
     extend: {
       fontFamily: {
-        "jaini-purva": ["Jaini Purva", "cursive"],
+        "jaini-purva": ["var(--font-jaini-purva)"],
         "josefin-sans": ["Josefin Sans", "sans-serif"],
       },
       backgroundImage: {

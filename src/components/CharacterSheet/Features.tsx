@@ -140,11 +140,11 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
             <Typography variant="h3">Spells</Typography>
             <List className="mt-4">
               {spellSlotsArray.map((spell, index) => (
-                <ListItem key={index} className="!px-0">
+                <ListItem key={index} className="px-0">
                   {spell ? (
                     <div className="flex flex-col gap-4 w-full">
                       <div className="flex gap-2 items-center">
-                        <ListItemIcon className="!min-w-min">
+                        <ListItemIcon className="min-w-min">
                           <AutoFixHigh />
                         </ListItemIcon>
                         <ListItemText primary={spell.name} />

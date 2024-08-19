@@ -35,24 +35,19 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
     <AppBar position="static" className="bg-darkGray">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+          <Link href="/" className="flex gap-2 items-center">
+            <Castle sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <Typography
+              variant="h1"
+              noWrap
+              className="mr-4 font-jaini-purva color-inherit text-3xl text-amber"
+              sx={{
+                display: { xs: "none", md: "flex" },
+              }}
+            >
+              Glyph.Quest
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton

@@ -7,6 +7,7 @@ import CharacterList from "../components/CharacterList";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import SiteHeader from "@/components/SiteHeader";
+import { Typography } from "@mui/material";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -32,7 +33,9 @@ export default function HomePage() {
       <>
         <SiteHeader user={user} />
         <main className="container mx-auto">
-          <h1 className="text-3xl font-bold">Your Characters</h1>
+          <Typography variant="h2" className="font-jaini-purva">
+            Your Characters
+          </Typography>
           <CharacterList />
         </main>
       </>
