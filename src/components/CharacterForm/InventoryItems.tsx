@@ -166,7 +166,7 @@ const InventoryItems: React.FC<InventoryItemsProps> = ({
       />
       <Divider />
       <List
-        className="h-[230px] overflow-auto"
+        className={`${isChosen ? "h-[374px]" : "h-[230px]"} overflow-auto`}
         dense
         component="div"
         role="list"
