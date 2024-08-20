@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, MenuItem, Typography } from "@mui/material";
 import { Item, Location, TypeOption } from "@/types/items";
 import { Character } from "@/types/character";
@@ -6,23 +6,32 @@ import { Character } from "@/types/character";
 type AddItemFormProps = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
   onClose: () => void;
+  editItem?: Item;
 };
 
-const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
-  const [newItem, setNewItem] = useState<Item>({
-    hands: null,
-    location: undefined,
-    name: "",
-    type: "item",
-    amount: "",
-    armor: undefined,
-    damage: undefined,
-    detail: "",
-    starter: false,
-  });
+const defaultNewItem: Item = {
+  hands: null,
+  location: undefined,
+  name: "",
+  type: "item",
+  amount: "1",
+  armor: undefined,
+  damage: undefined,
+  detail: "",
+};
+
+const AddItemForm: React.FC<AddItemFormProps> = ({
+  setCharacter,
+  onClose,
+  editItem,
+}) => {
+  const [newItem, setNewItem] = useState<Item>(
+    editItem ?? (defaultNewItem as Item)
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setNewItem((prevItem) => ({
       ...prevItem,
       [name]: value,
@@ -30,12 +39,29 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
   };
 
   const handleSubmit = () => {
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items: [...prevCharacter.items, newItem],
-    }));
+    setCharacter((prevCharacter) => {
+      let charItems = prevCharacter.items;
+      if (editItem) {
+        // remove original item from character.items
+        charItems = charItems.filter((i) => i.name !== editItem.name);
+      }
+      return {
+        ...prevCharacter,
+        items: [...charItems, newItem],
+      };
+    });
+    setNewItem(defaultNewItem as Item);
     onClose(); // Close the form
   };
+
+  const handleClose = () => {
+    setNewItem(defaultNewItem as Item);
+    onClose(); // Close the form
+  };
+
+  useEffect(() => {
+    console.log("newItem", newItem);
+  }, [newItem]);
 
   return (
     <form noValidate autoComplete="off">
@@ -96,20 +122,24 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
           margin="normal"
         />
       )}
-      <TextField
-        label="Damage"
-        name="damage"
-        type="number"
-        value={newItem.damage ?? ""}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      />
+      {newItem.type.includes("weapon") && (
+        <TextField
+          label="Damage"
+          name="damage"
+          type="number"
+          value={newItem.damage ?? ""}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          helperText="Light/Ranged weapons: 0, Heavy weapons: 1"
+        />
+      )}
       <TextField
         label="Amount"
         name="amount"
-        value={newItem.amount ?? ""}
+        value={newItem.amount ?? "1"}
         onChange={handleChange}
+        InputProps={{ inputProps: { min: 1 } }}
         fullWidth
         margin="normal"
       />
@@ -123,9 +153,14 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ setCharacter, onClose }) => {
         fullWidth
         margin="normal"
       />
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Add Item
-      </Button>
+      <div className="flex gap-2">
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          Add Item
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleClose}>
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 };

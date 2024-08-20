@@ -12,7 +12,7 @@ import {
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import InventoryLocationSelect from "../InventoryLocationSelect";
 import { Item, Location } from "@/types/items";
-import { Cancel } from "@mui/icons-material";
+import { Cancel, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import InventoryErrors from "../InventoryErrors";
 import NewInventoryItem from "./NewInventoryItem";
@@ -29,12 +29,15 @@ const Inventory: React.FC<InventoryProps> = ({
   setCharacter,
 }) => {
   const [error, setError] = useState<number>(0);
-  const [newFormOpen, setNewFormOpen] = useState<boolean>(false);
-  console.log(error);
+  const [newFormOpen, setNewFormOpen] = useState<[boolean, Item | undefined]>([
+    false,
+    undefined,
+  ]);
 
   const inventory = character.items.sort((a, b) =>
     a.name.localeCompare(b.name)
   );
+
   const handleItemLocationChange = (
     event: SelectChangeEvent<Location>,
     item: Item
@@ -51,6 +54,10 @@ const Inventory: React.FC<InventoryProps> = ({
     }));
   };
 
+  const handleEditItemClick = (item: Item) => {
+    setNewFormOpen([true, item]);
+  };
+
   return (
     <Grid xs={xs}>
       <Paper className="p-4 flex flex-col gap-4">
@@ -60,31 +67,48 @@ const Inventory: React.FC<InventoryProps> = ({
         <InventoryErrors items={inventory} setError={setError} />
         <List>
           {inventory.map((item, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={item.name} />
+            <ListItem key={index} className="items-start">
+              <ListItemText
+                primary={
+                  item.amount !== "1" && item.amount !== undefined
+                    ? `(${item.amount}) ${item.name}`
+                    : item.name
+                }
+                className="[&_span]:truncate mr-2"
+                secondary={item.detail}
+                title={item.name}
+              />
               <InventoryLocationSelect
                 id={item.name.toLowerCase()}
                 value={item.location}
                 onChange={(e) => handleItemLocationChange(e, item)}
               />
+              <IconButton
+                aria-label="edit Item"
+                color="primary"
+                onClick={() => handleEditItemClick(item)}
+              >
+                <Edit />
+              </IconButton>
               <IconButton aria-label="delete item" color="primary">
                 <Cancel />
               </IconButton>
             </ListItem>
           ))}
         </List>
-        {!newFormOpen ? (
+        {!newFormOpen[0] ? (
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setNewFormOpen(true)}
+            onClick={() => setNewFormOpen([true, undefined])}
           >
             Add Item
           </Button>
         ) : (
           <NewInventoryItem
-            onClose={() => console.log("foo")}
+            onClose={() => setNewFormOpen([false, undefined])}
             setCharacter={setCharacter}
+            editItem={newFormOpen[1]}
           />
         )}
       </Paper>
