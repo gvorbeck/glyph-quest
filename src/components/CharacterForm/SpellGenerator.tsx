@@ -1,5 +1,5 @@
 import { getSpellName, rollDice } from "@/utils/utils";
-import { Button, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import {
   physicalEffects,
   etherealEffects,
@@ -31,23 +31,59 @@ const SpellGenerator: React.FC<SpellGeneratorProps> = ({
     }));
   };
 
+  const handleSpellNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setCharacter((prevCharacter) => {
+      const spells = prevCharacter.spells;
+      spells[index].name = value;
+      return {
+        ...prevCharacter,
+        spells,
+      };
+    });
+  };
+
+  const handleSpellDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target;
+    setCharacter((prevCharacter) => {
+      const spells = prevCharacter.spells;
+      spells[index].description = value;
+      return {
+        ...prevCharacter,
+        spells,
+      };
+    });
+  };
+
   return (
     <div>
       <Typography variant="h3">Spells</Typography>
       {instruction && <Typography variant="body2">{instruction}</Typography>}
-      <div className="flex gap-4 mt-4 items-center">
-        <Button
-          variant="contained"
-          onClick={handleSpellGenerateClick}
-          disabled={!!character.spells.length}
-        >
-          Generate Spell
-        </Button>
-        {!!character.spells[index] && (
-          <Typography variant="body1">
-            Spell Name: <strong>{character.spells[index].name}</strong>
-          </Typography>
-        )}
+      <div className="flex flex-col gap-4 mt-4 items-start">
+        <div className="flex gap-2">
+          <TextField
+            size="small"
+            placeholder="Spell Name"
+            value={character.spells[index]?.name}
+            onChange={handleSpellNameChange}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSpellGenerateClick}
+            // disabled={!!character.spells.length}
+          >
+            Generate Spell
+          </Button>
+        </div>
+        <TextField
+          size="small"
+          placeholder="Spell Description (optional)"
+          multiline
+          value={character.spells[index]?.description}
+          onChange={handleSpellDescriptionChange}
+        />
       </div>
     </div>
   );

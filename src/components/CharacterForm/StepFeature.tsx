@@ -120,7 +120,7 @@ const StepFeature: React.FC<StepFeatureProps> = ({
       ))}
       {character.features?.[0] === "spell-slot" && (
         <SpellGenerator
-          instruction="Generate your first spell."
+          instruction="Generate your first spell. You can roll on your own or use the random generator."
           character={character}
           setCharacter={setCharacter}
         />
