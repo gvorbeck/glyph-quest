@@ -11,12 +11,10 @@ type AddItemFormProps = {
 
 const defaultNewItem: Item = {
   hands: null,
-  location: undefined,
+  location: null,
   name: "",
   type: "item",
   amount: "1",
-  armor: undefined,
-  damage: undefined,
   detail: "",
 };
 
@@ -44,6 +42,12 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
       if (editItem) {
         // remove original item from character.items
         charItems = charItems.filter((i) => i.name !== editItem.name);
+      }
+      // Determine if the item is a two-handed weapon
+      if (newItem.type === "heavy-weapon" || newItem.type === "ranged-weapon") {
+        newItem.hands = 2;
+      } else {
+        newItem.hands = 1;
       }
       return {
         ...prevCharacter,
@@ -155,7 +159,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
       />
       <div className="flex gap-2">
         <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Add Item
+          Add Item (NOTE: NEEDS VALIDATION!)
         </Button>
         <Button variant="contained" color="primary" onClick={handleClose}>
           Cancel
