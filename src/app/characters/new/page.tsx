@@ -1,6 +1,7 @@
 "use client";
 
 import CharacterForm from "@/components/CharacterForm/CharacterForm";
+import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { auth } from "@/lib/firebase";
 import { Typography } from "@mui/material";
@@ -26,6 +27,7 @@ export default function CharacterFormPage() {
         </Typography>
         <CharacterForm />
       </main>
+      <SiteFooter />
     </>
   );
 }

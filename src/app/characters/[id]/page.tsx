@@ -5,6 +5,7 @@ import CharacterSheet from "../../../components/CharacterSheet/CharacterSheet";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function CharacterSheetPage({
   params,
@@ -28,6 +29,7 @@ export default function CharacterSheetPage({
       <main className="max-w-[1000px] mx-auto p-4">
         <CharacterSheet characterId={characterId} />
       </main>
+      <SiteFooter />
     </>
   );
 }

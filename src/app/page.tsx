@@ -8,6 +8,7 @@ import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import SiteHeader from "@/components/SiteHeader";
 import { Typography } from "@mui/material";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -38,6 +39,7 @@ export default function HomePage() {
           </Typography>
           <CharacterList />
         </main>
+        <SiteFooter />
       </>
     );
   }
