@@ -25,16 +25,16 @@ const InventoryLocationSelect: React.FC<InventoryLocationSelectProps> = ({
         disabled={disabled}
         size="small"
       >
-        <MenuItem value={INVENTORYLOCATIONS.hands.value}>
+        <MenuItem value={INVENTORYLOCATIONS.hands.value as string}>
           {INVENTORYLOCATIONS.hands.label}
         </MenuItem>
-        <MenuItem value={INVENTORYLOCATIONS.belt.value}>
+        <MenuItem value={INVENTORYLOCATIONS.belt.value as string}>
           {INVENTORYLOCATIONS.belt.label}
         </MenuItem>
-        <MenuItem value={INVENTORYLOCATIONS.worn.value}>
+        <MenuItem value={INVENTORYLOCATIONS.worn.value as string}>
           {INVENTORYLOCATIONS.worn.label}
         </MenuItem>
-        <MenuItem value={INVENTORYLOCATIONS.backpack.value}>
+        <MenuItem value={INVENTORYLOCATIONS.backpack.value as string}>
           {INVENTORYLOCATIONS.backpack.label}
         </MenuItem>
       </Select>
