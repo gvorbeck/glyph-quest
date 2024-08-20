@@ -21,6 +21,7 @@ import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 import StepDetails from "./StepDetails";
 import StepName from "./StepName";
 import { Location, TypeOption } from "@/types/items";
+import useSnackbar from "@/hooks/useSnackbar";
 
 const characterBlank: Character = {
   abilities: {
@@ -83,6 +84,7 @@ export default function CharacterForm() {
   const [error, setError] = useState<number>(0);
   const { user } = useAuth();
   const router = useRouter();
+  const { snackbar, showSnackbar } = useSnackbar();
 
   const steps = [
     {
@@ -183,10 +185,11 @@ export default function CharacterForm() {
       const docRef = await addDoc(userCharactersCollection, {
         ...character,
       });
-
+      showSnackbar("Character created successfully.", "success");
       router.push(`/characters/${docRef.id}`);
     } catch (err) {
-      console.error("Failed to create character.");
+      showSnackbar("Failed to create character.", "error");
+      console.error("Failed to create character.", err);
     }
   };
 
@@ -240,6 +243,7 @@ export default function CharacterForm() {
           </Step>
         ))}
       </Stepper>
+      {snackbar}
     </>
   );
 }

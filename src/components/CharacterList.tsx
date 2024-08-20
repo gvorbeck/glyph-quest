@@ -7,33 +7,49 @@ import { useAuth } from "../context/AuthContext";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { deleteDocument } from "@/utils/utils";
 import { Character } from "@/types/character";
+import useSnackbar from "@/hooks/useSnackbar";
 
 export default function CharacterList() {
   const { user } = useAuth();
   const [characters, setCharacters] = useState<Character[]>([]);
+  const { snackbar, showSnackbar } = useSnackbar();
+
+  const fetchCharacters = async () => {
+    if (!user) return;
+
+    const userCharactersCollection = collection(
+      db,
+      "users",
+      user.uid,
+      "characters"
+    );
+    const characterSnapshot = await getDocs(userCharactersCollection);
+    const characterList = characterSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Character[];
+    setCharacters(characterList);
+  };
 
   useEffect(() => {
-    const fetchCharacters = async () => {
-      if (!user) return;
-
-      const userCharactersCollection = collection(
-        db,
-        "users",
-        user.uid,
-        "characters"
-      );
-      const characterSnapshot = await getDocs(userCharactersCollection);
-      const characterList = characterSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Character[];
-      setCharacters(characterList);
-    };
-
     fetchCharacters();
   }, [user]);
 
   if (!user) return null;
+
+  const handleDelete = async (characterId: string) => {
+    try {
+      await deleteDocument({
+        collection: "characters",
+        docId: characterId,
+        uid: user.uid,
+      });
+      fetchCharacters(); // Refresh the character list after deletion
+      showSnackbar("Character deleted successfully.", "success");
+    } catch (error) {
+      showSnackbar("Failed to delete character.", "error");
+    }
+  };
 
   const backgroundClasses: Record<Character["settings"]["wallpaper"], string> =
     {
@@ -96,13 +112,7 @@ export default function CharacterList() {
                   </Link>
                   <Button
                     variant="contained"
-                    onClick={() =>
-                      deleteDocument({
-                        collection: "characters",
-                        docId: character.id!,
-                        uid: user.uid,
-                      })
-                    }
+                    onClick={() => handleDelete(character.id!)}
                   >
                     Delete
                   </Button>
@@ -112,29 +122,7 @@ export default function CharacterList() {
           </Box>
         );
       })}
+      {snackbar} {/* Render the Snackbar */}
     </Box>
-    // <div className="grid gap-4">
-    //   {characters.map((character, index) => (
-    //     <div className="p-4 border border-gray-300 rounded" key={index}>
-    //       <h2 className="text-xl font-bold">{character.name}</h2>
-    //       {/* Add other character details here */}
-    // <Link key={character.id} href={`/characters/${character.id}`}>
-    //   <Button variant="contained">View Character</Button>
-    // </Link>
-    // <Button
-    //   variant="contained"
-    //   onClick={() =>
-    //     deleteDocument({
-    //       collection: "characters",
-    //       docId: character.id,
-    //       uid: user.uid,
-    //     })
-    //   }
-    // >
-    //   Delete Character
-    // </Button>
-    //     </div>
-    //   ))}
-    // </div>
   );
 }
