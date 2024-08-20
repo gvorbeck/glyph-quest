@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextField, Button, MenuItem, Typography } from "@mui/material";
 import { Item, Location, TypeOption } from "@/types/items";
 import { Character } from "@/types/character";
@@ -18,14 +18,13 @@ const defaultNewItem: Item = {
   detail: "",
 };
 
-const AddItemForm: React.FC<AddItemFormProps> = ({
-  setCharacter,
-  onClose,
-  editItem,
-}) => {
+const AddItemForm: React.FC<
+  AddItemFormProps & React.ComponentPropsWithRef<"div">
+> = ({ setCharacter, onClose, editItem, id }) => {
   const [newItem, setNewItem] = useState<Item>(
     editItem ?? (defaultNewItem as Item)
   );
+  const itemRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,8 +66,13 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
     console.log("newItem", newItem);
   }, [newItem]);
 
+  useEffect(() => {
+    if (itemRef.current) {
+      itemRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
   return (
-    <form noValidate autoComplete="off">
+    <form noValidate autoComplete="off" id={id} ref={itemRef}>
       <Typography variant="h4" className="font-jaini-purva">
         Add Item
       </Typography>

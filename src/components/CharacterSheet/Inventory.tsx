@@ -96,7 +96,11 @@ const Inventory: React.FC<InventoryProps> = ({
                 >
                   <Edit />
                 </IconButton>
-                <IconButton aria-label="delete item" color="primary">
+                <IconButton
+                  aria-label="delete item"
+                  color="primary"
+                  href="#newItem"
+                >
                   <Cancel />
                 </IconButton>
               </div>
@@ -113,6 +117,7 @@ const Inventory: React.FC<InventoryProps> = ({
           </Button>
         ) : (
           <NewInventoryItem
+            id="newItem"
             onClose={() => setNewFormOpen([false, undefined])}
             setCharacter={setCharacter}
             editItem={newFormOpen[1]}
