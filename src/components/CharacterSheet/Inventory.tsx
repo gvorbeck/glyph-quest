@@ -12,10 +12,12 @@ import {
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import InventoryLocationSelect from "../InventoryLocationSelect";
 import { Item, Location } from "@/types/items";
-import { Cancel, Edit } from "@mui/icons-material";
+import { Bolt, Cancel, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import InventoryErrors from "../InventoryErrors";
 import NewInventoryItem from "./NewInventoryItem";
+import { isCrit, rollDice } from "@/utils/utils";
+import useSnackbar from "@/hooks/useSnackbar";
 
 type InventoryProps = {
   xs?: number;
@@ -33,6 +35,7 @@ const Inventory: React.FC<InventoryProps> = ({
     false,
     undefined,
   ]);
+  const { snackbar, showSnackbar } = useSnackbar();
 
   const inventory = character.items.sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -56,6 +59,23 @@ const Inventory: React.FC<InventoryProps> = ({
 
   const handleEditItemClick = (item: Item) => {
     setNewFormOpen([true, item]);
+  };
+
+  const handleDeleteItemClick = (item: Item) => {
+    const items = character.items.filter((i) => i.name !== item.name);
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items,
+    }));
+  };
+
+  const handleAttackClick = (item: Item) => {
+    const attackRoll = rollDice(2);
+    if (isCrit(attackRoll as number)) {
+      showSnackbar("Critical Hit!", "success");
+    } else {
+      showSnackbar(`Attack Roll: ${attackRoll}`, "info");
+    }
   };
 
   return (
@@ -84,10 +104,22 @@ const Inventory: React.FC<InventoryProps> = ({
                 title={item.name}
               />
               <div className="flex gap-2 w-full justify-end">
+                {item.type.includes("weapon") && (
+                  <Button
+                    variant="outlined"
+                    startIcon={<Bolt />}
+                    size="small"
+                    className=" mr-auto"
+                    onClick={() => handleAttackClick(item)}
+                  >
+                    Attack
+                  </Button>
+                )}
                 <InventoryLocationSelect
                   id={item.name.toLowerCase()}
                   value={item.location}
                   onChange={(e) => handleItemLocationChange(e, item)}
+                  size="small"
                 />
                 <IconButton
                   aria-label="edit Item"
@@ -100,6 +132,7 @@ const Inventory: React.FC<InventoryProps> = ({
                   aria-label="delete item"
                   color="primary"
                   href="#newItem"
+                  onClick={() => handleDeleteItemClick(item)}
                 >
                   <Cancel />
                 </IconButton>
@@ -124,6 +157,7 @@ const Inventory: React.FC<InventoryProps> = ({
           />
         )}
       </Paper>
+      {snackbar}
     </Grid>
   );
 };

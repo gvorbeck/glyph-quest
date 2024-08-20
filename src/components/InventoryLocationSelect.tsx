@@ -7,6 +7,7 @@ type InventoryLocationSelectProps = {
   value: any;
   onChange: (event: SelectChangeEvent<Location>) => void;
   disabled?: boolean;
+  size?: "small" | "medium";
 };
 
 const InventoryLocationSelect: React.FC<InventoryLocationSelectProps> = ({
@@ -14,6 +15,7 @@ const InventoryLocationSelect: React.FC<InventoryLocationSelectProps> = ({
   value,
   onChange,
   disabled,
+  size = "medium",
 }) => {
   return (
     <>
@@ -23,7 +25,7 @@ const InventoryLocationSelect: React.FC<InventoryLocationSelectProps> = ({
         label="Location"
         onChange={onChange}
         disabled={disabled}
-        size="small"
+        size={size}
       >
         <MenuItem value={INVENTORYLOCATIONS.hands.value as string}>
           {INVENTORYLOCATIONS.hands.label}

@@ -52,6 +52,8 @@ export const rollTable: (table: string[]) => string = (table) => {
   return table[index];
 };
 
+export const isCrit: (roll: number) => boolean = (roll) => roll === 12;
+
 // Stats
 export const getModifier: (ability: number) => number = (ability) => {
   if (ability < 3) return 0;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, SnackbarCloseReason } from "@mui/material";
 
 type SnackbarSeverity = "success" | "error" | "warning" | "info";
 
@@ -31,7 +31,10 @@ export default function useSnackbar(
     });
   };
 
-  const handleClose = () => {
+  const handleClose = (_: any, reason?: SnackbarCloseReason) => {
+    if (reason === "clickaway") {
+      return;
+    }
     setSnackbarData((prev) => ({
       ...prev,
       open: false,
