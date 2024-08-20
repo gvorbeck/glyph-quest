@@ -67,32 +67,39 @@ const Inventory: React.FC<InventoryProps> = ({
         <InventoryErrors items={inventory} setError={setError} />
         <List>
           {inventory.map((item, index) => (
-            <ListItem key={index} className="items-start">
+            <ListItem
+              key={index}
+              className={`items-start flex-col ${
+                index % 2 === 0 ? "bg-white/5" : ""
+              }`}
+            >
               <ListItemText
                 primary={
                   item.amount !== "1" && item.amount !== undefined
                     ? `(${item.amount}) ${item.name}`
                     : item.name
                 }
-                className="[&_span]:truncate mr-2"
+                className="[&_span]:truncate w-full"
                 secondary={item.detail}
                 title={item.name}
               />
-              <InventoryLocationSelect
-                id={item.name.toLowerCase()}
-                value={item.location}
-                onChange={(e) => handleItemLocationChange(e, item)}
-              />
-              <IconButton
-                aria-label="edit Item"
-                color="primary"
-                onClick={() => handleEditItemClick(item)}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton aria-label="delete item" color="primary">
-                <Cancel />
-              </IconButton>
+              <div className="flex gap-2 w-full justify-end">
+                <InventoryLocationSelect
+                  id={item.name.toLowerCase()}
+                  value={item.location}
+                  onChange={(e) => handleItemLocationChange(e, item)}
+                />
+                <IconButton
+                  aria-label="edit Item"
+                  color="primary"
+                  onClick={() => handleEditItemClick(item)}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton aria-label="delete item" color="primary">
+                  <Cancel />
+                </IconButton>
+              </div>
             </ListItem>
           ))}
         </List>

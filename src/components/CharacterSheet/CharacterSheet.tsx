@@ -138,13 +138,16 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
       <Stats stats={primaryStats} xs={6} />
       <Stats stats={secondaryStats} xs={6} />
       <GQDivider />
-      <Features
-        character={character}
-        setCharacter={
-          setCharacter as React.Dispatch<React.SetStateAction<Character>>
-        }
-        xs={6}
-      />
+      <Grid xs={6} className="p-0">
+        <Features
+          character={character}
+          setCharacter={
+            setCharacter as React.Dispatch<React.SetStateAction<Character>>
+          }
+          xs={12}
+        />
+        <Description details={character.details} xs={12} />
+      </Grid>
       <Inventory
         xs={6}
         character={character}
@@ -153,7 +156,6 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
         }
       />
       <GQDivider />
-      <Description details={character.details} xs={6} />
     </Grid>
   );
 }
