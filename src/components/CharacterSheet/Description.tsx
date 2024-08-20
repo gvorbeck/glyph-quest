@@ -19,7 +19,9 @@ const Description: React.FC<DescriptionProps> = ({ details, xs }) => {
   return (
     <Grid xs={xs}>
       <Paper className="p-4">
-        <Typography variant="h3">Description</Typography>
+        <Typography variant="h3" className="font-jaini-purva">
+          Description
+        </Typography>
         <List dense>
           {details.appearance && (
             <ListItem>

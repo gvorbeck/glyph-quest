@@ -124,7 +124,9 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
   return (
     <Grid xs={xs}>
       <Paper className="p-4">
-        <Typography variant="h3">Features</Typography>
+        <Typography variant="h3" className="font-jaini-purva">
+          Features
+        </Typography>
         <List>
           {character.features?.map((feature, index) => (
             <ListItem key={index}>
