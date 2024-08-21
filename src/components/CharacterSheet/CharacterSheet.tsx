@@ -139,8 +139,8 @@ export default function CharacterSheet({
         }
       />
       <GQDivider />
-      <Stats stats={primaryStats} xs={6} />
-      <Stats stats={secondaryStats} xs={6} />
+      <Stats stats={primaryStats} xs={6} className="[&>div]:h-full" />
+      <Stats stats={secondaryStats} xs={6} className="[&>div]:h-full" />
       <GQDivider />
       <Grid xs={6} className="p-0">
         <Features

@@ -18,10 +18,13 @@ type Stat = {
 type StatsProps = {
   stats: Stat[];
   xs?: number;
-  className?: string;
 };
 
-const Stats: React.FC<StatsProps> = ({ xs, stats, className }) => {
+const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
+  xs,
+  stats,
+  className,
+}) => {
   return (
     <Grid xs={xs} className={className}>
       <Paper className="p-4">
