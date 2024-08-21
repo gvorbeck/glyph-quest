@@ -25,10 +25,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${Jaini.variable}`}>
-      <body>
+    <html lang="en" className={`${Jaini.variable} h-full`}>
+      <body className="h-full">
         <AuthProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
+          <ThemeRegistry>
+            <div className="flex flex-col h-full [&_footer]:mt-auto">
+              {children}
+            </div>
+          </ThemeRegistry>
         </AuthProvider>
       </body>
     </html>
