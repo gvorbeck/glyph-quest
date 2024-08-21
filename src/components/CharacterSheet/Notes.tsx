@@ -1,7 +1,7 @@
 import { Character } from "@/types/character";
 import { Paper, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type NotesProps = {
   xs?: number;
@@ -10,9 +10,36 @@ type NotesProps = {
 };
 
 const Notes: React.FC<NotesProps> = ({ xs, character, setCharacter }) => {
-  const [notes, setNotes] = useState<Character["notes"]>(character.notes);
+  const [pendingNotes, setPendingNotes] = useState<Character["notes"]>(
+    character.notes
+  );
 
-  const handleNotesChange = () => {};
+  const handleNotesChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = event.target;
+    setPendingNotes(value);
+  };
+
+  const handleNotesBlur = () => {
+    if (pendingNotes !== character.notes) {
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        notes: pendingNotes,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleNotesBlur();
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [pendingNotes]);
+
   return (
     <Grid xs={xs}>
       <Paper className="p-4">
@@ -25,8 +52,9 @@ const Notes: React.FC<NotesProps> = ({ xs, character, setCharacter }) => {
           className="w-full"
           minRows={5}
           maxRows={15}
-          value={notes}
+          value={pendingNotes}
           onChange={handleNotesChange}
+          onBlur={handleNotesBlur}
         />
       </Paper>
     </Grid>
