@@ -139,7 +139,9 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
         </List>
         {!!spellSlots && (
           <div>
-            <Typography variant="h3">Spells</Typography>
+            <Typography variant="h3" className="font-jaini-purva">
+              Spells
+            </Typography>
             <List className="mt-4">
               {spellSlotsArray.map((spell, index) => (
                 <ListItem key={index} className="px-0">
