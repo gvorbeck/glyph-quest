@@ -30,6 +30,7 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
   const [pendingSpellDescriptions, setPendingSpellDescriptions] = useState<
     Record<string, string>
   >({});
+  const [spellName, setSpellName] = useState<string>("");
 
   const spellSlots =
     character.features?.reduce((acc, feature) => {
@@ -105,6 +106,22 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
     }));
   };
 
+  const handleSpellNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSpellName(event.target.value);
+  };
+
+  const handleAddSpell = () => {
+    const spells = character.spells;
+    spells.push({ name: spellName, description: "" });
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      spells: [...spells],
+    }));
+    setSpellName("");
+  };
+
   useEffect(() => {
     const timers: Record<string, NodeJS.Timeout> = {};
 
@@ -176,12 +193,34 @@ const Features: React.FC<FeaturesProps> = ({ xs, character, setCharacter }) => {
                       />
                     </div>
                   ) : (
-                    <Button
-                      variant="contained"
-                      onClick={handleSpellGenerateClick}
-                    >
-                      Generate Spell
-                    </Button>
+                    <div className="flex gap-2 items-center">
+                      <TextField
+                        size="small"
+                        placeholder="Enter spell name"
+                        value={spellName}
+                        onChange={handleSpellNameChange}
+                      />
+                      {!spellName ? (
+                        <>
+                          <span>OR</span>
+                          <Button
+                            variant="contained"
+                            onClick={handleSpellGenerateClick}
+                            size="small"
+                          >
+                            Generate Spell
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          onClick={handleAddSpell}
+                        >
+                          Add Spell
+                        </Button>
+                      )}
+                    </div>
                   )}
                 </ListItem>
               ))}

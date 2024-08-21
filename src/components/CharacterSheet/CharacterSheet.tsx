@@ -19,7 +19,7 @@ import {
   Shield,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
-import { Alert, TextField } from "@mui/material";
+import { Alert, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 
@@ -109,6 +109,14 @@ export default function CharacterSheet({
           type="number"
           className="[&_input]:!text-sm [&_input]:py-1"
           value={character.health}
+          InputProps={{
+            inputProps: { min: 0 },
+            endAdornment: (
+              <InputAdornment position="end" className="opacity-70">
+                /{character.healthMax}
+              </InputAdornment>
+            ),
+          }}
         />
       ),
     },
