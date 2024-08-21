@@ -107,7 +107,7 @@ export default function CharacterList() {
                   {character.name}
                 </Typography>
                 <div className="flex gap-4 z-20">
-                  <Link href={`/characters/${character.id}`}>
+                  <Link href={`/characters/${user.uid}-${character.id}`}>
                     <Button variant="contained">Character Sheet</Button>
                   </Link>
                   <Button

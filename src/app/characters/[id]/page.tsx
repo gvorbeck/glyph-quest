@@ -20,14 +20,15 @@ export default function CharacterSheetPage({
 
     return () => unsubscribe();
   }, []);
-
-  const characterId = params.id;
+  const idString = params.id.split("-");
+  const userId = idString[0];
+  const characterId = idString[1];
 
   return (
     <>
       <SiteHeader user={user} />
       <main className="max-w-[1000px] mx-auto p-4">
-        <CharacterSheet characterId={characterId} />
+        <CharacterSheet characterId={characterId} userId={userId} />
       </main>
       <SiteFooter />
     </>

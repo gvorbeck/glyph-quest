@@ -24,9 +24,13 @@ import Inventory from "./Inventory";
 
 interface CharacterSheetProps {
   characterId: string;
+  userId: string;
 }
 
-export default function CharacterSheet({ characterId }: CharacterSheetProps) {
+export default function CharacterSheet({
+  characterId,
+  userId,
+}: CharacterSheetProps) {
   const [character, setCharacter] = useState<Character | null>(null);
   const { user } = useAuth();
 
@@ -35,9 +39,8 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
    */
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!user) return;
-
-      const docRef = doc(db, "users", user.uid, "characters", characterId);
+      // if (!user) return;
+      const docRef = doc(db, "users", userId, "characters", characterId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setCharacter(docSnap.data() as Character);
@@ -47,7 +50,7 @@ export default function CharacterSheet({ characterId }: CharacterSheetProps) {
     };
 
     fetchCharacter();
-  }, [user, characterId]);
+  }, [userId, characterId]);
 
   /**
    * * Update Firestore document when character state changes
