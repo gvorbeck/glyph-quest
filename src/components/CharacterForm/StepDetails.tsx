@@ -2,12 +2,8 @@ import { Character } from "@/types/character";
 import {
   Button,
   FormControl,
-  FormControlLabel,
-  FormLabel,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
   SelectChangeEvent,
   TextField,

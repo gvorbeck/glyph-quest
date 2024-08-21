@@ -71,6 +71,18 @@ export default function CharacterSheet({
 
   if (!character) return <p>Loading character...</p>;
 
+  const handleHealthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    if (!setCharacter || !character) return;
+    setCharacter(
+      (prevCharacter) =>
+        ({
+          ...prevCharacter,
+          health: parseInt(value),
+        } as Character)
+    );
+  };
+
   const primaryStats = [
     {
       icon: <FitnessCenter />,
@@ -109,6 +121,7 @@ export default function CharacterSheet({
           type="number"
           className="[&_input]:!text-sm [&_input]:py-1"
           value={character.health}
+          onChange={handleHealthChange}
           InputProps={{
             inputProps: { min: 0 },
             endAdornment: (

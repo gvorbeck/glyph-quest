@@ -1,13 +1,6 @@
 import { Character, Feature } from "@/types/character";
 import { FEATURES } from "@/utils/constants";
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import SpellGenerator from "./SpellGenerator";
 import GQRadioGroup from "../GQRadioGroup";

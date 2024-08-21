@@ -187,7 +187,7 @@ export default function CharacterForm() {
         ...character,
       });
       showSnackbar("Character created successfully.", "success");
-      router.push(`/characters/${docRef.id}`);
+      router.push(`/characters/${user.uid}-${docRef.id}`);
     } catch (err) {
       showSnackbar("Failed to create character.", "error");
       console.error("Failed to create character.", err);

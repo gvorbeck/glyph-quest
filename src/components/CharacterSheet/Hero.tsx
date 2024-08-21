@@ -1,9 +1,7 @@
 import { Character } from "@/types/character";
 import {
-  Box,
   Button,
   IconButton,
-  Modal,
   TextField,
   Tooltip,
   Typography,

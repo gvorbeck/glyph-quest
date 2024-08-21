@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextField, Button, MenuItem, Typography } from "@mui/material";
-import { Item, Location, TypeOption } from "@/types/items";
+import { Item } from "@/types/items";
 import { Character } from "@/types/character";
 
 type AddItemFormProps = {

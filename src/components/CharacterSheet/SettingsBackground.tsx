@@ -1,5 +1,5 @@
 import { Character } from "@/types/character";
-import { ImageList, ImageListItem, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Image from "next/image";
 
 type SettingsBackgroundProps = {

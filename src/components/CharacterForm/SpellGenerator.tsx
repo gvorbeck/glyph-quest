@@ -1,13 +1,5 @@
 import { getSpellName, rollDice } from "@/utils/utils";
 import { Button, TextField, Typography } from "@mui/material";
-import {
-  physicalEffects,
-  etherealEffects,
-  etherealElements,
-  etherealForms,
-  physicalElements,
-  physicalForms,
-} from "@/data/spellNames";
 import { Character } from "@/types/character";
 
 type SpellGeneratorProps = {
@@ -25,20 +17,27 @@ const SpellGenerator: React.FC<SpellGeneratorProps> = ({
 }) => {
   const handleSpellGenerateClick = () => {
     const spellName = getSpellName(rollDice(2, true) as number[]);
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      spells: [{ name: spellName, description: "" }],
-    }));
+    setCharacter((prevCharacter) => {
+      const newSpells = [...prevCharacter.spells];
+      newSpells[index] = { name: spellName, description: "" };
+      return {
+        ...prevCharacter,
+        spells: newSpells,
+      };
+    });
   };
 
   const handleSpellNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setCharacter((prevCharacter) => {
-      const spells = prevCharacter.spells;
-      spells[index].name = value;
+      const newSpells = [...prevCharacter.spells];
+      if (!newSpells[index]) {
+        newSpells[index] = { name: "", description: "" };
+      }
+      newSpells[index].name = value;
       return {
         ...prevCharacter,
-        spells,
+        spells: newSpells,
       };
     });
   };
@@ -48,11 +47,14 @@ const SpellGenerator: React.FC<SpellGeneratorProps> = ({
   ) => {
     const { value } = e.target;
     setCharacter((prevCharacter) => {
-      const spells = prevCharacter.spells;
-      spells[index].description = value;
+      const newSpells = [...prevCharacter.spells];
+      if (!newSpells[index]) {
+        newSpells[index] = { name: "", description: "" };
+      }
+      newSpells[index].description = value;
       return {
         ...prevCharacter,
-        spells,
+        spells: newSpells,
       };
     });
   };
@@ -66,13 +68,13 @@ const SpellGenerator: React.FC<SpellGeneratorProps> = ({
           <TextField
             size="small"
             placeholder="Spell Name"
-            value={character.spells[index]?.name}
+            value={character.spells[index]?.name || ""}
             onChange={handleSpellNameChange}
           />
           <Button
             variant="contained"
             onClick={handleSpellGenerateClick}
-            // disabled={!!character.spells.length}
+            disabled={!!character.spells[index]?.name}
           >
             Generate Spell
           </Button>
@@ -81,7 +83,7 @@ const SpellGenerator: React.FC<SpellGeneratorProps> = ({
           size="small"
           placeholder="Spell Description (optional)"
           multiline
-          value={character.spells[index]?.description}
+          value={character.spells[index]?.description || ""}
           onChange={handleSpellDescriptionChange}
         />
       </div>
