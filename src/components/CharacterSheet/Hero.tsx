@@ -126,7 +126,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
       <Grid xs={8} className="flex flex-col gap-4 relative">
         <Typography
           variant="h2"
-          className="font-jaini-purva text-amber pl-4 text-7xl [text-shadow:2px_2px_black]"
+          className="font-jaini-purva text-amber pl-4 text-7xl [text-shadow:2px_2px_#242120]"
         >
           {character.name}
         </Typography>

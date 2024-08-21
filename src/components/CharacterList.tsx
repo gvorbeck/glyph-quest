@@ -111,7 +111,7 @@ export default function CharacterList() {
                     <Button variant="contained">Character Sheet</Button>
                   </Link>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={() => handleDelete(character.id!)}
                   >
                     Delete
