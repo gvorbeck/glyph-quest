@@ -19,7 +19,7 @@ import {
   Shield,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
-import { TextField } from "@mui/material";
+import { Alert, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 
@@ -125,48 +125,65 @@ export default function CharacterSheet({
     };
 
   return (
-    <Grid
-      container
-      spacing={2}
-      className={`${
-        backgroundClasses[character.settings.wallpaper] || ""
-      } bg-contain bg-no-repeat bg-darkGray`}
-    >
-      <Hero
-        character={character}
-        setCharacter={
-          setCharacter as React.Dispatch<React.SetStateAction<Character>>
-        }
-      />
-      <GQDivider />
-      <Stats stats={primaryStats} xs={6} className="[&>div]:h-full" />
-      <Stats stats={secondaryStats} xs={6} className="[&>div]:h-full" />
-      <GQDivider />
-      <Grid xs={6} className="p-0">
-        <Features
+    <>
+      <Grid
+        container
+        spacing={2}
+        className={`${
+          backgroundClasses[character.settings.wallpaper] || ""
+        } bg-contain bg-no-repeat bg-darkGray`}
+      >
+        {!user && (
+          <Grid xs={12}>
+            <Alert severity="error">
+              You are not logged in. No changes will be saved.
+            </Alert>
+          </Grid>
+        )}
+        {user && user.uid !== userId && (
+          <Grid xs={12}>
+            <Alert severity="info">
+              You are viewing another user's character. No changes will be
+              saved.
+            </Alert>
+          </Grid>
+        )}
+        <Hero
           character={character}
           setCharacter={
             setCharacter as React.Dispatch<React.SetStateAction<Character>>
           }
-          xs={12}
         />
-        <Description details={character.details} xs={12} />
+        <GQDivider />
+        <Stats stats={primaryStats} xs={6} className="[&>div]:h-full" />
+        <Stats stats={secondaryStats} xs={6} className="[&>div]:h-full" />
+        <GQDivider />
+        <Grid xs={6} className="p-0">
+          <Features
+            character={character}
+            setCharacter={
+              setCharacter as React.Dispatch<React.SetStateAction<Character>>
+            }
+            xs={12}
+          />
+          <Description details={character.details} xs={12} />
+        </Grid>
+        <Inventory
+          xs={6}
+          character={character}
+          setCharacter={
+            setCharacter as React.Dispatch<React.SetStateAction<Character>>
+          }
+        />
+        <GQDivider />
+        <Notes
+          xs={12}
+          character={character}
+          setCharacter={
+            setCharacter as React.Dispatch<React.SetStateAction<Character>>
+          }
+        />
       </Grid>
-      <Inventory
-        xs={6}
-        character={character}
-        setCharacter={
-          setCharacter as React.Dispatch<React.SetStateAction<Character>>
-        }
-      />
-      <GQDivider />
-      <Notes
-        xs={12}
-        character={character}
-        setCharacter={
-          setCharacter as React.Dispatch<React.SetStateAction<Character>>
-        }
-      />
-    </Grid>
+    </>
   );
 }
