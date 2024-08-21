@@ -21,6 +21,7 @@ import {
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
 import { TextField } from "@mui/material";
 import Inventory from "./Inventory";
+import Notes from "./Notes";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -159,6 +160,13 @@ export default function CharacterSheet({
         }
       />
       <GQDivider />
+      <Notes
+        xs={12}
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
     </Grid>
   );
 }

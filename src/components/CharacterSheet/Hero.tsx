@@ -80,6 +80,13 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
     }));
   };
 
+  const handleGoldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      gold: parseInt(e.target.value),
+    }));
+  };
+
   const stats = [
     {
       icon: <Grade />,
@@ -108,6 +115,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
           type="number"
           className="[&_input]:text-sm [&_input]:py-1"
           value={character.gold}
+          onChange={handleGoldChange}
         />
       ),
     },

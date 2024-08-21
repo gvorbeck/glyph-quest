@@ -76,6 +76,7 @@ const characterBlank: Character = {
   settings: {
     wallpaper: "sheet-hero",
   },
+  notes: "",
 };
 
 export default function CharacterForm() {
