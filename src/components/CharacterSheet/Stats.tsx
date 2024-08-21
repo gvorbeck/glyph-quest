@@ -1,9 +1,11 @@
 import {
+  Box,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Paper,
+  Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 
@@ -31,7 +33,12 @@ const Stats: React.FC<StatsProps> = ({ xs, stats, className }) => {
                   {stat.icon}
                 </ListItemIcon>
               )}
-              <ListItemText primary={stat.primary} secondary={stat.secondary} />
+              <div className="flex flex-col gap-2">
+                <Typography variant="body1">{stat.primary}</Typography>
+                <Box typography="body2" className="opacity-70">
+                  {stat.secondary}
+                </Box>
+              </div>
             </ListItem>
           ))}
         </List>
