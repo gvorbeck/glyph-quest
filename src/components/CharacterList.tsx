@@ -122,7 +122,7 @@ export default function CharacterList() {
           </Box>
         );
       })}
-      {snackbar} {/* Render the Snackbar */}
+      {snackbar}
     </Box>
   );
 }

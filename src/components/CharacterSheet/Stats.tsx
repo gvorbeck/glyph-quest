@@ -38,7 +38,7 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
               )}
               <div className="flex flex-col gap-2">
                 <Typography variant="body1">{stat.primary}</Typography>
-                <Box typography="body2" className="opacity-70">
+                <Box typography="body2" className="[&_p]:opacity-70">
                   {stat.secondary}
                 </Box>
               </div>
