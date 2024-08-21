@@ -15,6 +15,7 @@ import { useState } from "react";
 import { User } from "firebase/auth";
 import Link from "next/link";
 import { Castle } from "@mui/icons-material";
+import { auth } from "@/lib/firebase";
 
 type SiteHeaderProps = {
   user: User | null;
@@ -110,19 +111,26 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
                 key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
+                variant="outlined"
               >
                 <Link href={page.link}>{page.name}</Link>
               </Button>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title={user ? user.email : ""}>
-              <Button variant="contained" color="primary">
-                Log {user ? "Out" : "In"}
-              </Button>
-            </Tooltip>
-          </Box>
+          {user && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title={user ? user.email : ""}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => auth.signOut()}
+                >
+                  Log Out
+                </Button>
+              </Tooltip>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

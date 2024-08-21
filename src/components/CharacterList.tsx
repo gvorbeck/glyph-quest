@@ -82,6 +82,15 @@ export default function CharacterList() {
 
   return (
     <Box className="flex flex-col gap-4 mt-8">
+      {characters.length === 0 && (
+        <Typography>
+          You have no characters yet.{" "}
+          <Link href="/characters/new" className="text-amber underline">
+            Create one
+          </Link>{" "}
+          to get started.
+        </Typography>
+      )}
       {characters.map((character: Character, index) => {
         return (
           <Box key={index}>

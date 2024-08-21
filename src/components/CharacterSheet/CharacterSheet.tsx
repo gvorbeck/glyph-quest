@@ -22,6 +22,7 @@ import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
 import { Alert, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
+import SkeletonSheet from "./SkeletonSheet";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -69,7 +70,7 @@ export default function CharacterSheet({
     });
   }, [character]);
 
-  if (!character) return <p>Loading character...</p>;
+  if (!character) return <SkeletonSheet />;
 
   const handleHealthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

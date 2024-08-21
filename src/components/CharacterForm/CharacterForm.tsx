@@ -200,7 +200,6 @@ export default function CharacterForm() {
 
   return (
     <>
-      <p>make better components. standardize coomponent jsx</p>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
