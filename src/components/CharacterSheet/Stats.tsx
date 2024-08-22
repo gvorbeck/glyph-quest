@@ -29,9 +29,9 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
       <Paper className="bg-[rgba(18,_18,_18,_0.85)]">
         <List>
           {stats.map((stat, index) => (
-            <ListItem key={index}>
+            <ListItem key={index} className="items-start">
               {stat.icon && (
-                <ListItemIcon className="[&_svg]:fill-amber">
+                <ListItemIcon className="[&_svg]:fill-amber mt-3">
                   {stat.icon}
                 </ListItemIcon>
               )}

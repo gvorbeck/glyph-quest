@@ -34,9 +34,9 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
   return (
     <AppBar position="static" className="bg-darkGray">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters className="lg:max-w-[1000px] mx-auto pl-8 pr-4">
           <Link href="/" className="flex gap-2 items-center">
-            <Castle sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <Castle sx={{ display: { xs: "none", md: "flex" } }} />
             <Typography
               variant="h1"
               noWrap
