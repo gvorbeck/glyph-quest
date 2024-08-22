@@ -3,31 +3,29 @@
 import { useEffect, useState } from "react";
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
-import CharacterList from "../components/CharacterList";
+import CharacterList from "../components/CharacterList/CharacterList";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import SiteHeader from "@/components/SiteHeader";
 import { Typography } from "@mui/material";
 import SiteFooter from "@/components/SiteFooter";
+import CharacterListPageSkeleton from "@/components/CharacterList/CharacterListPageSkeleton";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
-  const [showSignUp, setShowSignUp] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsMounted(true);
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  if (!isMounted) {
-    return null; // Avoid rendering on server-side to prevent mismatches
-  }
+  if (loading) return <CharacterListPageSkeleton />;
 
   if (user) {
     return (

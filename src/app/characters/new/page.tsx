@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 export default function CharacterFormPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // Track loading state
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {

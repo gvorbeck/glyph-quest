@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { db, collection, getDocs } from "../lib/firebase";
+import { db, collection, getDocs } from "../../lib/firebase";
 import Link from "next/link";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { deleteDocument } from "@/utils/utils";
 import { Character } from "@/types/character";
 import useSnackbar from "@/hooks/useSnackbar";
+import CharacterListSkeleton from "./CharacterListSkeleton";
 
 export default function CharacterList() {
   const { user } = useAuth();
   const [characters, setCharacters] = useState<Character[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const { snackbar, showSnackbar } = useSnackbar();
 
   const fetchCharacters = async () => {
@@ -29,6 +31,7 @@ export default function CharacterList() {
       ...doc.data(),
     })) as Character[];
     setCharacters(characterList);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -79,6 +82,8 @@ export default function CharacterList() {
         return "0%";
     }
   };
+
+  if (loading) return <CharacterListSkeleton />;
 
   return (
     <Box className="flex flex-col gap-4 mt-8">
