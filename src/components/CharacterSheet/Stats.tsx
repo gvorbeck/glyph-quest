@@ -26,7 +26,7 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
 }) => {
   return (
     <Grid xs={xs} className={className}>
-      <Paper className="p-4">
+      <Paper className="p-4 bg-[rgba(18,_18,_18,_0.85)]">
         <List>
           {stats.map((stat, index) => (
             <ListItem key={index}>

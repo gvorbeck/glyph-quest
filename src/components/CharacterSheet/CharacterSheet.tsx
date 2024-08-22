@@ -14,15 +14,20 @@ import {
   DirectionsRun,
   Favorite,
   FitnessCenter,
+  Grade,
   MilitaryTech,
+  Paid,
   Psychology,
   Shield,
+  TrendingUp,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
 import { Alert, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
+import SwordFiller from "@/svg/SwordFiller";
+import LevelUp from "./LevelUp";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -72,6 +77,26 @@ export default function CharacterSheet({
 
   if (!character) return <SkeletonSheet />;
 
+  const handleXPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharacter(
+      (prevCharacter) =>
+        ({
+          ...prevCharacter,
+          xp: parseInt(e.target.value),
+        } as Character)
+    );
+  };
+
+  const handleGoldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharacter(
+      (prevCharacter) =>
+        ({
+          ...prevCharacter,
+          gold: parseInt(e.target.value),
+        } as Character)
+    );
+  };
+
   const handleHealthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (!setCharacter || !character) return;
@@ -84,19 +109,21 @@ export default function CharacterSheet({
     );
   };
 
+  const iconSizeClassNames = "w-10 h-10";
+
   const primaryStats = [
     {
-      icon: <FitnessCenter />,
+      icon: <FitnessCenter className={iconSizeClassNames} />,
       primary: character.abilities.str.short,
       secondary: character.abilities.str.value,
     },
     {
-      icon: <DirectionsRun />,
+      icon: <DirectionsRun className={iconSizeClassNames} />,
       primary: character.abilities.dex.short,
       secondary: character.abilities.dex.value,
     },
     {
-      icon: <Psychology />,
+      icon: <Psychology className={iconSizeClassNames} />,
       primary: character.abilities.wil.short,
       secondary: character.abilities.wil.value,
     },
@@ -104,33 +131,78 @@ export default function CharacterSheet({
 
   const secondaryStats = [
     {
-      icon: <MilitaryTech />,
+      icon: <MilitaryTech className={iconSizeClassNames} />,
       primary: "Attack",
       secondary: `+${getAttackBonus(character)}`,
     },
     {
-      icon: <Shield />,
+      icon: <Shield className={iconSizeClassNames} />,
       primary: "Armor",
       secondary: getArmorRating(character),
     },
     {
-      icon: <Favorite />,
+      icon: <Favorite className={iconSizeClassNames} />,
       primary: "Health",
       secondary: (
         <TextField
           size="small"
           type="number"
-          className="[&_input]:!text-sm [&_input]:py-1"
+          className="[&_input]:py-1 [&_input]:w-12 [&_input]:text-xl"
           value={character.health}
           onChange={handleHealthChange}
           InputProps={{
             inputProps: { min: 0 },
             endAdornment: (
-              <InputAdornment position="end" className="opacity-70">
+              <InputAdornment
+                position="end"
+                className="opacity-70 text-xl"
+                component="span"
+              >
                 /{character.healthMax}
               </InputAdornment>
             ),
           }}
+        />
+      ),
+    },
+  ];
+
+  const tertiaryStats = [
+    {
+      icon: <Grade className={iconSizeClassNames} />,
+      primary: "Level",
+      secondary: (
+        <LevelUp
+          character={character}
+          setCharacter={
+            setCharacter as React.Dispatch<React.SetStateAction<Character>>
+          }
+        />
+      ),
+    },
+    {
+      icon: <TrendingUp className={iconSizeClassNames} />,
+      primary: "XP",
+      secondary: (
+        <TextField
+          size="small"
+          type="number"
+          className="[&_input]:py-1 [&_input]:w-11 [&_input]:text-xl"
+          value={character.xp}
+          onChange={handleXPChange}
+        />
+      ),
+    },
+    {
+      icon: <Paid className={iconSizeClassNames} />,
+      primary: "Gold",
+      secondary: (
+        <TextField
+          size="small"
+          type="number"
+          className="[&_input]:py-1 [&_input]:w-16 [&_input]:text-xl"
+          value={character.gold}
+          onChange={handleGoldChange}
         />
       ),
     },
@@ -145,6 +217,9 @@ export default function CharacterSheet({
       "sheet-ranger": "bg-sheet-ranger",
       "sheet-thief": "bg-sheet-thief",
     };
+
+  const statTitleClassNames =
+    "[&>div]:h-full [&_p]:font-jaini-purva [&_p]:text-6xl [&_div_div_div]:text-4xl";
 
   return (
     <>
@@ -177,8 +252,9 @@ export default function CharacterSheet({
           }
         />
         <GQDivider />
-        <Stats stats={primaryStats} xs={6} className="[&>div]:h-full" />
-        <Stats stats={secondaryStats} xs={6} className="[&>div]:h-full" />
+        <Stats stats={tertiaryStats} xs={4} className={statTitleClassNames} />
+        <Stats stats={primaryStats} xs={4} className={statTitleClassNames} />
+        <Stats stats={secondaryStats} xs={4} className={statTitleClassNames} />
         <GQDivider />
         <Grid xs={6} className="p-0">
           <Features
