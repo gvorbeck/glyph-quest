@@ -5,7 +5,7 @@ import {
   SnackbarCloseReason,
   IconButton,
 } from "@mui/material";
-import { ContentCopy } from "@mui/icons-material";
+import { Close, ContentCopy } from "@mui/icons-material";
 
 type SnackbarSeverity = "success" | "error" | "warning" | "info";
 
@@ -68,7 +68,19 @@ export default function useSnackbar(
         onClose={handleClose}
         severity={snackbarData.severity}
         sx={{ width: "100%" }}
-        action={snackbarData.action}
+        action={
+          <>
+            {snackbarData.action}
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+            >
+              <Close fontSize="small" />
+            </IconButton>
+          </>
+        }
       >
         {snackbarData.message}
       </Alert>
