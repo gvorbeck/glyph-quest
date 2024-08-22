@@ -26,7 +26,6 @@ import { Alert, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
-import SwordFiller from "@/svg/SwordFiller";
 import LevelUp from "./LevelUp";
 
 interface CharacterSheetProps {

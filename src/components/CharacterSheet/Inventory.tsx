@@ -106,7 +106,7 @@ const Inventory: React.FC<InventoryProps> = ({
               <div className="flex gap-2 w-full justify-end">
                 {item.type.includes("weapon") && (
                   <Button
-                    variant="outlined"
+                    variant="text"
                     startIcon={<Bolt />}
                     size="small"
                     className=" mr-auto"

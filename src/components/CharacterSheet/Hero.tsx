@@ -32,7 +32,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
             onClick={handleSettingsOpen}
             className="absolute bottom-0 left-4 bg-darkGray"
           >
-            <SettingsIcon color="primary" />
+            <SettingsIcon color="primary" className="w-10 h-10" />
           </IconButton>
         </Tooltip>
         <GQModal
