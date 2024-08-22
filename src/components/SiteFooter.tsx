@@ -5,7 +5,7 @@ type SiteFooterProps = {};
 const SiteFooter: React.FC<SiteFooterProps> = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="p-4">
+    <footer className="lg:max-w-[1000px] mx-auto w-full pt-4 pl-8 pr-4">
       <Typography variant="body2">
         © {currentYear}{" "}
         <Link

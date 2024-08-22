@@ -11,11 +11,12 @@ type AddItemFormProps = {
 
 const defaultNewItem: Item = {
   hands: null,
-  location: null,
+  location: "backpack",
   name: "",
   type: "item",
   amount: "1",
   detail: "",
+  damage: 0,
 };
 
 const AddItemForm: React.FC<
@@ -29,6 +30,12 @@ const AddItemForm: React.FC<
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log(name, value);
+    if (value === "heavy-weapon") {
+      setNewItem((prevItem) => ({
+        ...prevItem,
+        damage: 1,
+      }));
+    }
     setNewItem((prevItem) => ({
       ...prevItem,
       [name]: value,

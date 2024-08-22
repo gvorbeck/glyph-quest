@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Snackbar, Alert, SnackbarCloseReason } from "@mui/material";
+import {
+  Snackbar,
+  Alert,
+  SnackbarCloseReason,
+  IconButton,
+} from "@mui/material";
+import { ContentCopy } from "@mui/icons-material";
 
 type SnackbarSeverity = "success" | "error" | "warning" | "info";
 
@@ -7,15 +13,20 @@ interface SnackbarData {
   open: boolean;
   message: string;
   severity: SnackbarSeverity;
+  action?: JSX.Element;
 }
 
 interface UseSnackbarReturn {
   snackbar: JSX.Element;
-  showSnackbar: (message: string, severity: SnackbarSeverity) => void;
+  showSnackbar: (
+    message: string,
+    severity: SnackbarSeverity,
+    action?: JSX.Element
+  ) => void;
 }
 
 export default function useSnackbar(
-  autoHideDuration: number = 6000
+  autoHideDuration?: number
 ): UseSnackbarReturn {
   const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
@@ -23,11 +34,16 @@ export default function useSnackbar(
     severity: "success",
   });
 
-  const showSnackbar = (message: string, severity: SnackbarSeverity) => {
+  const showSnackbar = (
+    message: string,
+    severity: SnackbarSeverity,
+    action?: JSX.Element
+  ) => {
     setSnackbarData({
       open: true,
       message,
       severity,
+      action,
     });
   };
 
@@ -46,11 +62,13 @@ export default function useSnackbar(
       open={snackbarData.open}
       autoHideDuration={autoHideDuration}
       onClose={handleClose}
+      action={snackbarData.action}
     >
       <Alert
         onClose={handleClose}
         severity={snackbarData.severity}
         sx={{ width: "100%" }}
+        action={snackbarData.action}
       >
         {snackbarData.message}
       </Alert>

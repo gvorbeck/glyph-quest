@@ -12,7 +12,7 @@ import {
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import InventoryLocationSelect from "../InventoryLocationSelect";
 import { Item, Location } from "@/types/items";
-import { Bolt, Cancel, Edit } from "@mui/icons-material";
+import { Bolt, Cancel, Edit, ContentCopy } from "@mui/icons-material";
 import { useState } from "react";
 import InventoryErrors from "../InventoryErrors";
 import NewInventoryItem from "./NewInventoryItem";
@@ -70,11 +70,37 @@ const Inventory: React.FC<InventoryProps> = ({
   };
 
   const handleAttackClick = (item: Item) => {
-    const attackRoll = rollDice(2);
-    if (isCrit(attackRoll as number)) {
-      showSnackbar("Critical Hit!", "success");
+    const attackRoll = rollDice(2, true) as number[];
+    const attackRollString = attackRoll.join(" ");
+    const attackRollTotal = attackRoll.reduce((a, b) => a + b, 0);
+    const message = `Attack Roll: [${attackRollString}]: ${attackRollTotal}`;
+
+    const copyToClipboard = () => {
+      navigator.clipboard.writeText(message).then(
+        () => {
+          showSnackbar("Copied to clipboard!", "success");
+        },
+        (err) => {
+          console.error("Could not copy text: ", err);
+        }
+      );
+    };
+
+    const action = (
+      <IconButton
+        size="small"
+        aria-label="copy"
+        color="inherit"
+        onClick={copyToClipboard}
+      >
+        <ContentCopy fontSize="small" />
+      </IconButton>
+    );
+
+    if (isCrit(attackRollTotal)) {
+      showSnackbar("Critical Hit!", "success", action);
     } else {
-      showSnackbar(`Attack Roll: ${attackRoll}`, "info");
+      showSnackbar(message, "info", action);
     }
   };
 
