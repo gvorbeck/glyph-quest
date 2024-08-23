@@ -54,7 +54,9 @@ export const rollTable: (table: string[]) => string = (table) => {
 
 export const isCrit: (roll: number) => boolean = (roll) => roll === 12;
 
-// Stats
+/**
+ * * Stats
+ */
 export const getModifier: (ability: number) => number = (ability) => {
   if (ability < 3) return 0;
   if (ability < 6) return 1;
@@ -125,7 +127,9 @@ export const getFeatureText: (feature: Feature) => string = (feature) => {
   return "";
 };
 
-// Items
+/**
+ * * Items
+ */
 export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
   items
 ) => items.filter((item: Item) => item.type.includes("weapon"));
@@ -134,7 +138,9 @@ export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
   items
 ) => items.find((item) => item.type === "armor" && item.location === "worn");
 
-// Spells
+/**
+ * * Spells
+ */
 const spellNames = [
   [
     [physicalEffects, physicalForms],
@@ -176,7 +182,9 @@ export const getSpellName = (dice: number[]): string => {
   return `${firstWord} ${secondWord}`;
 };
 
-// Firestore
+/**
+ * * Firestore
+ */
 type UpdatePayload = {
   collection: string;
   docId: string;

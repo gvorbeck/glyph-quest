@@ -16,7 +16,7 @@ import { Bolt, Cancel, Edit, ContentCopy } from "@mui/icons-material";
 import { useState } from "react";
 import InventoryErrors from "../InventoryErrors";
 import NewInventoryItem from "./NewInventoryItem";
-import { isCrit, rollDice } from "@/utils/utils";
+import { getAttackBonus, isCrit, rollDice } from "@/utils/utils";
 import useSnackbar from "@/hooks/useSnackbar";
 
 type InventoryProps = {
@@ -70,10 +70,14 @@ const Inventory: React.FC<InventoryProps> = ({
   };
 
   const handleAttackClick = (item: Item) => {
+    const attackBonus = getAttackBonus(character);
     const attackRoll = rollDice(2, true) as number[];
-    const attackRollString = attackRoll.join(" ");
-    const attackRollTotal = attackRoll.reduce((a, b) => a + b, 0);
-    const message = `Attack Roll: [${attackRollString}]: ${attackRollTotal}`;
+    const attackRollString = attackRoll.join(", ");
+    const attackRollTotal = attackRoll.reduce((a, b) => a + b, 0) + attackBonus;
+    const damageBonus = !!item.damage
+      ? ` (+${item.damage} damage on a hit)`
+      : "";
+    const message = `${item.name} Attack Roll (2d6+AB): [${attackRollString}] + ${attackBonus} = ${attackRollTotal}${damageBonus}`;
 
     const copyToClipboard = () => {
       navigator.clipboard.writeText(message).then(
