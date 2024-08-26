@@ -1,17 +1,19 @@
+import usePopover from "@/hooks/usePopover";
 import useSnackbar from "@/hooks/useSnackbar";
 import { rollDice } from "@/utils/utils";
 import {
   Box,
-  IconButton,
+  Button,
   List,
   ListItem,
   ListItemIcon,
   Paper,
+  Popover,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
+import { useState } from "react";
 import CopySnackbarAction from "../SnackbarActions/CopySnackbarAction";
-import { FlashOn } from "@mui/icons-material";
 
 type Stat = {
   icon?: React.ReactNode;
@@ -30,66 +32,46 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
   stats,
   className,
 }) => {
+  const { openPopover, closePopover, popoverProps } = usePopover();
+  const [selectedStat, setSelectedStat] = useState<Stat | null>(null);
+
+  const handleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    stat: Stat
+  ) => {
+    setSelectedStat(stat);
+    openPopover(e);
+  };
   const { snackbar, showSnackbar } = useSnackbar();
 
-  const handleDangerRoll = (statValue: number, statName: string) => {
-    const rollString = (rolls: number[]) => rolls.join(", ");
-    const rollTotal = (rolls: number[]) => rolls.reduce((a, b) => a + b, 0);
-    const rollMessage = (
-      rollName: string,
-      rollFormula: string,
-      rollArray: string,
-      total: number
-    ) =>
-      `${rollName} Roll (${rollFormula}): [${rollArray}] + ${statValue} = ${total}`;
+  const handleDangerRoll = (
+    stat: string | undefined,
+    value: string | undefined,
+    isAdvantage: boolean = false
+  ) => {
+    closePopover();
+    if (!stat || value === undefined) return;
 
-    const abilityRoll = rollDice(2, true) as number[];
-    const abilityRollString = rollString(abilityRoll);
-    const abilityRollTotal = rollTotal(abilityRoll) + statValue;
-    const message = rollMessage(
-      `${statName} Danger`,
-      `2d6+${statValue}`,
-      abilityRollString,
-      abilityRollTotal
-    );
+    let rollArr = rollDice(isAdvantage ? 3 : 2, true) as number[];
+    let rollSum: number;
+    let rollMsg: string;
 
-    const advantageRoll = rollDice(3, true) as number[];
-    const removedDie = advantageRoll.sort().shift();
-    const advantageRollString = rollString(advantageRoll);
-    const advantageRollTotal = rollTotal(advantageRoll) + statValue;
+    if (isAdvantage) {
+      // Sort the array, remove the lowest number, and sum the remaining two highest
+      const sortedRolls = rollArr.sort((a, b) => a - b);
+      const removedRoll = sortedRolls.shift(); // Remove the lowest roll
+      rollSum = sortedRolls.reduce((a, b) => a + b, 0);
+      rollMsg = `Advantage ${stat} Danger Roll (3d6): (${removedRoll}, ${sortedRolls.join(
+        ", "
+      )}) + ${value} = ${rollSum + Number(value)}`;
+    } else {
+      rollSum = rollArr.reduce((a, b) => a + b, 0);
+      rollMsg = `${stat} Danger Roll (2d6): (${rollArr.join(
+        ", "
+      )}) + ${value} = ${rollSum + Number(value)}`;
+    }
 
-    // JSX message for the Snackbar with the removed die crossed out
-    const advantageMessageJSX = (
-      <span>
-        {statName} Danger Roll w/Advantage (3d6+{statValue}): [
-        <s>{removedDie}</s>, {advantageRollString}] + {statValue} ={" "}
-        {advantageRollTotal}
-      </span>
-    );
-
-    // Plain text message for copying to the clipboard
-    const advantageMessageText = `${statName} Danger Roll w/Advantage (3d6+${statValue}): [${removedDie}, ${advantageRollString}] + ${statValue} = ${advantageRollTotal}`;
-
-    showSnackbar(
-      message,
-      "info",
-      <>
-        <CopySnackbarAction message={message} />
-        <IconButton
-          color="inherit"
-          size="small"
-          onClick={() => {
-            showSnackbar(
-              advantageMessageJSX,
-              "info",
-              <CopySnackbarAction message={advantageMessageText} />
-            );
-          }}
-        >
-          <FlashOn />
-        </IconButton>
-      </>
-    );
+    showSnackbar(rollMsg, "info", <CopySnackbarAction message={rollMsg} />);
   };
 
   return (
@@ -111,10 +93,15 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
                   )}
                   <Tag
                     className="flex flex-col gap-2 p-1"
-                    onClick={() =>
-                      stat.button &&
-                      handleDangerRoll(stat.secondary, stat.primary)
-                    }
+                    aria-describedby={popoverProps.id}
+                    onClick={(e) => {
+                      if (stat.button) {
+                        handleButtonClick(
+                          e as React.MouseEvent<HTMLButtonElement>,
+                          stat
+                        );
+                      }
+                    }}
                   >
                     <Typography variant="body1">{stat.primary}</Typography>
                     <Box
@@ -124,6 +111,34 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
                       {stat.secondary}
                     </Box>
                   </Tag>
+                  <Popover
+                    {...popoverProps}
+                    className="[&_div]:flex [&_div]:flex-col [&_div]:gap-2 [&_div]:p-2"
+                  >
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        handleDangerRoll(
+                          selectedStat?.primary,
+                          selectedStat?.secondary
+                        )
+                      }
+                    >
+                      {selectedStat?.primary} Danger Roll
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() =>
+                        handleDangerRoll(
+                          selectedStat?.primary,
+                          selectedStat?.secondary,
+                          true
+                        )
+                      }
+                    >
+                      Advantage {selectedStat?.primary} Danger Roll
+                    </Button>
+                  </Popover>
                 </ListItem>
               );
             })}

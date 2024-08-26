@@ -1,0 +1,23 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#ffce3a",
+    "activityBar.background": "#ffce3a",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#009f78",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#ffce3a",
+    "statusBar.background": "#ffc107",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#d39e00",
+    "statusBarItem.remoteBackground": "#ffc107",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#ffc107",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#ffc10799",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#ffc107",
+  "cSpell.words": ["jaini", "purva"]
+}
