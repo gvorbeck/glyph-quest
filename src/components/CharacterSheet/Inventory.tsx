@@ -7,6 +7,7 @@ import {
   ListItemText,
   Paper,
   SelectChangeEvent,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
@@ -80,25 +81,20 @@ const Inventory: React.FC<InventoryProps> = ({
     const message = `${item.name} Attack Roll (2d6+AB): [${attackRollString}] + ${attackBonus} = ${attackRollTotal}${damageBonus}`;
 
     const copyToClipboard = () => {
-      navigator.clipboard.writeText(message).then(
-        () => {
-          showSnackbar("Copied to clipboard!", "success");
-        },
-        (err) => {
-          console.error("Could not copy text: ", err);
-        }
-      );
+      navigator.clipboard.writeText(message);
     };
 
     const action = (
-      <IconButton
-        size="small"
-        aria-label="copy"
-        color="inherit"
-        onClick={copyToClipboard}
-      >
-        <ContentCopy fontSize="small" />
-      </IconButton>
+      <Tooltip title="Copy attack message">
+        <IconButton
+          size="small"
+          aria-label="copy"
+          color="inherit"
+          onClick={copyToClipboard}
+        >
+          <ContentCopy fontSize="small" />
+        </IconButton>
+      </Tooltip>
     );
 
     if (isCrit(attackRollTotal)) {

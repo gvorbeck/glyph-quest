@@ -19,7 +19,7 @@ interface SnackbarData {
 interface UseSnackbarReturn {
   snackbar: JSX.Element;
   showSnackbar: (
-    message: string,
+    message: any,
     severity: SnackbarSeverity,
     action?: JSX.Element
   ) => void;

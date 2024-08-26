@@ -25,6 +25,10 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 export const capitalize: (s: string) => string = (s) =>
   s.charAt(0).toUpperCase() + s.slice(1);
 
+export const copyToClipboard = (message: string) => {
+  navigator.clipboard.writeText(message);
+};
+
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 

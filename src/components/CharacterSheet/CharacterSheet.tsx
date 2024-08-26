@@ -113,16 +113,19 @@ export default function CharacterSheet({
   const primaryStats = [
     {
       icon: <FitnessCenter className={iconSizeClassNames} />,
+      button: true,
       primary: character.abilities.str.short,
       secondary: character.abilities.str.value,
     },
     {
       icon: <DirectionsRun className={iconSizeClassNames} />,
+      button: true,
       primary: character.abilities.dex.short,
       secondary: character.abilities.dex.value,
     },
     {
       icon: <Psychology className={iconSizeClassNames} />,
+      button: true,
       primary: character.abilities.wil.short,
       secondary: character.abilities.wil.value,
     },
@@ -146,7 +149,7 @@ export default function CharacterSheet({
         <TextField
           size="small"
           type="number"
-          className="[&_input]:py-1 [&_input]:w-12 [&_input]:text-xl"
+          // className="[&_input]:py-1 [&_input]:w-12 [&_input]:text-xl"
           value={character.health}
           onChange={handleHealthChange}
           InputProps={{
@@ -186,7 +189,6 @@ export default function CharacterSheet({
         <TextField
           size="small"
           type="number"
-          className="[&_input]:py-1 [&_input]:w-11 [&_input]:text-xl"
           value={character.xp}
           onChange={handleXPChange}
         />
@@ -199,7 +201,6 @@ export default function CharacterSheet({
         <TextField
           size="small"
           type="number"
-          className="[&_input]:py-1 [&_input]:w-16 [&_input]:text-xl"
           value={character.gold}
           onChange={handleGoldChange}
         />
@@ -216,9 +217,6 @@ export default function CharacterSheet({
       "sheet-ranger": "bg-sheet-ranger",
       "sheet-thief": "bg-sheet-thief",
     };
-
-  const statTitleClassNames =
-    "[&>div]:h-full [&_p]:font-jaini-purva [&_p]:text-6xl [&_div_div_div]:text-4xl";
 
   return (
     <>
@@ -251,9 +249,9 @@ export default function CharacterSheet({
           }
         />
         <GQDivider />
-        <Stats stats={tertiaryStats} xs={4} className={statTitleClassNames} />
-        <Stats stats={primaryStats} xs={4} className={statTitleClassNames} />
-        <Stats stats={secondaryStats} xs={4} className={statTitleClassNames} />
+        <Stats stats={tertiaryStats} xs={4} />
+        <Stats stats={primaryStats} xs={4} />
+        <Stats stats={secondaryStats} xs={4} />
         <GQDivider />
         <Grid xs={6} className="p-0">
           <Features
