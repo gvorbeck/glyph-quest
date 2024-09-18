@@ -57,7 +57,7 @@ export interface Character {
   level: number;
   xp: number;
   spells: Spell[];
-  gold: number;
+  coins: number;
   settings: Settings;
   notes: string;
 }

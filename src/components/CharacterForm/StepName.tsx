@@ -8,13 +8,12 @@ import {
   lowerclassSurnames,
   upperclassSurnames,
 } from "@/data/characterNames";
+import { useCharacter } from "@/context/CharacterContext";
 
-type StepNameProps = {
-  character: Character;
-  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
-};
+type StepNameProps = {};
 
-const StepName: React.FC<StepNameProps> = ({ character, setCharacter }) => {
+const StepName: React.FC<StepNameProps> = ({}) => {
+  const { character, setCharacter } = useCharacter();
   const [name, setName] = useState<string>(character.name);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");

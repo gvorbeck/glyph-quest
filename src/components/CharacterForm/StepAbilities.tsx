@@ -5,21 +5,19 @@ import { rollDice } from "@/utils/utils";
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import AbilityBox from "../AbilityBox";
+import { useCharacter } from "@/context/CharacterContext";
 
 type StepAbilityProps = {
-  character: Character;
-  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
   remainingPoints: number;
   setRemainingPoints: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const StepAbilities: React.FC<StepAbilityProps> = ({
-  character,
-  setCharacter,
   remainingPoints,
   setRemainingPoints,
 }) => {
   const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
+  const { character, setCharacter } = useCharacter();
 
   // Abilities array for easier mapping
   const abilities = [

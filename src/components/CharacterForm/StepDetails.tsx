@@ -11,11 +11,9 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 import GQRadioGroup from "../GQRadioGroup";
 import { rollTable } from "@/utils/utils";
+import { useCharacter } from "@/context/CharacterContext";
 
-type StepDetailsProps = {
-  character: Character;
-  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
-};
+type StepDetailsProps = {};
 
 const appearance = [
   "Aquiline",
@@ -260,10 +258,8 @@ const sections: [string, string[]][] = [
   ["Mannerism", mannerism],
 ];
 
-const StepDetails: React.FC<StepDetailsProps> = ({
-  character,
-  setCharacter,
-}) => {
+const StepDetails: React.FC<StepDetailsProps> = ({}) => {
+  const { character, setCharacter } = useCharacter();
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
     {}
   );

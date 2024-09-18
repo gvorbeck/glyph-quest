@@ -7,7 +7,7 @@ import {
   physicalForms,
 } from "@/data/spellNames";
 import { db } from "@/lib/firebase";
-import { Character, Feature } from "@/types/character";
+import { Character } from "@/types/character";
 import { Item } from "@/types/items";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
