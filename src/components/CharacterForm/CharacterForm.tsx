@@ -15,13 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import StepAbilities from "./StepAbilities";
-import StepFeature from "./StepFeature";
 import StepInventory from "./StepInventory";
 import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
 import StepDetails from "./StepDetails";
 import StepName from "./StepName";
 import { Location, TypeOption } from "@/types/items";
 import useSnackbar from "@/hooks/useSnackbar";
+import StepHitPoints from "./StepHitPoints";
 
 const characterBlank: Character = {
   abilities: {
@@ -35,15 +35,30 @@ const characterBlank: Character = {
       short: "DEX",
       value: null,
     },
-    wil: {
-      long: "Will",
-      short: "WIL",
+    con: {
+      long: "Constitution",
+      short: "CON",
+      value: null,
+    },
+    int: {
+      long: "Intelligence",
+      short: "INT",
+      value: null,
+    },
+    wis: {
+      long: "Wisdom",
+      short: "WIS",
+      value: null,
+    },
+    cha: {
+      long: "Charisma",
+      short: "CHA",
       value: null,
     },
   },
-  health: 4,
-  healthMax: 4,
-  features: null,
+  health: 0,
+  healthMax: 0,
+  careers: [],
   items: [
     {
       name: "Light Armor",
@@ -82,7 +97,8 @@ const characterBlank: Character = {
 export default function CharacterForm() {
   const [character, setCharacter] = useState<Character>(characterBlank);
   const [activeStep, setActiveStep] = useState(0);
-  const [error, setError] = useState<number>(0);
+  const [remainingPoints, setRemainingPoints] = useState(3); // Tracks remaining points
+  // const [error, setError] = useState<number>(0);
   const { user } = useAuth();
   const router = useRouter();
   const { snackbar, showSnackbar } = useSnackbar();
@@ -91,27 +107,32 @@ export default function CharacterForm() {
     {
       label: "Abilities",
       description:
-        "Your PC has 3 abilities: Strength, Dexterity, and Will. Roll 1d to find their starting values, or simply choose a row (with GM permission). You may raise one of your PC's abilities by one point at levels 2, 4, and 6. A PC's abilities may never be raised higher than +4.",
+        "Assign 3 points to your PC’s ability scores. You can place more than 1 point in a single score. Alternatively, you can leave it to chance by rolling 3d6, with each die contributing 1 point to the ability score that matches its number. Example: rolling 3-5-5 results in CON (the 3rd score) having 1 point and WIS (the 5th score) having 2 points. All other scores start at 0.",
       content: (
-        <StepAbilities character={character} setCharacter={setCharacter} />
+        <StepAbilities
+          character={character}
+          setCharacter={setCharacter}
+          remainingPoints={remainingPoints}
+          setRemainingPoints={setRemainingPoints}
+        />
       ),
     },
     {
-      label: "Feature",
-      description: "Your PC begins with one of the following features",
-      content: (
-        <StepFeature character={character} setCharacter={setCharacter} />
-      ),
-    },
-    {
-      label: "Inventory",
+      label: "Secondary Stats",
       description:
-        "Choose six items. Record the location of all items, armor, and weapons on your character. Items can be stored in the following locations: hands, worn, belt, or in a backpack. Belts can hold up to two items, while backpacks can carry whatever a typical backpack could reasonably fit. PCs start with the following equipment: light armor (+1 armor), a shield (+1 armor, 1 hand), and two weapons.",
+        "Your PC begins at level 1 with 0 XP. They will also have 10 + CON item slots. Your PC's Hit Points are determined by rolling a d6.",
+      content: (
+        <StepHitPoints character={character} setCharacter={setCharacter} />
+      ),
+    },
+    {
+      label: "Careers Inventory",
+      description: "foo",
       content: (
         <StepInventory
           character={character}
           setCharacter={setCharacter}
-          setError={setError}
+          // setError={setError}
         />
       ),
     },
@@ -140,32 +161,24 @@ export default function CharacterForm() {
   const isDisabled = () => {
     // Abilities
     if (activeStep === 0) {
-      return (
-        character.abilities.str.value === null ||
-        character.abilities.dex.value === null ||
-        character.abilities.wil.value === null
-      );
+      return remainingPoints > 0; // Ensure it's a boolean
     }
-    // Feature
+    // Hit Points
     if (activeStep === 1) {
-      return (
-        character.features === null ||
-        character.features[0] === "path" ||
-        (character.features[0] === "spell-slot" && !character.spells.length)
-      );
+      return !character.health;
     }
     // Inventory
     if (activeStep === 2) {
-      return (
-        character.items.find((item) => item.location === ("" as Location)) !==
-          undefined || error > 0
-      );
+      // return (
+      //   character.items.find((item) => item.location === ("" as Location)) !==
+      //     undefined || error > 0
+      // );
     }
     // Name
     if (activeStep === 4) {
       return character.name === "";
     }
-    return false;
+    return false; // Ensure it's a boolean
   };
 
   const handleCreateCharacter = async (e: React.FormEvent) => {

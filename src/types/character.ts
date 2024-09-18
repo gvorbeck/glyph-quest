@@ -1,23 +1,20 @@
 import { Item } from "./items";
 
-export type AbilityLongName = "Strength" | "Dexterity" | "Will";
+export type AbilityLongName =
+  | "Strength"
+  | "Dexterity"
+  | "Constitution"
+  | "Intelligence"
+  | "Wisdom"
+  | "Charisma";
 
-export type AbilityShortName = "STR" | "DEX" | "WIL";
+export type AbilityShortName = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 
 export interface Ability {
   long: AbilityLongName;
   short: AbilityShortName;
   value: number | null;
 }
-
-export type Feature =
-  | "attack-bonus"
-  | "spell-slot"
-  | "path"
-  | "path-briarborn"
-  | "path-fingersmith"
-  | "path-roofrunner"
-  | "path-shadowjack";
 
 export type Spell = {
   name: string;
@@ -39,11 +36,14 @@ export interface Character {
   abilities: {
     str: Ability;
     dex: Ability;
-    wil: Ability;
+    con: Ability;
+    int: Ability;
+    wis: Ability;
+    cha: Ability;
   };
   health: number;
   healthMax: number;
-  features: Feature[] | null;
+  careers: string[];
   items: Item[];
   details: {
     appearance: string | null;
