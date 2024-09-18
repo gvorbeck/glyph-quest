@@ -14,14 +14,14 @@ export type TypeOption =
 export type Location = "hands" | "belt" | "worn" | "backpack" | null;
 
 export type Item = {
-  hands: number | null;
-  location: Location;
+  // hands: number | null;
+  // location: Location;
   name: string;
-  type: TypeOption;
-  amount?: number | string;
-  armor?: number;
-  damage?: number;
-  detail?: string;
-  starter?: boolean;
-  value?: number;
+  // type: TypeOption;
+  // amount?: number | string;
+  // armor?: number;
+  // damage?: number;
+  // detail?: string;
+  // starter?: boolean;
+  // value?: number;
 };

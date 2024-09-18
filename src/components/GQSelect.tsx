@@ -14,14 +14,15 @@ type GQSelectProps = {
   value: any;
   labelId: string;
   options: { value: any; label: string }[];
+  minWidthClassName?: string;
 };
 
 const GQSelect: React.FC<
   GQSelectProps & React.ComponentPropsWithRef<"div">
-> = ({ onChange, value, label, id, labelId, options }) => {
+> = ({ onChange, value, label, id, labelId, options, minWidthClassName }) => {
   return (
-    <Box>
-      <FormControl>
+    <Box className={minWidthClassName}>
+      <FormControl fullWidth>
         <InputLabel id={labelId}>{label}</InputLabel>
         <Select
           labelId={labelId}

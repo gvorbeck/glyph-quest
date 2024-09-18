@@ -60,20 +60,20 @@ const characterBlank: Character = {
   healthMax: 0,
   careers: [],
   items: [
-    {
-      name: "Light Armor",
-      hands: 1,
-      location: INVENTORYLOCATIONS.worn.value,
-      type: ITEMTYPES.armor.value as TypeOption,
-      armor: 1,
-    },
-    {
-      hands: 1,
-      location: INVENTORYLOCATIONS.hands.value,
-      name: "Shield",
-      type: ITEMTYPES.shield.value as TypeOption,
-      armor: 1,
-    },
+    // {
+    //   name: "Light Armor",
+    //   hands: 1,
+    //   location: INVENTORYLOCATIONS.worn.value,
+    //   type: ITEMTYPES.armor.value as TypeOption,
+    //   armor: 1,
+    // },
+    // {
+    //   hands: 1,
+    //   location: INVENTORYLOCATIONS.hands.value,
+    //   name: "Shield",
+    //   type: ITEMTYPES.shield.value as TypeOption,
+    //   armor: 1,
+    // },
   ],
   details: {
     appearance: null,
