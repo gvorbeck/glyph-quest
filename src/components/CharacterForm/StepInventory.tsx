@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Careers from "./Careers";
 import { useCharacter } from "@/context/CharacterContext";
 import { Alert, IconButton, Typography } from "@mui/material";
@@ -14,6 +14,9 @@ type StepInventoryProps = {};
 
 const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const { character, setCharacter, inventory, maxItems } = useCharacter();
+
+  // Track items deleted specifically from career
+  const [deletedCareerItems, setDeletedCareerItems] = useState<string[]>([]);
 
   // Helper function to process armor items
   const processArmor = (): Item[] => {
@@ -38,20 +41,26 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const processCareers = (): Item[] => {
     const careerItems: Item[] = [];
     inventory.careers.one.inventory.forEach((item) => {
-      careerItems.push({
-        name: item,
-        slots: 1,
-        amount: 1,
-        type: "career" as TypeOption,
-      });
+      if (!deletedCareerItems.includes(item)) {
+        // Skip deleted career items
+        careerItems.push({
+          name: item,
+          slots: 1,
+          amount: 1,
+          type: "career" as TypeOption,
+        });
+      }
     });
     inventory.careers.two.inventory.forEach((item) => {
-      careerItems.push({
-        name: item,
-        slots: 1,
-        amount: 1,
-        type: "career" as TypeOption,
-      });
+      if (!deletedCareerItems.includes(item)) {
+        // Skip deleted career items
+        careerItems.push({
+          name: item,
+          slots: 1,
+          amount: 1,
+          type: "career" as TypeOption,
+        });
+      }
     });
     return careerItems;
   };
@@ -152,7 +161,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
     }));
 
     console.log("Items updated", updatedItems);
-  }, [inventory, setCharacter]);
+  }, [inventory, setCharacter, deletedCareerItems]); // Add deletedCareerItems dependency
 
   // Separate useEffect to update character.coins
   useEffect(() => {
@@ -161,6 +170,23 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       coins: inventory.coins, // Update character.coins
     }));
   }, [inventory.coins, setCharacter]);
+
+  // Handle item deletion
+  const handleDeleteItem = (itemName: string, itemType: TypeOption) => {
+    if (itemType === "career") {
+      // If it's a career item, add it to the deletedCareerItems array
+      setDeletedCareerItems((prevDeletedItems) => [
+        ...prevDeletedItems,
+        itemName,
+      ]);
+    } else {
+      // If it's any other item, directly update character's items
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: prevCharacter.items.filter((item) => item.name !== itemName),
+      }));
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6 relative">
@@ -198,7 +224,10 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
                 <Typography variant="caption">{item.amount}</Typography>
               )}
               {item.type !== "generic" && item.type !== "armor" && (
-                <IconButton aria-label="delete">
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => handleDeleteItem(item.name, item.type)}
+                >
                   <Delete />
                 </IconButton>
               )}
