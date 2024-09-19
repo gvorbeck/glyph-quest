@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Careers from "./Careers";
 import { useCharacter } from "@/context/CharacterContext";
 import { Alert, IconButton, Typography } from "@mui/material";
@@ -14,10 +14,9 @@ type StepInventoryProps = {};
 
 const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const { character, setCharacter, inventory, maxItems } = useCharacter();
-  const [items, setItems] = useState<Item[]>([]);
 
   // Helper function to process armor items
-  const processArmor = () => {
+  const processArmor = (): Item[] => {
     return Object.entries(inventory.armor).reduce<Item[]>(
       (acc, [key, value]) => {
         if (value) {
@@ -36,7 +35,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   };
 
   // Helper function to process career items
-  const processCareers = () => {
+  const processCareers = (): Item[] => {
     const careerItems: Item[] = [];
     inventory.careers.one.inventory.forEach((item) => {
       careerItems.push({
@@ -58,14 +57,14 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   };
 
   // Helper function to process generic items
-  const processGenericItems = () => {
+  const processGenericItems = (): Item[] => {
     const genericItems: Item[] = [];
     if (inventory.generic.rations) {
       genericItems.push({
         name: "Rations",
         slots: 1,
         amount: 2,
-        type: "generic" as TypeOption, // Explicitly cast as TypeOption
+        type: "generic" as TypeOption,
       });
     }
     if (inventory.generic.rope) {
@@ -73,7 +72,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         name: "Rope",
         slots: 1,
         amount: "50' ft.",
-        type: "generic" as TypeOption, // Explicitly cast as TypeOption
+        type: "generic" as TypeOption,
       });
     }
     if (inventory.generic.torches) {
@@ -81,7 +80,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         name: "Torches",
         slots: 1,
         amount: 2,
-        type: "generic" as TypeOption, // Explicitly cast as TypeOption
+        type: "generic" as TypeOption,
       });
     }
     if (inventory.generic.arrows) {
@@ -89,14 +88,14 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         name: "Quiver",
         slots: 1,
         amount: "20 arrows",
-        type: "generic" as TypeOption, // Explicitly cast as TypeOption
+        type: "generic" as TypeOption,
       });
     }
     return genericItems;
   };
 
   // Helper function to process weapon items
-  const processWeapons = () => {
+  const processWeapons = (): Item[] => {
     const weaponItems: Item[] = [];
     inventory.weapons.oneHanded.forEach((weapon) => {
       weaponItems.push({
@@ -126,7 +125,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   };
 
   // Helper function to process spells
-  const processSpells = () => {
+  const processSpells = (): Item[] => {
     return inventory.spells.map((spell) => ({
       name: spell.name,
       slots: 1,
@@ -136,7 +135,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
     }));
   };
 
-  // Consolidated useEffect to update items based on inventory changes
+  // Consolidated useEffect to update character.items based on inventory changes
   useEffect(() => {
     const updatedItems: Item[] = [
       ...processArmor(),
@@ -146,12 +145,10 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       ...processSpells(),
     ];
 
-    setItems(updatedItems);
-
     // Update the character's items when the inventory changes
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      items: updatedItems, // Update character.items
+      items: updatedItems, // Directly update character.items
     }));
 
     console.log("Items updated", updatedItems);
@@ -188,19 +185,18 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         />
       )}
 
-      {/* USE MUI LIST COMPONENT */}
+      {/* Render items for debugging */}
       <div>
         <Typography variant="h4" className="font-jaini-purva">
           Current Items:
         </Typography>
         <ul>
-          {items.map((item, index) => (
+          {character.items.map((item, index) => (
             <li key={index} className="flex gap-4 items-center h-10">
               <Typography>{item.name}</Typography>
               {item.amount && item.amount !== 1 && (
                 <Typography variant="caption">{item.amount}</Typography>
               )}
-              (item.type = {item.type})
               {item.type !== "generic" && item.type !== "armor" && (
                 <IconButton aria-label="delete">
                   <Delete />
