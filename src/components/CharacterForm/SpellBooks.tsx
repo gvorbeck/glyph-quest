@@ -70,22 +70,6 @@ const SpellBooks: React.FC<SpellBooksProps> = ({ title, subtitle }) => {
             >
               {spellBook ? `Spell Book ${index + 1}` : "Add Spell Book"}
             </Button>
-            {/* {spellBook && (
-              <div className="flex flex-col">
-                <Typography variant="body1">
-                  <strong>{spellBook.name}</strong>
-                </Typography>
-                <Typography variant="body2">{spellBook.description}</Typography>
-              </div>
-            )}
-            {spellBook && (
-              <IconButton
-                color="primary"
-                onClick={() => handleRemoveSpellBook(index)}
-              >
-                <Delete />
-              </IconButton>
-            )} */}
           </div>
         ))}
       </div>
