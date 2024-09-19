@@ -7,6 +7,9 @@ type CharacterContextType = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
   inventory: InventoryType;
   setInventory: React.Dispatch<React.SetStateAction<InventoryType>>;
+  maxItems: number;
+  itemCount: number;
+  setItemCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // Create the context with default values
@@ -62,11 +65,11 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     careers: {
       one: {
         name: "",
-        items: [],
+        inventory: [],
       },
       two: {
         name: "",
-        items: [],
+        inventory: [],
       },
     },
     coins: 0,
@@ -92,10 +95,20 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     spells: [],
   });
+  const [itemCount, setItemCount] = useState(0);
+  const maxItems = 10 + (character.abilities.con.value ?? 0);
 
   return (
     <CharacterContext.Provider
-      value={{ character, setCharacter, inventory, setInventory }}
+      value={{
+        character,
+        setCharacter,
+        inventory,
+        setInventory,
+        maxItems,
+        itemCount,
+        setItemCount,
+      }}
     >
       {children}
     </CharacterContext.Provider>

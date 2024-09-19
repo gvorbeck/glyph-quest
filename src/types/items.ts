@@ -17,8 +17,13 @@ export type Item = {
   // hands: number | null;
   // location: Location;
   name: string;
+  slots: number;
+  bonus?: number;
+  armorPoints?: number;
   // type: TypeOption;
-  // amount?: number | string;
+  amount?: number | string;
+  spell?: boolean;
+  description?: string;
   // armor?: number;
   // damage?: number;
   // detail?: string;

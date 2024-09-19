@@ -74,16 +74,7 @@ export type CareersType = {
 };
 
 export type InventoryType = {
-  careers: {
-    one: {
-      name: string;
-      items: string[];
-    };
-    two: {
-      name: string;
-      items: string[];
-    };
-  };
+  careers: CareersType;
   coins: number;
   generic: {
     rations: boolean;

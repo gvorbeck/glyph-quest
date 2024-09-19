@@ -38,11 +38,11 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
       careers: {
         one: {
           name: careerObjs[0].name,
-          items: careerObjs[0].inventory,
+          inventory: careerObjs[0].inventory,
         },
         two: {
           name: careerObjs[1].name,
-          items: careerObjs[1].inventory,
+          inventory: careerObjs[1].inventory,
         },
       },
     }));

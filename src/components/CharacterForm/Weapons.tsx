@@ -11,48 +11,56 @@ type WeaponsProps = {
 const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
   const [meleeWeaponOneHanded, setMeleeWeaponOneHanded] = useState<string>("");
   const [meleeWeaponTwoHanded, setMeleeWeaponTwoHanded] = useState<string>("");
-  const [missileWeapon, setMissileWeapon] = useState<string>("");
+  const [missileWeaponOneHanded, setMissileWeaponOneHanded] =
+    useState<string>("");
+  const [missileWeaponTwoHanded, setMissileWeaponTwoHanded] =
+    useState<string>("");
+
   const { inventory, setInventory } = useCharacter();
 
-  // Handle input change for one-handed or two-handed weapons
-  const handleChangeMelee = (e: any, hands: 1 | 2) => {
-    if (hands === 1) setMeleeWeaponOneHanded(e.target.value);
-    else setMeleeWeaponTwoHanded(e.target.value);
+  const handleChangeWeapon = (
+    e: any,
+    hands: 1 | 2,
+    weaponType: "melee" | "missile"
+  ) => {
+    if (weaponType === "melee") {
+      hands === 1
+        ? setMeleeWeaponOneHanded(e.target.value)
+        : setMeleeWeaponTwoHanded(e.target.value);
+    } else {
+      hands === 1
+        ? setMissileWeaponOneHanded(e.target.value)
+        : setMissileWeaponTwoHanded(e.target.value);
+    }
   };
 
-  // Handle adding a one-handed or two-handed melee weapon
-  const handleClickMelee = (hands: 1 | 2) => {
+  const handleClickWeapon = (hands: 1 | 2, weaponType: "melee" | "missile") => {
     const key = hands === 1 ? "oneHanded" : "twoHanded";
     const weaponToAdd =
-      hands === 1 ? meleeWeaponOneHanded : meleeWeaponTwoHanded;
+      weaponType === "melee"
+        ? hands === 1
+          ? meleeWeaponOneHanded
+          : meleeWeaponTwoHanded
+        : hands === 1
+        ? missileWeaponOneHanded
+        : missileWeaponTwoHanded;
 
     setInventory((prevInventory) => ({
       ...prevInventory,
       weapons: {
         ...prevInventory.weapons,
-        [key]: [...prevInventory.weapons[key], weaponToAdd], // Add to correct array (oneHanded or twoHanded)
+        [key]: [...prevInventory.weapons[key], weaponToAdd],
       },
     }));
 
-    // Reset input field after adding weapon
-    hands === 1 ? setMeleeWeaponOneHanded("") : setMeleeWeaponTwoHanded("");
-  };
-
-  const handleChangeMissile = (e: any) => {
-    setMissileWeapon(e.target.value);
-  };
-
-  const handleClickMissile = () => {
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      weapons: {
-        ...prevInventory.weapons,
-        missile: [...prevInventory.weapons.missile, missileWeapon],
-      },
-    }));
-
-    // Reset input field after adding weapon
-    setMissileWeapon("");
+    // Reset the input field after adding the weapon
+    if (weaponType === "melee") {
+      hands === 1 ? setMeleeWeaponOneHanded("") : setMeleeWeaponTwoHanded("");
+    } else {
+      hands === 1
+        ? setMissileWeaponOneHanded("")
+        : setMissileWeaponTwoHanded("");
+    }
   };
 
   return (
@@ -63,36 +71,36 @@ const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
           <Typography variant="h4" className="font-jaini-purva">
             Melee Weapons
           </Typography>
-          {/* One-handed weapon input */}
+          {/* One-handed melee weapon input */}
           <div className="flex gap-4 items-center">
             <TextField
               variant="filled"
-              label="One-handed weapon"
+              label="One-handed melee weapon"
               value={meleeWeaponOneHanded}
-              onChange={(e) => handleChangeMelee(e, 1)}
+              onChange={(e) => handleChangeWeapon(e, 1, "melee")}
             />
             <Button
               variant="outlined"
               disabled={meleeWeaponOneHanded === ""}
-              onClick={() => handleClickMelee(1)}
+              onClick={() => handleClickWeapon(1, "melee")}
             >
-              Add One-handed Weapon
+              Add One-handed Melee Weapon
             </Button>
           </div>
-          {/* Two-handed weapon input */}
+          {/* Two-handed melee weapon input */}
           <div className="flex gap-4 items-center">
             <TextField
               variant="filled"
-              label="Two-handed weapon"
+              label="Two-handed melee weapon"
               value={meleeWeaponTwoHanded}
-              onChange={(e) => handleChangeMelee(e, 2)}
+              onChange={(e) => handleChangeWeapon(e, 2, "melee")}
             />
             <Button
               variant="outlined"
               disabled={meleeWeaponTwoHanded === ""}
-              onClick={() => handleClickMelee(2)}
+              onClick={() => handleClickWeapon(2, "melee")}
             >
-              Add Two-handed Weapon
+              Add Two-handed Melee Weapon
             </Button>
           </div>
         </div>
@@ -102,19 +110,36 @@ const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
           <Typography variant="h4" className="font-jaini-purva">
             Missile Weapons
           </Typography>
+          {/* One-handed missile weapon input */}
           <div className="flex gap-4 items-center">
             <TextField
               variant="filled"
-              label="Missile weapon"
-              value={missileWeapon}
-              onChange={handleChangeMissile}
+              label="One-handed missile weapon"
+              value={missileWeaponOneHanded}
+              onChange={(e) => handleChangeWeapon(e, 1, "missile")}
             />
             <Button
               variant="outlined"
-              disabled={missileWeapon === ""}
-              onClick={handleClickMissile}
+              disabled={missileWeaponOneHanded === ""}
+              onClick={() => handleClickWeapon(1, "missile")}
             >
-              Add Missile Weapon
+              Add One-handed Missile Weapon
+            </Button>
+          </div>
+          {/* Two-handed missile weapon input */}
+          <div className="flex gap-4 items-center">
+            <TextField
+              variant="filled"
+              label="Two-handed missile weapon"
+              value={missileWeaponTwoHanded}
+              onChange={(e) => handleChangeWeapon(e, 2, "missile")}
+            />
+            <Button
+              variant="outlined"
+              disabled={missileWeaponTwoHanded === ""}
+              onClick={() => handleClickWeapon(2, "missile")}
+            >
+              Add Two-handed Missile Weapon
             </Button>
           </div>
         </div>
