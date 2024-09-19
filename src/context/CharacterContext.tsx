@@ -8,8 +8,6 @@ type CharacterContextType = {
   inventory: InventoryType;
   setInventory: React.Dispatch<React.SetStateAction<InventoryType>>;
   maxItems: number;
-  itemCount: number;
-  setItemCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // Create the context with default values
@@ -95,7 +93,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     spells: [],
   });
-  const [itemCount, setItemCount] = useState(0);
   const maxItems = 10 + (character.abilities.con.value ?? 0);
 
   return (
@@ -106,8 +103,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
         inventory,
         setInventory,
         maxItems,
-        itemCount,
-        setItemCount,
       }}
     >
       {children}

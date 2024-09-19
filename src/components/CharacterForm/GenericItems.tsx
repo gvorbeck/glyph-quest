@@ -18,7 +18,7 @@ const equipmentOptions = [
   { name: "rations", amount: 2, label: "2 Rations" },
   { name: "rope", amount: "50'", label: "50' Rope" },
   { name: "torches", amount: 2, label: "2 Torches" },
-  { name: "quiver", amount: "20 arrows", label: "Quiver of 20 arrows" },
+  { name: "arrows", amount: "20 arrows", label: "Quiver of 20 arrows" },
 ];
 
 const GenericItems: React.FC<GenericItemsProps> = ({ title, subtitle }) => {

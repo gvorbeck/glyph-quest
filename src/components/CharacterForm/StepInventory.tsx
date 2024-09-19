@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Careers from "./Careers";
 import { useCharacter } from "@/context/CharacterContext";
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import Coins from "./Coins";
 import GenericItems from "./GenericItems";
 import ArmorPieces from "./ArmorPieces";
@@ -12,7 +12,7 @@ import { Item } from "@/types/items";
 type StepInventoryProps = {};
 
 const StepInventory: React.FC<StepInventoryProps> = ({}) => {
-  const { character, setCharacter, inventory } = useCharacter();
+  const { character, setCharacter, inventory, maxItems } = useCharacter();
   const [items, setItems] = useState<Item[]>([]); // Initialize items as a state
 
   // Helper function to process armor items
@@ -44,16 +44,16 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const processGenericItems = () => {
     const genericItems: Item[] = [];
     if (inventory.generic.rations) {
-      genericItems.push({ name: "Rations", slots: 1, amount: 1 });
+      genericItems.push({ name: "Rations", slots: 1, amount: 2 });
     }
     if (inventory.generic.rope) {
-      genericItems.push({ name: "Rope", slots: 1, amount: 1 });
+      genericItems.push({ name: "Rope", slots: 1, amount: "50' ft." });
     }
     if (inventory.generic.torches) {
-      genericItems.push({ name: "Torches", slots: 1, amount: 1 });
+      genericItems.push({ name: "Torches", slots: 1, amount: 2 });
     }
     if (inventory.generic.arrows) {
-      genericItems.push({ name: "Arrows", slots: 1, amount: 1 });
+      genericItems.push({ name: "Quiver", slots: 1, amount: "20 arrows" });
     }
     return genericItems;
   };
@@ -114,7 +114,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   }, [inventory.coins, setCharacter]);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 relative">
       <Typography variant="h2" className="font-jaini-purva">
         Careers & Inventory
       </Typography>
@@ -138,7 +138,9 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
 
       {/* Render items for debugging */}
       <div>
-        <Typography variant="h4">Current Items:</Typography>
+        <Typography variant="h4" className="font-jaini-purva">
+          Current Items:
+        </Typography>
         <ul>
           {items.map((item, index) => (
             <li key={index}>
@@ -148,6 +150,11 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
           ))}
         </ul>
       </div>
+      {maxItems < character.items.length && (
+        <Alert severity="error" className="sticky bottom-2 z-10">
+          Here is a gentle confirmation that your action was successful.
+        </Alert>
+      )}
     </div>
   );
 };
