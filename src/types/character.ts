@@ -105,4 +105,5 @@ export type InventoryType = {
     twoHanded: string[];
     missile: string[];
   };
+  spells: Spell[];
 };

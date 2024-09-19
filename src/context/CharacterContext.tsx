@@ -90,6 +90,7 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
       twoHanded: [],
       missile: [],
     },
+    spells: [],
   });
 
   return (

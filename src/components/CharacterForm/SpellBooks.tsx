@@ -1,9 +1,9 @@
-import { useCharacter } from "@/context/CharacterContext";
-import InventorySection from "./InventorySection";
+import { useEffect, useState } from "react";
 import { Button, IconButton, Typography } from "@mui/material";
+import { useCharacter } from "@/context/CharacterContext";
 import spellsData from "@/data/spells.json";
+import InventorySection from "./InventorySection";
 import { Spell } from "@/types/character";
-import { useEffect } from "react";
 import { Delete } from "@mui/icons-material";
 
 type SpellBooksProps = {
@@ -12,75 +12,83 @@ type SpellBooksProps = {
 };
 
 const SpellBooks: React.FC<SpellBooksProps> = ({ title, subtitle }) => {
-  const { character, setCharacter } = useCharacter();
+  const { inventory, setInventory, character } = useCharacter();
+  const [spellBooks, setSpellBooks] = useState<(Spell | null)[]>([]);
 
-  // Initialize the spell array if it is empty
   useEffect(() => {
-    if (!character.spells.length) {
-      setCharacter((prev) => ({
-        ...prev,
-        spells: Array.from(
-          { length: character.abilities.int.value || 0 },
-          () => null as unknown as Spell
-        ),
-      }));
+    // Initialize spellBooks with the number of INT points
+    if (character.abilities.int.value) {
+      const spellCount = character.abilities.int.value;
+      setSpellBooks(Array(spellCount).fill(null)); // Initialize with null values
     }
-  }, [character.abilities.int.value, character.spells.length, setCharacter]);
+  }, [character.abilities.int.value]);
 
-  // Select a random spell from the spellsData
-  const handleClick = (index: number) => {
-    const randomSpell =
-      spellsData[Math.floor(Math.random() * spellsData.length)];
-    setCharacter((prev) => {
-      const newSpells = [...prev.spells];
-      newSpells[index] = randomSpell;
-      return { ...prev, spells: newSpells };
-    });
+  // Select a random spell from spellsData
+  const selectRandomSpell = (): Spell => {
+    const randomIndex = Math.floor(Math.random() * spellsData.length);
+    return spellsData[randomIndex];
   };
 
-  // Remove the spell at the given index
-  const handleRemoveSpell = (index: number) => {
-    setCharacter((prev) => {
-      const newSpells = [...prev.spells];
-      newSpells[index] = null as unknown as Spell; // Set the spell to null
-      return { ...prev, spells: newSpells };
+  // Add a spell book
+  const handleAddSpellBook = (index: number) => {
+    const newSpell = selectRandomSpell();
+    setSpellBooks((prevSpellBooks) => {
+      const updatedSpellBooks = [...prevSpellBooks];
+      updatedSpellBooks[index] = newSpell;
+      return updatedSpellBooks;
     });
+
+    setInventory((prevInventory) => ({
+      ...prevInventory,
+      spells: [...prevInventory.spells, newSpell],
+    }));
   };
 
-  // Render spell book buttons and spells
-  const spellBooksButtons = Array.from(
-    { length: character.abilities.int.value || 0 },
-    (_, index) => (
-      <div className="flex gap-4 items-center" key={index}>
-        <Button
-          variant="outlined"
-          onClick={() => handleClick(index)}
-          className="shrink-0"
-        >
-          Spell Book {index + 1}
-        </Button>
-        <IconButton
-          aria-label="delete"
-          color="primary"
-          onClick={() => handleRemoveSpell(index)}
-        >
-          <Delete />
-        </IconButton>
-        {character.spells[index] && character.spells[index].name && (
-          <div className="flex flex-col gap-2">
-            <Typography>
-              <strong>{character.spells[index].name}</strong>
-            </Typography>
-            <Typography>{character.spells[index].description}</Typography>
-          </div>
-        )}
-      </div>
-    )
-  );
+  // Remove a spell book
+  const handleRemoveSpellBook = (index: number) => {
+    setSpellBooks((prevSpellBooks) => {
+      const updatedSpellBooks = [...prevSpellBooks];
+      updatedSpellBooks[index] = null; // Reset to null when removed
+      return updatedSpellBooks;
+    });
+
+    setInventory((prevInventory) => ({
+      ...prevInventory,
+      spells: prevInventory.spells.filter((_, i) => i !== index),
+    }));
+  };
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
-      <div className="flex gap-4 flex-col items-start">{spellBooksButtons}</div>
+      <div className="flex flex-col gap-4">
+        {spellBooks.map((spellBook, index) => (
+          <div key={index} className="flex gap-4 items-center">
+            <Button
+              variant="outlined"
+              onClick={() => handleAddSpellBook(index)}
+              disabled={!!spellBook} // Disable if a spell is already assigned
+            >
+              {spellBook ? `Spell Book ${index + 1}` : "Add Spell Book"}
+            </Button>
+            {/* {spellBook && (
+              <div className="flex flex-col">
+                <Typography variant="body1">
+                  <strong>{spellBook.name}</strong>
+                </Typography>
+                <Typography variant="body2">{spellBook.description}</Typography>
+              </div>
+            )}
+            {spellBook && (
+              <IconButton
+                color="primary"
+                onClick={() => handleRemoveSpellBook(index)}
+              >
+                <Delete />
+              </IconButton>
+            )} */}
+          </div>
+        ))}
+      </div>
     </InventorySection>
   );
 };
