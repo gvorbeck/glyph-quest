@@ -61,3 +61,48 @@ export interface Character {
   settings: Settings;
   notes: string;
 }
+
+export type CareersType = {
+  one: {
+    name: string;
+    inventory: string[];
+  };
+  two: {
+    name: string;
+    inventory: string[];
+  };
+};
+
+export type InventoryType = {
+  careers: {
+    one: {
+      name: string;
+      items: string[];
+    };
+    two: {
+      name: string;
+      items: string[];
+    };
+  };
+  coins: number;
+  generic: {
+    rations: boolean;
+    rope: boolean;
+    torches: boolean;
+    arrows: boolean;
+  };
+  armor: {
+    shield: boolean;
+    helmet: boolean;
+    gambeson: boolean;
+    mailShirt: boolean;
+    breastplate: boolean;
+    armPlate: boolean;
+    legPlate: boolean;
+  };
+  weapons: {
+    oneHanded: string[];
+    twoHanded: string[];
+    missile: string[];
+  };
+};

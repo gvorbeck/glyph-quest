@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { db, addDoc, collection } from "@/lib/firebase";
@@ -23,8 +23,8 @@ import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
 
 const CharacterFormSteps = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [remainingPoints, setRemainingPoints] = useState(3);
-  const { character } = useCharacter();
+  const [remainingPoints, setRemainingPoints] = useState(3); // Put this in StepAbilities. It can determine this on component mount by looking at character.abilities
+  const { character, inventory } = useCharacter();
   const { user } = useAuth();
   const router = useRouter();
   const { snackbar, showSnackbar } = useSnackbar();
@@ -32,7 +32,7 @@ const CharacterFormSteps = () => {
   const steps = [
     {
       label: "Abilities",
-      description: "Assign 3 points to your PC’s ability scores...",
+      description: "Assign 3 points to your PC's ability scores...",
       content: (
         <StepAbilities
           remainingPoints={remainingPoints}
@@ -111,6 +111,11 @@ const CharacterFormSteps = () => {
       console.error("Failed to create character.", err);
     }
   };
+
+  useEffect(
+    () => console.log("character:", character, "inteventory:", inventory),
+    [character, inventory]
+  );
 
   return (
     <>

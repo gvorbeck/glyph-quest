@@ -3,31 +3,32 @@ import AbilityBox from "../AbilityBox";
 import { useCharacter } from "@/context/CharacterContext";
 import { rollDice } from "@/utils/utils";
 import InventorySection from "./InventorySection";
+import { set } from "firebase/database";
 
-type CoinsProps = {};
+type CoinsProps = {
+  title: string;
+  subtitle: string;
+};
 
-const Coins: React.FC<CoinsProps> = () => {
-  const { character, setCharacter } = useCharacter();
+const Coins: React.FC<CoinsProps> = ({ title, subtitle }) => {
+  const { inventory, setInventory } = useCharacter();
 
   const handleClick = () => {
     const newCoins = (rollDice(3) as number) * 10;
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
+    setInventory((prevInventory) => ({
+      ...prevInventory,
       coins: newCoins,
     }));
   };
 
   const handleChange = (coins: string) => {
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
+    setInventory((prevInventory) => ({
+      ...prevInventory,
       coins: +coins,
     }));
   };
   return (
-    <InventorySection
-      title="Coins"
-      subtitle="Roll for your character's starting coinage."
-    >
+    <InventorySection title={title} subtitle={subtitle}>
       <div className="flex gap-4 items-center">
         <Button variant="outlined" onClick={handleClick}>
           Roll Starting Coins
@@ -35,7 +36,7 @@ const Coins: React.FC<CoinsProps> = () => {
         <AbilityBox
           label="Coins"
           onChange={(e) => handleChange(e.target.value)}
-          value={character.coins}
+          value={inventory.coins}
           max={180}
         />
       </div>

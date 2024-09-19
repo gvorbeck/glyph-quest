@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
-import { Character } from "@/types/character";
+import { Character, InventoryType } from "@/types/character";
 
 // Create the context type
 type CharacterContextType = {
   character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
+  inventory: InventoryType;
+  setInventory: React.Dispatch<React.SetStateAction<InventoryType>>;
 };
 
 // Create the context with default values
@@ -56,9 +58,44 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     notes: "",
   });
+  const [inventory, setInventory] = useState<InventoryType>({
+    careers: {
+      one: {
+        name: "",
+        items: [],
+      },
+      two: {
+        name: "",
+        items: [],
+      },
+    },
+    coins: 0,
+    generic: {
+      rations: false,
+      rope: false,
+      torches: false,
+      arrows: false,
+    },
+    armor: {
+      shield: false,
+      helmet: false,
+      gambeson: false,
+      mailShirt: false,
+      breastplate: false,
+      armPlate: false,
+      legPlate: false,
+    },
+    weapons: {
+      oneHanded: [],
+      twoHanded: [],
+      missile: [],
+    },
+  });
 
   return (
-    <CharacterContext.Provider value={{ character, setCharacter }}>
+    <CharacterContext.Provider
+      value={{ character, setCharacter, inventory, setInventory }}
+    >
       {children}
     </CharacterContext.Provider>
   );

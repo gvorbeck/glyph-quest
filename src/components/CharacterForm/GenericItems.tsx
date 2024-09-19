@@ -1,45 +1,51 @@
 import { useCharacter } from "@/context/CharacterContext";
-import { FormControlLabel, Switch, Typography } from "@mui/material";
+import { FormControlLabel, Switch } from "@mui/material";
 import InventorySection from "./InventorySection";
+import { set } from "firebase/database";
 
-type GenericItemsProps = {};
+type GenericItemsProps = {
+  title: string;
+  subtitle: string;
+};
 
-const GenericItems: React.FC<GenericItemsProps> = () => {
-  const { character, setCharacter } = useCharacter();
+type GenericNames = "rations" | "rope" | "torches" | "arrows";
+type GenericItemsType = {
+  name: GenericNames;
+  amount: number | string;
+};
 
-  const toggleEquipment = (item: { name: string; amount: number | string }) => {
-    setCharacter((prevCharacter) => {
-      const items = [...prevCharacter.items];
-      const index = items.findIndex((i) => i.name === item.name);
-      if (index === -1) {
-        items.push(item);
-      } else {
-        items.splice(index, 1);
-      }
+const equipmentOptions = [
+  { name: "rations", amount: 2, label: "2 Rations" },
+  { name: "rope", amount: "50'", label: "50' Rope" },
+  { name: "torches", amount: 2, label: "2 Torches" },
+  { name: "quiver", amount: "20 arrows", label: "Quiver of 20 arrows" },
+];
+
+const GenericItems: React.FC<GenericItemsProps> = ({ title, subtitle }) => {
+  const { setInventory } = useCharacter();
+
+  const toggleEquipment = (item: GenericItemsType) => {
+    setInventory((prevInventory) => {
+      const generic = { ...prevInventory.generic };
+      generic[item.name] = !generic[item.name];
       return {
-        ...prevCharacter,
-        items,
+        ...prevInventory,
+        generic,
       };
     });
   };
 
-  const equipmentOptions = [
-    { name: "Rations", amount: 2, label: "2 Rations" },
-    { name: "Rope", amount: "50'", label: "50' Rope" },
-    { name: "Torches", amount: 2, label: "2 Torches" },
-    { name: "Quiver", amount: "20 arrows", label: "Quiver of 20 arrows" },
-  ];
-
   return (
-    <InventorySection
-      title="Generic Items"
-      subtitle="Every new character may start with these items."
-    >
-      <div className="flex gap-4 flex-col">
+    <InventorySection title={title} subtitle={subtitle}>
+      <div className="flex gap-1 flex-col">
         {equipmentOptions.map((item) => (
           <FormControlLabel
             key={item.name}
-            control={<Switch onChange={() => toggleEquipment(item)} />}
+            control={
+              <Switch
+                onChange={() => toggleEquipment(item as GenericItemsType)}
+              />
+            }
             label={item.label}
           />
         ))}

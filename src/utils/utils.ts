@@ -29,6 +29,17 @@ export const copyToClipboard = (message: string) => {
   navigator.clipboard.writeText(message);
 };
 
+export const camelCase = (str: string) =>
+  str
+    .split(" ")
+    .map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase();
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join("");
+
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 
