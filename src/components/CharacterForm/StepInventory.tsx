@@ -9,8 +9,6 @@ import Weapons from "./Weapons";
 import SpellBooks from "./SpellBooks";
 import { Item, TypeOption } from "@/types/items";
 import { Delete } from "@mui/icons-material";
-import { set } from "firebase/database";
-import { camelCaseToWords } from "@/utils/utils";
 
 type StepInventoryProps = {};
 
@@ -18,208 +16,53 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const { character, setCharacter, inventory, maxItems, setInventory } =
     useCharacter();
 
-  // Track items deleted specifically from career
-  // const [deletedCareerItems, setDeletedCareerItems] = useState<string[]>([]);
+  // Move spellBooks state to StepInventory
+  const [spellBooks, setSpellBooks] = useState<Item[]>([]);
 
-  // Helper function to process armor items
-  // const processArmor = () => {
-  //   const armorItems: Item[] = Object.entries(inventory.armor).reduce<Item[]>(
-  //     (acc, [key, value]) => {
-  //       if (value) {
-  //         acc.push({
-  //           name: camelCaseToWords(key),
-  //           amount: 1,
-  //           slots: 1,
-  //           armorPoints: 1,
-  //           type: "armor" as TypeOption,
-  //         });
-  //       }
-  //       return acc;
-  //     },
-  //     []
-  //   );
-
-  //   const filteredItems = character.items.filter(
-  //     (item) => item.type !== "armor"
-  //   );
-  //   setCharacter((prevCharacter) => ({
-  //     ...prevCharacter,
-  //     items: [...filteredItems, ...armorItems],
-  //   }));
-  // };
-
-  // Helper function to process career items
-  // const processCareers = () => {
-  //   const careerItems: Item[] = [];
-
-  //   // Check if careers.one and careers.two exist before accessing inventory
-  //   if (inventory.careers?.one?.inventory) {
-  //     inventory.careers.one.inventory.forEach((item) => {
-  //       careerItems.push({
-  //         name: item,
-  //         slots: 1,
-  //         amount: 1,
-  //         type: "career" as TypeOption,
-  //       });
-  //     });
-  //   }
-  //   if (inventory.careers?.two?.inventory) {
-  //     inventory.careers.two.inventory.forEach((item) => {
-  //       careerItems.push({
-  //         name: item,
-  //         slots: 1,
-  //         amount: 1,
-  //         type: "career" as TypeOption,
-  //       });
-  //     });
-  //   }
-
-  //   const filteredItems = character.items.filter(
-  //     (item) => item.type !== "career"
-  //   );
-
-  //   setCharacter((prevCharacter) => ({
-  //     ...prevCharacter,
-  //     items: [...filteredItems, ...careerItems],
-  //   }));
-  // };
-
-  // Helper function to process generic items
-  // const processGenericItems = () => {
-  //   const genericItems: Item[] = [];
-  //   if (inventory.generic.rations) {
-  //     genericItems.push({
-  //       name: "Rations",
-  //       slots: 1,
-  //       amount: 2,
-  //       type: "generic" as TypeOption,
-  //     });
-  //   }
-  //   if (inventory.generic.rope) {
-  //     genericItems.push({
-  //       name: "Rope",
-  //       slots: 1,
-  //       amount: "50' ft.",
-  //       type: "generic" as TypeOption,
-  //     });
-  //   }
-  //   if (inventory.generic.torches) {
-  //     genericItems.push({
-  //       name: "Torches",
-  //       slots: 1,
-  //       amount: 2,
-  //       type: "generic" as TypeOption,
-  //     });
-  //   }
-  //   if (inventory.generic.arrows) {
-  //     genericItems.push({
-  //       name: "Quiver",
-  //       slots: 1,
-  //       amount: "20 arrows",
-  //       type: "generic" as TypeOption,
-  //     });
-  //   }
-
-  //   const filteredItems = character.items.filter(
-  //     (item) => item.type !== "generic"
-  //   );
-  //   setCharacter((prevCharacter) => ({
-  //     ...prevCharacter,
-  //     items: [...filteredItems, ...genericItems],
-  //   }));
-  // };
-
-  // Helper function to process weapon items
-  // const processWeapons = () => {
-  //   // Get all weapon items from the inventory
-  //   const weaponItems: Item[] = [...inventory.weapons];
-
-  //   // Filter new weapons that aren't already in character.items
-  //   const newWeapons = weaponItems.filter(
-  //     (weapon) =>
-  //       !character.items.some(
-  //         (item) => item.name === weapon.name && item.type === "weapon"
-  //       )
-  //   );
-
-  //   if (newWeapons.length > 0) {
-  //     // Update character items by adding only the new weapons
-  //     setCharacter((prevCharacter) => ({
-  //       ...prevCharacter,
-  //       items: [...prevCharacter.items, ...newWeapons],
-  //     }));
-
-  //     // Remove added weapons from the inventory
-  //     setInventory((prevInventory) => ({
-  //       ...prevInventory,
-  //       weapons: prevInventory.weapons.filter(
-  //         (weapon) =>
-  //           !newWeapons.some((newWeapon) => newWeapon.name === weapon.name)
-  //       ),
-  //     }));
-  //   }
-  // };
-
-  // Helper function to process spells
-  // const processSpells = (): Item[] => {
-  //   return inventory.spells.map((spell) => ({
-  //     name: spell.name,
-  //     slots: 1,
-  //     amount: 1,
-  //     description: spell.description,
-  //     type: "spell" as TypeOption,
-  //   }));
-  // };
-
-  // Consolidated useEffect to update character.items based on inventory changes
-  // useEffect(() => {
-  //   const updatedItems: Item[] = [
-  //     ...processArmor(),
-  //     ...processCareers(),
-  //     ...processGenericItems(),
-  //     ...processWeapons(),
-  //     ...processSpells(),
-  //   ];
-
-  //   // Update the character's items when the inventory changes
-  //   setCharacter((prevCharacter) => ({
-  //     ...prevCharacter,
-  //     items: updatedItems, // Directly update character.items
-  //   }));
-
-  //   console.log("Items updated", updatedItems);
-  // }, [inventory, setCharacter, deletedCareerItems]); // Add deletedCareerItems dependency
-
-  // Separate useEffect to update character.coins
   useEffect(() => {
+    // Initialize spellBooks based on INT value
+    if (character.abilities.int.value) {
+      const spellCount = character.abilities.int.value;
+      setSpellBooks(
+        Array(spellCount).fill({ name: "", type: "spell", slots: 1 })
+      ); // Initialize with empty spell objects
+    }
+  }, [character.abilities.int.value]);
+
+  useEffect(() => {
+    // Sync spellBooks with character.items when they change
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      coins: inventory.coins, // Update character.coins
+      items: [
+        ...prevCharacter.items.filter((item) => item.type !== "spell"),
+        ...spellBooks.filter((spellBook) => spellBook.name !== ""), // Only add valid spells
+      ],
     }));
-  }, [inventory.coins, setCharacter]);
-
-  // Handle item deletion
-  // const handleDeleteItem = (itemName: string, itemType: TypeOption) => {
-  //   if (itemType === "career") {
-  //     // If it's a career item, add it to the deletedCareerItems array
-  //     setDeletedCareerItems((prevDeletedItems) => [
-  //       ...prevDeletedItems,
-  //       itemName,
-  //     ]);
-  //   } else {
-  //     // If it's any other item, directly update character's items
-  //     setCharacter((prevCharacter) => ({
-  //       ...prevCharacter,
-  //       items: prevCharacter.items.filter((item) => item.name !== itemName),
-  //     }));
-  //   }
-  // };
+  }, [spellBooks]);
 
   const handleDeleteItem = (itemName: string) => {
+    // Update character items and remove the item
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
       items: prevCharacter.items.filter((item) => item.name !== itemName),
     }));
+
+    // Also update the spellBooks state to remove the corresponding spell
+    setSpellBooks((prevSpellBooks) =>
+      prevSpellBooks.map((spellBook) =>
+        spellBook.name === itemName
+          ? { name: "", type: "spell", slots: 1 }
+          : spellBook
+      )
+    );
+  };
+
+  const handleAddSpellBook = (index: number, spell: Item) => {
+    setSpellBooks((prevSpellBooks) => {
+      const updatedSpellBooks = [...prevSpellBooks];
+      updatedSpellBooks[index] = spell;
+      return updatedSpellBooks;
+    });
   };
 
   return (
@@ -242,6 +85,8 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         <SpellBooks
           title="Spell Books"
           subtitle="Your PC may have one spell book per INT."
+          spellBooks={spellBooks}
+          onAddSpellBook={handleAddSpellBook}
         />
       )}
 
@@ -252,7 +97,6 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         </Typography>
         <ul>
           {character.items.map((item, index) =>
-            // Add a guard clause to check if item exists and has a name
             item && item.name ? (
               <li key={index} className="flex gap-4 items-center h-10">
                 <Typography>{item.name}</Typography>

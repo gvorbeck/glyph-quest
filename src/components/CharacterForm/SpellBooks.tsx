@@ -1,55 +1,35 @@
-import { useEffect, useState } from "react";
-import { Button, Typography } from "@mui/material";
-import { useCharacter } from "@/context/CharacterContext";
-import spellsData from "@/data/spells.json";
-import InventorySection from "./InventorySection";
+import { Button } from "@mui/material";
 import { Item } from "@/types/items";
+import InventorySection from "./InventorySection";
+import spellsData from "@/data/spells.json";
 
 type SpellBooksProps = {
   title: string;
   subtitle: string;
+  spellBooks: Item[]; // Receive the spellBooks as props
+  onAddSpellBook: (index: number, spell: Item) => void; // Receive the add spell handler as props
 };
 
-const SpellBooks: React.FC<SpellBooksProps> = ({ title, subtitle }) => {
-  const { setCharacter, character } = useCharacter();
-  const [spellBooks, setSpellBooks] = useState<Item[]>([]);
-
-  useEffect(() => {
-    // Initialize spellBooks with empty Item objects based on INT points
-    if (character.abilities.int.value) {
-      const spellCount = character.abilities.int.value;
-      setSpellBooks(
-        Array(spellCount).fill({ name: "", type: "spell", slots: 1 })
-      );
-    }
-  }, [character.abilities.int.value]);
-
-  useEffect(() => {
-    console.log(spellBooks);
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items: [
-        ...prevCharacter.items.filter((item) => item.type !== "spell"),
-        ...spellBooks.filter((spellBook) => spellBook.name !== ""), // Only add valid spells
-      ],
-    }));
-  }, [spellBooks]);
-
+const SpellBooks: React.FC<SpellBooksProps> = ({
+  title,
+  subtitle,
+  spellBooks,
+  onAddSpellBook,
+}) => {
   // Select a random spell from spellsData
   const selectRandomSpell = (): Item => {
     const randomIndex = Math.floor(Math.random() * spellsData.length);
-    return spellsData[randomIndex] as Item;
+    return {
+      ...spellsData[randomIndex],
+      type: "spell",
+      slots: 1,
+    } as Item;
   };
 
   // Add a spell book
   const handleAddSpellBook = (index: number) => {
-    const newSpell = selectRandomSpell() as Item;
-    newSpell.type = "spell";
-    setSpellBooks((prevSpellBooks) => {
-      const updatedSpellBooks = [...prevSpellBooks];
-      updatedSpellBooks[index] = newSpell;
-      return updatedSpellBooks;
-    });
+    const newSpell = selectRandomSpell();
+    onAddSpellBook(index, newSpell); // Use the passed prop function to add spell
   };
 
   return (
@@ -62,9 +42,7 @@ const SpellBooks: React.FC<SpellBooksProps> = ({ title, subtitle }) => {
               onClick={() => handleAddSpellBook(index)}
               disabled={!!spellBook.name} // Disable if a spell is already assigned
             >
-              {spellBook.name
-                ? `Spell Book ${index + 1}: ${spellBook.name}`
-                : "Add Spell Book"}
+              {spellBook.name ? `Spell Book ${index + 1}` : "Add Spell Book"}
             </Button>
           </div>
         ))}
