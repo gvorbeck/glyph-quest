@@ -79,6 +79,9 @@ const CharacterFormSteps = () => {
     if (activeStep === 1) {
       return !character.health;
     }
+    if (activeStep === 2) {
+      return character.items.length > (character.abilities.int.value || 0) + 10;
+    }
     // Name
     if (activeStep === 4) {
       return character.name === "";
