@@ -1,147 +1,100 @@
+import { useEffect, useState } from "react";
+import {
+  Button,
+  TextField,
+  Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import { useCharacter } from "@/context/CharacterContext";
 import InventorySection from "./InventorySection";
-import { Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Character, InventoryType } from "@/types/character";
 
 type WeaponsProps = {
   title: string;
   subtitle: string;
+  process: () => void;
 };
 
-const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
-  const [meleeWeaponOneHanded, setMeleeWeaponOneHanded] = useState<string>("");
-  const [meleeWeaponTwoHanded, setMeleeWeaponTwoHanded] = useState<string>("");
-  const [missileWeaponOneHanded, setMissileWeaponOneHanded] =
-    useState<string>("");
-  const [missileWeaponTwoHanded, setMissileWeaponTwoHanded] =
-    useState<string>("");
-
+const Weapons: React.FC<WeaponsProps> = ({ title, subtitle, process }) => {
   const { inventory, setInventory } = useCharacter();
+  const [weaponName, setWeaponName] = useState<string>("");
+  const [weaponHands, setWeaponHands] = useState<1 | 2>(1);
 
-  const handleChangeWeapon = (
-    e: any,
-    hands: 1 | 2,
-    weaponType: "melee" | "missile"
-  ) => {
-    if (weaponType === "melee") {
-      hands === 1
-        ? setMeleeWeaponOneHanded(e.target.value)
-        : setMeleeWeaponTwoHanded(e.target.value);
-    } else {
-      hands === 1
-        ? setMissileWeaponOneHanded(e.target.value)
-        : setMissileWeaponTwoHanded(e.target.value);
-    }
-  };
+  const handleChangeWeaponName = (e: any) => setWeaponName(e.target.value);
+  const handleChangeWeaponHands = (e: any) =>
+    setWeaponHands(e.target.value as 1 | 2);
 
-  const handleClickWeapon = (hands: 1 | 2, weaponType: "melee" | "missile") => {
-    const key = hands === 1 ? "oneHanded" : "twoHanded";
-    const weaponToAdd =
-      weaponType === "melee"
-        ? hands === 1
-          ? meleeWeaponOneHanded
-          : meleeWeaponTwoHanded
-        : hands === 1
-        ? missileWeaponOneHanded
-        : missileWeaponTwoHanded;
-
+  const handleClickAddWeapon = () => {
+    const weapon = {
+      name: weaponName,
+      type: "weapon" as InventoryType["weapons"][0]["type"],
+      slots: weaponHands,
+    };
     setInventory((prevInventory) => ({
       ...prevInventory,
-      weapons: {
-        ...prevInventory.weapons,
-        [key]: [...prevInventory.weapons[key], weaponToAdd],
-      },
+      weapons: [...prevInventory.weapons, weapon],
     }));
-
-    // Reset the input field after adding the weapon
-    if (weaponType === "melee") {
-      hands === 1 ? setMeleeWeaponOneHanded("") : setMeleeWeaponTwoHanded("");
-    } else {
-      hands === 1
-        ? setMissileWeaponOneHanded("")
-        : setMissileWeaponTwoHanded("");
-    }
+    setWeaponName("");
+    setWeaponHands(1); // Default to one-handed
   };
+
+  useEffect(() => {
+    console.log("process weapons");
+    process();
+  }, [inventory.weapons]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
-      <div className="flex gap-4 flex-col">
-        {/* Melee Weapons Section */}
+      <div className="flex flex-col gap-4">
+        {/* Weapon Input Section */}
         <div className="flex flex-col gap-4">
           <Typography variant="h4" className="font-jaini-purva">
-            Melee Weapons
+            Add Weapon
           </Typography>
-          {/* One-handed melee weapon input */}
-          <div className="flex gap-4 items-center">
-            <TextField
-              variant="filled"
-              label="One-handed melee weapon"
-              value={meleeWeaponOneHanded}
-              onChange={(e) => handleChangeWeapon(e, 1, "melee")}
-            />
-            <Button
-              variant="outlined"
-              disabled={meleeWeaponOneHanded === ""}
-              onClick={() => handleClickWeapon(1, "melee")}
-            >
-              Add One-handed Melee Weapon
-            </Button>
-          </div>
-          {/* Two-handed melee weapon input */}
-          <div className="flex gap-4 items-center">
-            <TextField
-              variant="filled"
-              label="Two-handed melee weapon"
-              value={meleeWeaponTwoHanded}
-              onChange={(e) => handleChangeWeapon(e, 2, "melee")}
-            />
-            <Button
-              variant="outlined"
-              disabled={meleeWeaponTwoHanded === ""}
-              onClick={() => handleClickWeapon(2, "melee")}
-            >
-              Add Two-handed Melee Weapon
-            </Button>
-          </div>
-        </div>
 
-        {/* Missile Weapons Section */}
-        <div className="flex flex-col gap-4">
-          <Typography variant="h4" className="font-jaini-purva">
-            Missile Weapons
-          </Typography>
-          {/* One-handed missile weapon input */}
-          <div className="flex gap-4 items-center">
-            <TextField
-              variant="filled"
-              label="One-handed missile weapon"
-              value={missileWeaponOneHanded}
-              onChange={(e) => handleChangeWeapon(e, 1, "missile")}
-            />
-            <Button
-              variant="outlined"
-              disabled={missileWeaponOneHanded === ""}
-              onClick={() => handleClickWeapon(1, "missile")}
+          <TextField
+            variant="filled"
+            label="Weapon Name"
+            value={weaponName}
+            onChange={handleChangeWeaponName}
+          />
+
+          {/* Select Weapon Type (Melee or Missile) */}
+          {/* <FormControl variant="filled">
+            <InputLabel id="weapon-type-select-label">Weapon Type</InputLabel>
+            <Select
+              labelId="weapon-type-select-label"
+              value={weaponType}
+              onChange={handleChangeWeaponType}
             >
-              Add One-handed Missile Weapon
-            </Button>
-          </div>
-          {/* Two-handed missile weapon input */}
-          <div className="flex gap-4 items-center">
-            <TextField
-              variant="filled"
-              label="Two-handed missile weapon"
-              value={missileWeaponTwoHanded}
-              onChange={(e) => handleChangeWeapon(e, 2, "missile")}
-            />
-            <Button
-              variant="outlined"
-              disabled={missileWeaponTwoHanded === ""}
-              onClick={() => handleClickWeapon(2, "missile")}
+              <MenuItem value="melee">Melee</MenuItem>
+              <MenuItem value="missile">Missile</MenuItem>
+            </Select>
+          </FormControl> */}
+
+          {/* Select Hands (One-handed or Two-handed) */}
+          <FormControl variant="filled">
+            <InputLabel id="weapon-hands-select-label">Hands</InputLabel>
+            <Select
+              labelId="weapon-hands-select-label"
+              value={weaponHands}
+              onChange={handleChangeWeaponHands}
             >
-              Add Two-handed Missile Weapon
-            </Button>
-          </div>
+              <MenuItem value={1}>One-handed</MenuItem>
+              <MenuItem value={2}>Two-handed</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Button
+            variant="outlined"
+            disabled={weaponName === ""}
+            onClick={handleClickAddWeapon}
+          >
+            Add Weapon
+          </Button>
         </div>
       </div>
     </InventorySection>

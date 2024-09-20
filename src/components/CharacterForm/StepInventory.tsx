@@ -9,22 +9,25 @@ import Weapons from "./Weapons";
 import SpellBooks from "./SpellBooks";
 import { Item, TypeOption } from "@/types/items";
 import { Delete } from "@mui/icons-material";
+import { set } from "firebase/database";
+import { camelCaseToWords } from "@/utils/utils";
 
 type StepInventoryProps = {};
 
 const StepInventory: React.FC<StepInventoryProps> = ({}) => {
-  const { character, setCharacter, inventory, maxItems } = useCharacter();
+  const { character, setCharacter, inventory, maxItems, setInventory } =
+    useCharacter();
 
   // Track items deleted specifically from career
-  const [deletedCareerItems, setDeletedCareerItems] = useState<string[]>([]);
+  // const [deletedCareerItems, setDeletedCareerItems] = useState<string[]>([]);
 
   // Helper function to process armor items
-  const processArmor = (): Item[] => {
-    return Object.entries(inventory.armor).reduce<Item[]>(
+  const processArmor = () => {
+    const armorItems: Item[] = Object.entries(inventory.armor).reduce<Item[]>(
       (acc, [key, value]) => {
         if (value) {
           acc.push({
-            name: key,
+            name: camelCaseToWords(key),
             amount: 1,
             slots: 1,
             armorPoints: 1,
@@ -35,38 +38,54 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       },
       []
     );
+
+    const filteredItems = character.items.filter(
+      (item) => item.type !== "armor"
+    );
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: [...filteredItems, ...armorItems],
+    }));
   };
 
   // Helper function to process career items
-  const processCareers = (): Item[] => {
+  const processCareers = () => {
     const careerItems: Item[] = [];
-    inventory.careers.one.inventory.forEach((item) => {
-      if (!deletedCareerItems.includes(item)) {
-        // Skip deleted career items
+
+    // Check if careers.one and careers.two exist before accessing inventory
+    if (inventory.careers?.one?.inventory) {
+      inventory.careers.one.inventory.forEach((item) => {
         careerItems.push({
           name: item,
           slots: 1,
           amount: 1,
           type: "career" as TypeOption,
         });
-      }
-    });
-    inventory.careers.two.inventory.forEach((item) => {
-      if (!deletedCareerItems.includes(item)) {
-        // Skip deleted career items
+      });
+    }
+    if (inventory.careers?.two?.inventory) {
+      inventory.careers.two.inventory.forEach((item) => {
         careerItems.push({
           name: item,
           slots: 1,
           amount: 1,
           type: "career" as TypeOption,
         });
-      }
-    });
-    return careerItems;
+      });
+    }
+
+    const filteredItems = character.items.filter(
+      (item) => item.type !== "career"
+    );
+
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: [...filteredItems, ...careerItems],
+    }));
   };
 
   // Helper function to process generic items
-  const processGenericItems = (): Item[] => {
+  const processGenericItems = () => {
     const genericItems: Item[] = [];
     if (inventory.generic.rations) {
       genericItems.push({
@@ -100,37 +119,45 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         type: "generic" as TypeOption,
       });
     }
-    return genericItems;
+
+    const filteredItems = character.items.filter(
+      (item) => item.type !== "generic"
+    );
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: [...filteredItems, ...genericItems],
+    }));
   };
 
   // Helper function to process weapon items
-  const processWeapons = (): Item[] => {
-    const weaponItems: Item[] = [];
-    inventory.weapons.oneHanded.forEach((weapon) => {
-      weaponItems.push({
-        name: weapon,
-        slots: 1,
-        amount: 1,
-        type: "weapon" as TypeOption,
-      });
-    });
-    inventory.weapons.twoHanded.forEach((weapon) => {
-      weaponItems.push({
-        name: weapon,
-        slots: 2,
-        amount: 1,
-        type: "weapon" as TypeOption,
-      });
-    });
-    inventory.weapons.missile.forEach((weapon) => {
-      weaponItems.push({
-        name: weapon,
-        slots: 1,
-        amount: 1,
-        type: "weapon" as TypeOption,
-      });
-    });
-    return weaponItems;
+  const processWeapons = () => {
+    // Get all weapon items from the inventory
+    const weaponItems: Item[] = [...inventory.weapons];
+
+    // Filter new weapons that aren't already in character.items
+    const newWeapons = weaponItems.filter(
+      (weapon) =>
+        !character.items.some(
+          (item) => item.name === weapon.name && item.type === "weapon"
+        )
+    );
+
+    if (newWeapons.length > 0) {
+      // Update character items by adding only the new weapons
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: [...prevCharacter.items, ...newWeapons],
+      }));
+
+      // Remove added weapons from the inventory
+      setInventory((prevInventory) => ({
+        ...prevInventory,
+        weapons: prevInventory.weapons.filter(
+          (weapon) =>
+            !newWeapons.some((newWeapon) => newWeapon.name === weapon.name)
+        ),
+      }));
+    }
   };
 
   // Helper function to process spells
@@ -145,23 +172,23 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   };
 
   // Consolidated useEffect to update character.items based on inventory changes
-  useEffect(() => {
-    const updatedItems: Item[] = [
-      ...processArmor(),
-      ...processCareers(),
-      ...processGenericItems(),
-      ...processWeapons(),
-      ...processSpells(),
-    ];
+  // useEffect(() => {
+  //   const updatedItems: Item[] = [
+  //     ...processArmor(),
+  //     ...processCareers(),
+  //     ...processGenericItems(),
+  //     ...processWeapons(),
+  //     ...processSpells(),
+  //   ];
 
-    // Update the character's items when the inventory changes
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items: updatedItems, // Directly update character.items
-    }));
+  //   // Update the character's items when the inventory changes
+  //   setCharacter((prevCharacter) => ({
+  //     ...prevCharacter,
+  //     items: updatedItems, // Directly update character.items
+  //   }));
 
-    console.log("Items updated", updatedItems);
-  }, [inventory, setCharacter, deletedCareerItems]); // Add deletedCareerItems dependency
+  //   console.log("Items updated", updatedItems);
+  // }, [inventory, setCharacter, deletedCareerItems]); // Add deletedCareerItems dependency
 
   // Separate useEffect to update character.coins
   useEffect(() => {
@@ -172,20 +199,27 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   }, [inventory.coins, setCharacter]);
 
   // Handle item deletion
-  const handleDeleteItem = (itemName: string, itemType: TypeOption) => {
-    if (itemType === "career") {
-      // If it's a career item, add it to the deletedCareerItems array
-      setDeletedCareerItems((prevDeletedItems) => [
-        ...prevDeletedItems,
-        itemName,
-      ]);
-    } else {
-      // If it's any other item, directly update character's items
-      setCharacter((prevCharacter) => ({
-        ...prevCharacter,
-        items: prevCharacter.items.filter((item) => item.name !== itemName),
-      }));
-    }
+  // const handleDeleteItem = (itemName: string, itemType: TypeOption) => {
+  //   if (itemType === "career") {
+  //     // If it's a career item, add it to the deletedCareerItems array
+  //     setDeletedCareerItems((prevDeletedItems) => [
+  //       ...prevDeletedItems,
+  //       itemName,
+  //     ]);
+  //   } else {
+  //     // If it's any other item, directly update character's items
+  //     setCharacter((prevCharacter) => ({
+  //       ...prevCharacter,
+  //       items: prevCharacter.items.filter((item) => item.name !== itemName),
+  //     }));
+  //   }
+  // };
+
+  const handleDeleteItem = (itemName: string) => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: prevCharacter.items.filter((item) => item.name !== itemName),
+    }));
   };
 
   return (
@@ -196,14 +230,24 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       <Careers
         title="Careers"
         subtitle="Roll or select two careers to build your PC's background."
+        process={processCareers}
       />
       <Coins title="Coins" subtitle="Roll or input your starting coins." />
       <GenericItems
         title="Generic Items"
         subtitle="Every PC may start with any of these items."
+        process={processGenericItems}
       />
-      <ArmorPieces title="Armor Pieces" subtitle="Select your armor pieces." />
-      <Weapons title="Weapons" subtitle="Select your weapons." />
+      <ArmorPieces
+        title="Armor Pieces"
+        subtitle="Select your armor pieces."
+        process={processArmor}
+      />
+      <Weapons
+        title="Weapons"
+        subtitle="Select your weapons."
+        process={processWeapons}
+      />
       {!!character.abilities.int.value && (
         <SpellBooks
           title="Spell Books"
@@ -226,7 +270,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
               {item.type !== "generic" && item.type !== "armor" && (
                 <IconButton
                   aria-label="delete"
-                  onClick={() => handleDeleteItem(item.name, item.type)}
+                  onClick={() => handleDeleteItem(item.name)}
                 >
                   <Delete />
                 </IconButton>

@@ -3,10 +3,12 @@ import InventorySection from "./InventorySection";
 import { FormControlLabel, Switch } from "@mui/material";
 import { InventoryType } from "@/types/character";
 import { camelCase } from "@/utils/utils";
+import { useEffect } from "react";
 
 type ArmorPiecesProps = {
   title: string;
   subtitle: string;
+  process: () => void;
 };
 
 const equipmentOptions = [
@@ -19,8 +21,12 @@ const equipmentOptions = [
   "Leg plate",
 ];
 
-const ArmorPieces: React.FC<ArmorPiecesProps> = ({ title, subtitle }) => {
-  const { setInventory } = useCharacter();
+const ArmorPieces: React.FC<ArmorPiecesProps> = ({
+  title,
+  subtitle,
+  process,
+}) => {
+  const { setInventory, inventory } = useCharacter();
 
   const toggleArmor = (item: keyof InventoryType["armor"]) => {
     setInventory((prevInventory) => {
@@ -32,6 +38,11 @@ const ArmorPieces: React.FC<ArmorPiecesProps> = ({ title, subtitle }) => {
       };
     });
   };
+
+  useEffect(() => {
+    console.log("process armor pieces");
+    process();
+  }, [inventory.armor]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>

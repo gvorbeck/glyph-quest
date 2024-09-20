@@ -2,10 +2,12 @@ import { useCharacter } from "@/context/CharacterContext";
 import { FormControlLabel, Switch } from "@mui/material";
 import InventorySection from "./InventorySection";
 import { set } from "firebase/database";
+import { useEffect } from "react";
 
 type GenericItemsProps = {
   title: string;
   subtitle: string;
+  process: () => void;
 };
 
 type GenericNames = "rations" | "rope" | "torches" | "arrows";
@@ -21,8 +23,12 @@ const equipmentOptions = [
   { name: "arrows", amount: "20 arrows", label: "Quiver of 20 arrows" },
 ];
 
-const GenericItems: React.FC<GenericItemsProps> = ({ title, subtitle }) => {
-  const { setInventory } = useCharacter();
+const GenericItems: React.FC<GenericItemsProps> = ({
+  title,
+  subtitle,
+  process,
+}) => {
+  const { setInventory, inventory } = useCharacter();
 
   const toggleEquipment = (item: GenericItemsType) => {
     setInventory((prevInventory) => {
@@ -34,6 +40,11 @@ const GenericItems: React.FC<GenericItemsProps> = ({ title, subtitle }) => {
       };
     });
   };
+
+  useEffect(() => {
+    console.log("process generic items");
+    process();
+  }, [inventory.generic]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>

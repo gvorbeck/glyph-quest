@@ -4,14 +4,15 @@ import careersData from "@/data/careers.json";
 import { CareersType } from "@/types/character";
 import InventorySection from "./InventorySection";
 import { useCharacter } from "@/context/CharacterContext";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 
 type CareersProps = {
   title: string;
   subtitle: string;
+  process: () => void;
 };
 
-const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
+const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
   const { inventory, setInventory } = useCharacter();
 
   // Select two unique and random careers from careersData
@@ -71,11 +72,16 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
         ...prevInventory.careers,
         [careerKey]: {
           name: newCareer,
-          items: careerData?.equipment || [],
+          inventory: careerData?.equipment || [],
         },
       },
     }));
   };
+
+  useEffect(() => {
+    console.log("process careers");
+    process();
+  }, [inventory.careers]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>

@@ -33,7 +33,7 @@
   },
   {
     "name": "astrologer",
-    "equipment": ["star charts", "almac", "telescope"]
+    "equipment": ["star charts", "almanac", "telescope"]
   },
   {
     "name": "baker",

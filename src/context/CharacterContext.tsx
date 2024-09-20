@@ -86,11 +86,7 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
       armPlate: false,
       legPlate: false,
     },
-    weapons: {
-      oneHanded: [],
-      twoHanded: [],
-      missile: [],
-    },
+    weapons: [],
     spells: [],
   });
   const maxItems = 10 + (character.abilities.con.value ?? 0);

@@ -92,9 +92,9 @@ export type InventoryType = {
     legPlate: boolean;
   };
   weapons: {
-    oneHanded: string[];
-    twoHanded: string[];
-    missile: string[];
-  };
+    name: string;
+    slots: 1 | 2;
+    type: "weapon";
+  }[];
   spells: Spell[];
 };

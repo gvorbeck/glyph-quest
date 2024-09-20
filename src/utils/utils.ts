@@ -40,6 +40,12 @@ export const camelCase = (str: string) =>
     })
     .join("");
 
+export const camelCaseToWords = (input: string) => {
+  const words = input.replace(/([A-Z])/g, " $1").toLowerCase();
+
+  return words.charAt(0).toUpperCase() + words.slice(1);
+};
+
 // Dice
 export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
 
