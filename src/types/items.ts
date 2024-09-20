@@ -12,6 +12,7 @@ export type Item = {
   armorPoints?: number;
   amount?: number | string;
   description?: string;
+  source?: string;
   // armor?: number;
   // damage?: number;
   // detail?: string;

@@ -1,9 +1,8 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import AbilityBox from "../AbilityBox";
 import { useCharacter } from "@/context/CharacterContext";
 import { rollDice } from "@/utils/utils";
 import InventorySection from "./InventorySection";
-import { set } from "firebase/database";
 
 type CoinsProps = {
   title: string;
@@ -11,18 +10,18 @@ type CoinsProps = {
 };
 
 const Coins: React.FC<CoinsProps> = ({ title, subtitle }) => {
-  const { inventory, setInventory } = useCharacter();
+  const { character, setCharacter } = useCharacter();
 
   const handleClick = () => {
     const newCoins = (rollDice(3) as number) * 10;
-    setInventory((prevInventory) => ({
+    setCharacter((prevInventory) => ({
       ...prevInventory,
       coins: newCoins,
     }));
   };
 
   const handleChange = (coins: string) => {
-    setInventory((prevInventory) => ({
+    setCharacter((prevInventory) => ({
       ...prevInventory,
       coins: +coins,
     }));
@@ -36,7 +35,7 @@ const Coins: React.FC<CoinsProps> = ({ title, subtitle }) => {
         <AbilityBox
           label="Coins"
           onChange={(e) => handleChange(e.target.value)}
-          value={inventory.coins}
+          value={character.coins}
           max={180}
         />
       </div>

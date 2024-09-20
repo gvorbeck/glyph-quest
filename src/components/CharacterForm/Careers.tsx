@@ -1,19 +1,17 @@
-import { Button, SelectChangeEvent, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import GQSelect from "../GQSelect";
 import careersData from "@/data/careers.json";
-import { CareersType } from "@/types/character";
 import InventorySection from "./InventorySection";
 import { useCharacter } from "@/context/CharacterContext";
-import { FormEvent, useEffect } from "react";
+import { Item, TypeOption } from "@/types/items";
 
 type CareersProps = {
   title: string;
   subtitle: string;
-  process: () => void;
 };
 
-const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
-  const { inventory, setInventory, setCharacter } = useCharacter();
+const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
+  const { setCharacter, character } = useCharacter();
 
   // Select two unique and random careers from careersData
   const handleClick = () => {
@@ -29,31 +27,36 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
       return [first, second];
     })();
 
-    const careerObjs = [career1, career2].map((career) => ({
-      name: career,
-      inventory: careersData.find((c) => c.name === career)?.equipment || [],
-    }));
+    const existingItems = [...character.items].filter(
+      (item) => item.type !== "career"
+    );
+    // Get equipment from career1 and career2 as Item[]
+    const newCareerItems = [career1, career2].reduce((acc, career) => {
+      const careerData = careersData.find((c) => c.name === career);
+      if (careerData) {
+        acc.push(
+          ...careerData.equipment.map((item) => ({
+            name: item,
+            slots: 1,
+            type: "career" as TypeOption,
+          }))
+        );
+      }
+      return acc;
+    }, [] as Item[]);
 
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      careers: {
-        one: {
-          name: careerObjs[0].name,
-          inventory: careerObjs[0].inventory,
-        },
-        two: {
-          name: careerObjs[1].name,
-          inventory: careerObjs[1].inventory,
-        },
-      },
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      careers: [career1, career2],
+      items: [...existingItems, ...newCareerItems],
     }));
   };
 
   const getCareerOptions = (careerKey: "one" | "two") => {
     const otherCareer =
       careerKey === "one"
-        ? inventory.careers.two.name
-        : inventory.careers.one.name;
+        ? character.careers[1] || ""
+        : character.careers[0] || "";
     return careersData
       .filter((career) => career.name !== otherCareer)
       .map((career) => ({
@@ -62,26 +65,46 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
       }));
   };
 
-  const handleChangeCareer = (event: any, careerKey: "one" | "two") => {
+  const handleChangeCareer = (event: any, careerKey: 0 | 1) => {
     const newCareer = event.target.value as string;
-    const careerData = careersData.find((c) => c.name === newCareer);
+    const newCareerEquipment = careersData.find(
+      (c) => c.name === newCareer
+    )?.equipment;
 
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      careers: {
-        ...prevInventory.careers,
-        [careerKey]: {
-          name: newCareer,
-          inventory: careerData?.equipment || [],
-        },
-      },
+    // Create a copy of the current careers
+    const newCareers = [...character.careers];
+    const oldCareer = newCareers[careerKey]; // Get the old career
+    newCareers[careerKey] = newCareer; // Replace with the new career
+
+    // Filter out the equipment of the old career only
+    const newItems = [...character.items].filter((item) => {
+      const otherCareerKey = careerKey === 0 ? 1 : 0;
+      const otherCareer = newCareers[otherCareerKey]; // Get the other career
+      return (
+        item.type !== "career" ||
+        (item.type === "career" && item.source === otherCareer)
+      );
+    });
+
+    // Add the new career's equipment
+    if (newCareerEquipment) {
+      newItems.push(
+        ...newCareerEquipment.map((item) => ({
+          name: item,
+          slots: 1,
+          type: "career" as TypeOption,
+          source: newCareer, // Add source for filtering later
+        }))
+      );
+    }
+
+    // Update character state
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      careers: newCareers,
+      items: newItems,
     }));
   };
-
-  useEffect(() => {
-    console.log("process careers");
-    process();
-  }, [inventory.careers]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
@@ -92,9 +115,9 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
         <GQSelect
           label="Select Career 1"
           labelId="select-career-one"
-          value={inventory.careers.one.name}
+          value={character.careers[0] || ""}
           options={getCareerOptions("one")}
-          onChange={(e) => handleChangeCareer(e, "one")}
+          onChange={(e) => handleChangeCareer(e, 0)}
           className="self-start"
         />
       </div>
@@ -102,10 +125,11 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
         <GQSelect
           label="Select Career 2"
           labelId="select-career-two"
-          value={inventory.careers.two.name}
+          value={character.careers[1] || ""}
           options={getCareerOptions("two")}
-          onChange={(e) => handleChangeCareer(e, "two")}
+          onChange={(e) => handleChangeCareer(e, 1)}
           className="self-start"
+          disabled={!character.careers[0]}
         />
       </div>
     </InventorySection>

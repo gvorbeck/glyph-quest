@@ -49,40 +49,40 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   };
 
   // Helper function to process career items
-  const processCareers = () => {
-    const careerItems: Item[] = [];
+  // const processCareers = () => {
+  //   const careerItems: Item[] = [];
 
-    // Check if careers.one and careers.two exist before accessing inventory
-    if (inventory.careers?.one?.inventory) {
-      inventory.careers.one.inventory.forEach((item) => {
-        careerItems.push({
-          name: item,
-          slots: 1,
-          amount: 1,
-          type: "career" as TypeOption,
-        });
-      });
-    }
-    if (inventory.careers?.two?.inventory) {
-      inventory.careers.two.inventory.forEach((item) => {
-        careerItems.push({
-          name: item,
-          slots: 1,
-          amount: 1,
-          type: "career" as TypeOption,
-        });
-      });
-    }
+  //   // Check if careers.one and careers.two exist before accessing inventory
+  //   if (inventory.careers?.one?.inventory) {
+  //     inventory.careers.one.inventory.forEach((item) => {
+  //       careerItems.push({
+  //         name: item,
+  //         slots: 1,
+  //         amount: 1,
+  //         type: "career" as TypeOption,
+  //       });
+  //     });
+  //   }
+  //   if (inventory.careers?.two?.inventory) {
+  //     inventory.careers.two.inventory.forEach((item) => {
+  //       careerItems.push({
+  //         name: item,
+  //         slots: 1,
+  //         amount: 1,
+  //         type: "career" as TypeOption,
+  //       });
+  //     });
+  //   }
 
-    const filteredItems = character.items.filter(
-      (item) => item.type !== "career"
-    );
+  //   const filteredItems = character.items.filter(
+  //     (item) => item.type !== "career"
+  //   );
 
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items: [...filteredItems, ...careerItems],
-    }));
-  };
+  //   setCharacter((prevCharacter) => ({
+  //     ...prevCharacter,
+  //     items: [...filteredItems, ...careerItems],
+  //   }));
+  // };
 
   // Helper function to process generic items
   const processGenericItems = () => {
@@ -230,7 +230,6 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       <Careers
         title="Careers"
         subtitle="Roll or select two careers to build your PC's background."
-        process={processCareers}
       />
       <Coins title="Coins" subtitle="Roll or input your starting coins." />
       <GenericItems

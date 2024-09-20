@@ -15,11 +15,21 @@ type GQSelectProps = {
   labelId: string;
   options: { value: any; label: string }[];
   minWidthClassName?: string;
+  disabled?: boolean;
 };
 
 const GQSelect: React.FC<
   GQSelectProps & React.ComponentPropsWithRef<"div">
-> = ({ onChange, value, label, id, labelId, options, minWidthClassName }) => {
+> = ({
+  onChange,
+  value,
+  label,
+  id,
+  labelId,
+  options,
+  minWidthClassName,
+  disabled,
+}) => {
   return (
     <Box className={minWidthClassName}>
       <FormControl fullWidth>
@@ -30,6 +40,7 @@ const GQSelect: React.FC<
           value={value}
           label={label}
           onChange={onChange}
+          disabled={disabled}
         >
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>

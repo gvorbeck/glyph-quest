@@ -1,8 +1,7 @@
 import { useCharacter } from "@/context/CharacterContext";
 import { FormControlLabel, Switch } from "@mui/material";
 import InventorySection from "./InventorySection";
-import { set } from "firebase/database";
-import { useEffect } from "react";
+import { ChangeEvent } from "react";
 
 type GenericItemsProps = {
   title: string;
@@ -17,10 +16,10 @@ type GenericItemsType = {
 };
 
 const equipmentOptions = [
-  { name: "rations", amount: 2, label: "2 Rations" },
-  { name: "rope", amount: "50'", label: "50' Rope" },
-  { name: "torches", amount: 2, label: "2 Torches" },
-  { name: "arrows", amount: "20 arrows", label: "Quiver of 20 arrows" },
+  { name: "Rations", amount: 2, label: "2 Rations" },
+  { name: "Rope", amount: "50'", label: "50' Rope" },
+  { name: "Torches", amount: 2, label: "2 Torches" },
+  { name: "Quiver", amount: "20 arrows", label: "Quiver of 20 arrows" },
 ];
 
 const GenericItems: React.FC<GenericItemsProps> = ({
@@ -28,23 +27,34 @@ const GenericItems: React.FC<GenericItemsProps> = ({
   subtitle,
   process,
 }) => {
-  const { setInventory, inventory } = useCharacter();
+  const { character, setCharacter } = useCharacter();
 
-  const toggleEquipment = (item: GenericItemsType) => {
-    setInventory((prevInventory) => {
-      const generic = { ...prevInventory.generic };
-      generic[item.name] = !generic[item.name];
-      return {
-        ...prevInventory,
-        generic,
-      };
-    });
+  const toggleEquipment = (
+    e: ChangeEvent<HTMLInputElement>,
+    item: GenericItemsType
+  ) => {
+    console.log("e", e.target.checked);
+    console.log("item", item);
+    if (e.target.checked) {
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: [
+          ...prevCharacter.items,
+          {
+            name: item.name,
+            slots: 1,
+            amount: item.amount,
+            type: "generic",
+          },
+        ],
+      }));
+    } else {
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: prevCharacter.items.filter((i) => i.name !== item.name),
+      }));
+    }
   };
-
-  useEffect(() => {
-    console.log("process generic items");
-    process();
-  }, [inventory.generic]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
@@ -54,7 +64,7 @@ const GenericItems: React.FC<GenericItemsProps> = ({
             key={item.name}
             control={
               <Switch
-                onChange={() => toggleEquipment(item as GenericItemsType)}
+                onChange={(e) => toggleEquipment(e, item as GenericItemsType)}
               />
             }
             label={item.label}
