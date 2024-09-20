@@ -7,7 +7,7 @@ import GenericItems from "./GenericItems";
 import ArmorPieces from "./ArmorPieces";
 import Weapons from "./Weapons";
 import SpellBooks from "./SpellBooks";
-import { Item, TypeOption } from "@/types/items";
+import { Item } from "@/types/items";
 import { Delete } from "@mui/icons-material";
 
 type StepInventoryProps = {};
@@ -16,7 +16,6 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
   const { character, setCharacter, inventory, maxItems, setInventory } =
     useCharacter();
 
-  // Move spellBooks state to StepInventory
   const [spellBooks, setSpellBooks] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -90,7 +89,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         />
       )}
 
-      {/* Render items for debugging */}
+      {/* Render items */}
       <div>
         <Typography variant="h4" className="font-jaini-purva">
           Current Items:

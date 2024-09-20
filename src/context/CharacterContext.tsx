@@ -5,8 +5,6 @@ import { Character, InventoryType } from "@/types/character";
 type CharacterContextType = {
   character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
-  inventory: InventoryType;
-  setInventory: React.Dispatch<React.SetStateAction<InventoryType>>;
   maxItems: number;
 };
 
@@ -58,35 +56,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     notes: "",
   });
-  const [inventory, setInventory] = useState<InventoryType>({
-    careers: {
-      one: {
-        name: "",
-        inventory: [],
-      },
-      two: {
-        name: "",
-        inventory: [],
-      },
-    },
-    coins: 0,
-    generic: {
-      rations: false,
-      rope: false,
-      torches: false,
-      arrows: false,
-    },
-    armor: {
-      shield: false,
-      helmet: false,
-      gambeson: false,
-      mailShirt: false,
-      breastplate: false,
-      armPlate: false,
-      legPlate: false,
-    },
-    weapons: [],
-  });
   const maxItems = 10 + (character.abilities.con.value ?? 0);
 
   return (
@@ -94,8 +63,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         character,
         setCharacter,
-        inventory,
-        setInventory,
         maxItems,
       }}
     >

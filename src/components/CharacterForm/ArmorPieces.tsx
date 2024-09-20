@@ -1,9 +1,7 @@
 import { useCharacter } from "@/context/CharacterContext";
 import InventorySection from "./InventorySection";
 import { FormControlLabel, Switch } from "@mui/material";
-import { InventoryType } from "@/types/character";
-import { camelCase } from "@/utils/utils";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { Item } from "@/types/items";
 
 type ArmorPiecesProps = {
