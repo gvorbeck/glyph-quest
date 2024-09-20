@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { db, addDoc, collection } from "@/lib/firebase";
@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import StepAbilities from "./StepAbilities";
 import StepInventory from "./StepInventory";
-import StepDetails from "./StepDetails";
 import StepName from "./StepName";
 import StepHitPoints from "./StepHitPoints";
 import useSnackbar from "@/hooks/useSnackbar";
@@ -51,13 +50,8 @@ const CharacterFormSteps = () => {
       content: <StepInventory />,
     },
     {
-      label: "Details",
-      description: "Create your character's details.",
-      content: <StepDetails />,
-    },
-    {
-      label: "Name",
-      description: "Name your character.",
+      label: "Finishing Touches",
+      description: "Name your character and optionally give them some detail.",
       content: <StepName />,
     },
   ];

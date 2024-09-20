@@ -13,8 +13,7 @@ import { Delete } from "@mui/icons-material";
 type StepInventoryProps = {};
 
 const StepInventory: React.FC<StepInventoryProps> = ({}) => {
-  const { character, setCharacter, inventory, maxItems, setInventory } =
-    useCharacter();
+  const { character, setCharacter, maxItems } = useCharacter();
 
   const [spellBooks, setSpellBooks] = useState<Item[]>([]);
 

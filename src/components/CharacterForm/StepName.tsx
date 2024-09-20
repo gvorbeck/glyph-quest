@@ -5,8 +5,8 @@ import { useState } from "react";
 import {
   maleFirstNames,
   femaleFirstNames,
-  lowerclassSurnames,
-  upperclassSurnames,
+  surnameStart,
+  surnameEnd,
 } from "@/data/characterNames";
 import { useCharacter } from "@/context/CharacterContext";
 
@@ -64,12 +64,12 @@ const StepName: React.FC<StepNameProps> = ({}) => {
         </Button>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button onClick={() => handleSurNameClick(upperclassSurnames)}>
+        {/* <Button onClick={() => handleSurNameClick(upperclassSurnames)}>
           Upperclass Surname
         </Button>
         <Button onClick={() => handleSurNameClick(lowerclassSurnames)}>
           Lowerclass Surname
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
