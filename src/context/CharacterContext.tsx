@@ -52,7 +52,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     name: "",
     level: 1,
     xp: 0,
-    spells: [],
     coins: 0,
     settings: {
       wallpaper: "sheet-hero",
@@ -87,7 +86,6 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
       legPlate: false,
     },
     weapons: [],
-    spells: [],
   });
   const maxItems = 10 + (character.abilities.con.value ?? 0);
 

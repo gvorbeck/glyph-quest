@@ -16,11 +16,6 @@ export interface Ability {
   value: number | null;
 }
 
-export type Spell = {
-  name: string;
-  description: string;
-};
-
 export type Settings = {
   wallpaper:
     | "sheet-hero"
@@ -56,7 +51,6 @@ export interface Character {
   name: string;
   level: number;
   xp: number;
-  spells: Spell[];
   coins: number;
   settings: Settings;
   notes: string;
@@ -96,5 +90,4 @@ export type InventoryType = {
     slots: 1 | 2;
     type: "weapon";
   }[];
-  spells: Spell[];
 };

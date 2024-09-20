@@ -6,7 +6,6 @@ import { ChangeEvent } from "react";
 type GenericItemsProps = {
   title: string;
   subtitle: string;
-  process: () => void;
 };
 
 type GenericNames = "rations" | "rope" | "torches" | "arrows";
@@ -22,19 +21,13 @@ const equipmentOptions = [
   { name: "Quiver", amount: "20 arrows", label: "Quiver of 20 arrows" },
 ];
 
-const GenericItems: React.FC<GenericItemsProps> = ({
-  title,
-  subtitle,
-  process,
-}) => {
-  const { character, setCharacter } = useCharacter();
+const GenericItems: React.FC<GenericItemsProps> = ({ title, subtitle }) => {
+  const { setCharacter } = useCharacter();
 
   const toggleEquipment = (
     e: ChangeEvent<HTMLInputElement>,
     item: GenericItemsType
   ) => {
-    console.log("e", e.target.checked);
-    console.log("item", item);
     if (e.target.checked) {
       setCharacter((prevCharacter) => ({
         ...prevCharacter,

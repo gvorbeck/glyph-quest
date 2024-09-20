@@ -16,6 +16,7 @@ type GQSelectProps = {
   options: { value: any; label: string }[];
   minWidthClassName?: string;
   disabled?: boolean;
+  variant?: "filled" | "outlined";
 };
 
 const GQSelect: React.FC<
@@ -29,10 +30,11 @@ const GQSelect: React.FC<
   options,
   minWidthClassName,
   disabled,
+  variant,
 }) => {
   return (
     <Box className={minWidthClassName}>
-      <FormControl fullWidth>
+      <FormControl fullWidth variant={variant}>
         <InputLabel id={labelId}>{label}</InputLabel>
         <Select
           labelId={labelId}

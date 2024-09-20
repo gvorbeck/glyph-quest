@@ -3,12 +3,12 @@ import InventorySection from "./InventorySection";
 import { FormControlLabel, Switch } from "@mui/material";
 import { InventoryType } from "@/types/character";
 import { camelCase } from "@/utils/utils";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
+import { Item } from "@/types/items";
 
 type ArmorPiecesProps = {
   title: string;
   subtitle: string;
-  process: () => void;
 };
 
 const equipmentOptions = [
@@ -21,28 +21,22 @@ const equipmentOptions = [
   "Leg plate",
 ];
 
-const ArmorPieces: React.FC<ArmorPiecesProps> = ({
-  title,
-  subtitle,
-  process,
-}) => {
-  const { setInventory, inventory } = useCharacter();
+const ArmorPieces: React.FC<ArmorPiecesProps> = ({ title, subtitle }) => {
+  const { setCharacter } = useCharacter();
 
-  const toggleArmor = (item: keyof InventoryType["armor"]) => {
-    setInventory((prevInventory) => {
-      const armor = { ...prevInventory.armor };
-      armor[item] = !armor[item];
-      return {
-        ...prevInventory,
-        armor,
-      };
-    });
+  const toggleArmor = (e: ChangeEvent<HTMLInputElement>, item: Item) => {
+    if (e.target.checked) {
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: [...prevCharacter.items, item],
+      }));
+    } else {
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: prevCharacter.items.filter((i) => i.name !== item.name),
+      }));
+    }
   };
-
-  useEffect(() => {
-    console.log("process armor pieces");
-    process();
-  }, [inventory.armor]);
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
@@ -52,8 +46,14 @@ const ArmorPieces: React.FC<ArmorPiecesProps> = ({
             key={item}
             control={
               <Switch
-                onChange={() =>
-                  toggleArmor(camelCase(item) as keyof InventoryType["armor"])
+                onChange={(e) =>
+                  toggleArmor(e, {
+                    name: item,
+                    slots: 1,
+                    amount: 1,
+                    type: "armor",
+                    armorPoints: 1,
+                  })
                 }
               />
             }

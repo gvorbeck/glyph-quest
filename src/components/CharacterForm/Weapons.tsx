@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
-import {
-  Button,
-  TextField,
-  Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import { useCharacter } from "@/context/CharacterContext";
 import InventorySection from "./InventorySection";
-import { Character, InventoryType } from "@/types/character";
+import { InventoryType } from "@/types/character";
+import GQSelect from "../GQSelect";
 
 type WeaponsProps = {
   title: string;
   subtitle: string;
-  process: () => void;
 };
 
-const Weapons: React.FC<WeaponsProps> = ({ title, subtitle, process }) => {
-  const { inventory, setInventory } = useCharacter();
+const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
+  const { character, setCharacter } = useCharacter();
   const [weaponName, setWeaponName] = useState<string>("");
   const [weaponHands, setWeaponHands] = useState<1 | 2>(1);
 
@@ -33,61 +25,37 @@ const Weapons: React.FC<WeaponsProps> = ({ title, subtitle, process }) => {
       type: "weapon" as InventoryType["weapons"][0]["type"],
       slots: weaponHands,
     };
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      weapons: [...prevInventory.weapons, weapon],
+
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      items: [...prevCharacter.items, weapon],
     }));
     setWeaponName("");
     setWeaponHands(1); // Default to one-handed
   };
 
-  useEffect(() => {
-    console.log("process weapons");
-    process();
-  }, [inventory.weapons]);
-
   return (
     <InventorySection title={title} subtitle={subtitle}>
       <div className="flex flex-col gap-4">
-        {/* Weapon Input Section */}
         <div className="flex flex-col gap-4">
-          <Typography variant="h4" className="font-jaini-purva">
-            Add Weapon
-          </Typography>
-
           <TextField
             variant="filled"
             label="Weapon Name"
             value={weaponName}
             onChange={handleChangeWeaponName}
           />
-
-          {/* Select Weapon Type (Melee or Missile) */}
-          {/* <FormControl variant="filled">
-            <InputLabel id="weapon-type-select-label">Weapon Type</InputLabel>
-            <Select
-              labelId="weapon-type-select-label"
-              value={weaponType}
-              onChange={handleChangeWeaponType}
-            >
-              <MenuItem value="melee">Melee</MenuItem>
-              <MenuItem value="missile">Missile</MenuItem>
-            </Select>
-          </FormControl> */}
-
-          {/* Select Hands (One-handed or Two-handed) */}
-          <FormControl variant="filled">
-            <InputLabel id="weapon-hands-select-label">Hands</InputLabel>
-            <Select
-              labelId="weapon-hands-select-label"
-              value={weaponHands}
-              onChange={handleChangeWeaponHands}
-            >
-              <MenuItem value={1}>One-handed</MenuItem>
-              <MenuItem value={2}>Two-handed</MenuItem>
-            </Select>
-          </FormControl>
-
+          <GQSelect
+            label="Hands"
+            labelId="weapon-hands-select-label"
+            value={weaponHands}
+            options={[
+              { label: "One-handed", value: 1 },
+              { label: "Two-handed", value: 2 },
+            ]}
+            onChange={handleChangeWeaponHands}
+            className="self-start"
+            variant="filled"
+          />
           <Button
             variant="outlined"
             disabled={weaponName === ""}

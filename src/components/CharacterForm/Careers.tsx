@@ -119,6 +119,7 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
           options={getCareerOptions("one")}
           onChange={(e) => handleChangeCareer(e, 0)}
           className="self-start"
+          variant="filled"
         />
       </div>
       <div className="self-start min-w-[150px]">
@@ -130,6 +131,7 @@ const Careers: React.FC<CareersProps> = ({ title, subtitle }) => {
           onChange={(e) => handleChangeCareer(e, 1)}
           className="self-start"
           disabled={!character.careers[0]}
+          variant="filled"
         />
       </div>
     </InventorySection>
