@@ -13,7 +13,7 @@ type CareersProps = {
 };
 
 const Careers: React.FC<CareersProps> = ({ title, subtitle, process }) => {
-  const { inventory, setInventory } = useCharacter();
+  const { inventory, setInventory, setCharacter } = useCharacter();
 
   // Select two unique and random careers from careersData
   const handleClick = () => {

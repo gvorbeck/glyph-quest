@@ -44,20 +44,6 @@ const SpellBooks: React.FC<SpellBooksProps> = ({ title, subtitle }) => {
     }));
   };
 
-  // Remove a spell book
-  const handleRemoveSpellBook = (index: number) => {
-    setSpellBooks((prevSpellBooks) => {
-      const updatedSpellBooks = [...prevSpellBooks];
-      updatedSpellBooks[index] = null; // Reset to null when removed
-      return updatedSpellBooks;
-    });
-
-    setInventory((prevInventory) => ({
-      ...prevInventory,
-      spells: prevInventory.spells.filter((_, i) => i !== index),
-    }));
-  };
-
   return (
     <InventorySection title={title} subtitle={subtitle}>
       <div className="flex flex-col gap-4">
