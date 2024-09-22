@@ -41,12 +41,9 @@ export interface Character {
   careers: string[];
   items: Item[];
   details: {
-    appearance: string | null;
-    background: string | null;
-    clothing: string | null;
-    mannerism: string | null;
-    personality: string | null;
-    physical: string | null;
+    personality: string | undefined;
+    detail: string | undefined;
+    mannerism: string | undefined;
   };
   name: string;
   level: number;
