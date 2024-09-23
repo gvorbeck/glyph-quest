@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import Careers from "./Careers";
 import { useCharacter } from "@/context/CharacterContext";
-import { Alert, IconButton, Typography } from "@mui/material";
+import {
+  Alert,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import Coins from "./Coins";
 import GenericItems from "./GenericItems";
 import ArmorPieces from "./ArmorPieces";
@@ -72,7 +80,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       <Coins title="Coins" subtitle="Roll or input your starting coins." />
       <GenericItems
         title="Generic Items"
-        subtitle="Every PC may start with any of these items."
+        subtitle="Every PC may start these items."
       />
       <ArmorPieces title="Armor Pieces" subtitle="Select your armor pieces." />
       <Weapons title="Weapons" subtitle="Add your weapons." />
@@ -90,26 +98,34 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         <Typography variant="h4" className="font-jaini-purva">
           Current Items ({character.items.length}/{maxItems}):
         </Typography>
-        <ul>
+        <List>
           {character.items.map((item, index) =>
             item && item.name ? (
-              <li key={index} className="flex gap-4 items-center h-10">
-                <Typography>{item.name}</Typography>
-                {item.amount && item.amount !== 1 && (
-                  <Typography variant="caption">{item.amount}</Typography>
-                )}
-                {item.type !== "generic" && item.type !== "armor" && (
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => handleDeleteItem(item.name)}
-                  >
-                    <Delete />
-                  </IconButton>
-                )}
-              </li>
+              <ListItem
+                key={index}
+                secondaryAction={
+                  item.type !== "generic" &&
+                  item.type !== "armor" && (
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleDeleteItem(item.name)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  )
+                }
+              >
+                <ListItemText
+                  primary={item.name}
+                  secondary={
+                    item.amount && item.amount !== 1 ? item.amount : ""
+                  }
+                  className="flex gap-2 items-baseline"
+                />
+              </ListItem>
             ) : null
           )}
-        </ul>
+        </List>
       </div>
       {maxItems < character.items.length && (
         <Alert severity="error" className="sticky bottom-2 z-10">
