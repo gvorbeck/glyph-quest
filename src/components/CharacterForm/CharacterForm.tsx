@@ -20,6 +20,7 @@ import StepHitPoints from "./StepHitPoints";
 import useSnackbar from "@/hooks/useSnackbar";
 import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
 import { getRemainingPoints } from "@/utils/utils";
+import StepWrapper from "./StepWrapper";
 
 const CharacterFormSteps = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -33,7 +34,7 @@ const CharacterFormSteps = () => {
     () => [
       {
         label: "Abilities",
-        description: "Assign 3 points to your PC's ability scores...",
+        description: "Assign 3 points to your PC's ability scores.",
         content: <StepAbilities />,
       },
       {
@@ -76,7 +77,7 @@ const CharacterFormSteps = () => {
 
   // Generic button rendering function
   const renderButtons = (index: number) => (
-    <Box>
+    <Box className="flex gap-2">
       <Button
         variant="contained"
         onClick={
@@ -86,7 +87,7 @@ const CharacterFormSteps = () => {
       >
         {index === steps.length - 1 ? "Finish" : "Continue"}
       </Button>
-      <Button disabled={index === 0} onClick={handleBack}>
+      <Button disabled={index === 0} onClick={handleBack} variant="outlined">
         Back
       </Button>
     </Box>
@@ -135,11 +136,12 @@ const CharacterFormSteps = () => {
               {step.label}
             </StepLabel>
             <StepContent>
-              <div className="flex flex-col gap-4">
-                <Typography>{step.description}</Typography>
-                <Box>{step.content}</Box>
-                {renderButtons(index)}
-              </div>
+              <StepWrapper
+                title={step.label}
+                description={step.description}
+                content={step.content}
+                buttons={renderButtons(index)}
+              />
             </StepContent>
           </Step>
         ))}
