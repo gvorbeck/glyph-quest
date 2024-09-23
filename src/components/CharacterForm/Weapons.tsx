@@ -36,34 +36,32 @@ const Weapons: React.FC<WeaponsProps> = ({ title, subtitle }) => {
 
   return (
     <InventorySection title={title} subtitle={subtitle}>
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4">
-          <TextField
-            variant="filled"
-            label="Weapon Name"
-            value={weaponName}
-            onChange={handleChangeWeaponName}
-          />
-          <GQSelect
-            label="Hands"
-            labelId="weapon-hands-select-label"
-            value={weaponHands}
-            options={[
-              { label: "One-handed", value: 1 },
-              { label: "Two-handed", value: 2 },
-            ]}
-            onChange={handleChangeWeaponHands}
-            className="self-start"
-            variant="filled"
-          />
-          <Button
-            variant="outlined"
-            disabled={weaponName === ""}
-            onClick={handleClickAddWeapon}
-          >
-            Add Weapon
-          </Button>
-        </div>
+      <div className="flex flex-col gap-4 items-start">
+        <TextField
+          variant="filled"
+          label="Weapon Name"
+          value={weaponName}
+          onChange={handleChangeWeaponName}
+        />
+        <GQSelect
+          label="Hands"
+          labelId="weapon-hands-select-label"
+          value={weaponHands}
+          options={[
+            { label: "One-handed", value: 1 },
+            { label: "Two-handed", value: 2 },
+          ]}
+          onChange={handleChangeWeaponHands}
+          className="self-start"
+          variant="filled"
+        />
+        <Button
+          variant="outlined"
+          disabled={weaponName === ""}
+          onClick={handleClickAddWeapon}
+        >
+          Add Weapon
+        </Button>
       </div>
     </InventorySection>
   );

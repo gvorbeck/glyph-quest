@@ -65,9 +65,6 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
 
   return (
     <div className="flex flex-col gap-6 relative">
-      <Typography variant="h2" className="font-jaini-purva">
-        Careers & Inventory
-      </Typography>
       <Careers
         title="Careers"
         subtitle="Roll or select two careers to build your PC's background."
@@ -91,7 +88,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       {/* Render items */}
       <div>
         <Typography variant="h4" className="font-jaini-purva">
-          Current Items:
+          Current Items ({character.items.length}/{maxItems}):
         </Typography>
         <ul>
           {character.items.map((item, index) =>
@@ -116,7 +113,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       </div>
       {maxItems < character.items.length && (
         <Alert severity="error" className="sticky bottom-2 z-10">
-          You have exceeded the maximum item limit!
+          You have exceeded your PC's maximum item limit!
         </Alert>
       )}
     </div>
