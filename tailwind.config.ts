@@ -13,6 +13,14 @@ const config: Config = {
       darkGray: "#242120",
       white: "#ffffff",
     },
+    screens: {
+      xs: "320px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       fontFamily: {
         "jaini-purva": ["var(--font-jaini-purva)"],

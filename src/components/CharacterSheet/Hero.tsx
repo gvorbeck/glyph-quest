@@ -5,6 +5,7 @@ import { useState } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GQModal from "../GQModal";
 import ModalSettings from "./ModalSettings";
+import Text from "../Text";
 
 type HeroProps = {
   character: Character;
@@ -20,12 +21,13 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
   return (
     <>
       <Grid xs={12} className="relative">
-        <Typography
-          variant="h2"
-          className="font-jaini-purva text-amber pl-4 text-7xl [text-shadow:2px_2px_#242120] h-[300px]"
+        <Text
+          level="h2"
+          className="text-amber pl-4 text-7xl [text-shadow:2px_2px_#242120] h-[300px]"
+          font
         >
           {character.name}
-        </Typography>
+        </Text>
         <Tooltip title="Settings">
           <IconButton
             aria-label="close"
@@ -40,7 +42,7 @@ const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
           id="settings"
           open={settingsOpen}
           title="Settings"
-          width={600}
+          // width={600}
         >
           <ModalSettings character={character} setCharacter={setCharacter} />
         </GQModal>

@@ -1,35 +1,24 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
+import Link from "next/link";
 
 type TextProps = {
   font?: boolean;
-  level?:
-    | "body1"
-    | "body2"
-    | "button"
-    | "caption"
-    | "h1"
-    | "h2"
-    | "h3"
-    | "h4"
-    | "h5"
-    | "h6"
-    | "inherit"
-    | "overline"
-    | "subtitle1"
-    | "subtitle2";
-};
+} & TypographyProps;
 
-const Text: React.FC<TextProps & React.ComponentPropsWithRef<"div">> = ({
+const Text: React.FC<TextProps & React.ComponentPropsWithRef<"a">> = ({
   children,
   className,
   font,
-  level,
+  variant,
+  href,
+  ...rest
 }) => {
   const fontClassName = font ? "font-jaini-purva" : undefined;
-  const textClassName = [fontClassName, className].join(" ");
+  const textClassName = [fontClassName, className].filter(Boolean).join(" "); // Ensure no undefined classes
+
   return (
-    <Typography variant={level} className={textClassName}>
-      {children}
+    <Typography variant={variant} className={textClassName} {...rest}>
+      {href ? <Link href={href}>{children}</Link> : children}
     </Typography>
   );
 };
