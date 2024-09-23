@@ -1,23 +1,20 @@
 "use client";
 
 import { Character } from "@/types/character";
-import { rollDice } from "@/utils/utils";
+import { getRemainingPoints, rollDice } from "@/utils/utils";
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import AbilityBox from "../AbilityBox";
 import { useCharacter } from "@/context/CharacterContext";
 
-type StepAbilityProps = {
-  remainingPoints: number;
-  setRemainingPoints: React.Dispatch<React.SetStateAction<number>>;
-};
+type StepAbilityProps = {};
 
-const StepAbilities: React.FC<StepAbilityProps> = ({
-  remainingPoints,
-  setRemainingPoints,
-}) => {
-  const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
+const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
   const { character, setCharacter } = useCharacter();
+  const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
+  const [remainingPoints, setRemainingPoints] = useState(
+    getRemainingPoints(character)
+  );
 
   // Abilities array for easier mapping
   const abilities = [

@@ -78,6 +78,16 @@ export const isCrit: (roll: number) => boolean = (roll) => roll === 12;
 /**
  * * Stats
  */
+export const getRemainingPoints = (character: Character) => {
+  return (
+    3 -
+    Object.values(character.abilities).reduce(
+      (acc, ability) => acc + (ability.value ?? 0),
+      0
+    )
+  );
+};
+
 export const getModifier: (ability: number) => number = (ability) => {
   if (ability < 3) return 0;
   if (ability < 6) return 1;
