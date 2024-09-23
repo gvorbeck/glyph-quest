@@ -23,51 +23,27 @@ const Description: React.FC<DescriptionProps> = ({ details, xs }) => {
           Description
         </Typography>
         <List dense>
-          {details.appearance && (
+          {details.detail && (
             <ListItem>
               <ListItemText
                 primary={capitalize(detailsArr[0])}
-                secondary={capitalize(details.appearance)}
-              />
-            </ListItem>
-          )}
-          {details.background && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[1])}
-                secondary={capitalize(details.background)}
-              />
-            </ListItem>
-          )}
-          {details.clothing && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[2])}
-                secondary={capitalize(details.clothing)}
-              />
-            </ListItem>
-          )}
-          {details.mannerism && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[3])}
-                secondary={capitalize(details.mannerism)}
+                secondary={capitalize(details.detail ?? "")}
               />
             </ListItem>
           )}
           {details.personality && (
             <ListItem>
               <ListItemText
-                primary={capitalize(detailsArr[4])}
+                primary={capitalize(detailsArr[1])}
                 secondary={capitalize(details.personality)}
               />
             </ListItem>
           )}
-          {details.physical && (
+          {details.mannerism && (
             <ListItem>
               <ListItemText
-                primary={capitalize(detailsArr[5])}
-                secondary={capitalize(details.physical)}
+                primary={capitalize(detailsArr[2])}
+                secondary={capitalize(details.mannerism)}
               />
             </ListItem>
           )}

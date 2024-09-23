@@ -126,8 +126,8 @@ export default function CharacterSheet({
     {
       icon: <Psychology className={iconSizeClassNames} />,
       button: true,
-      primary: character.abilities.wil.short,
-      secondary: character.abilities.wil.value,
+      primary: character.abilities.wis.short,
+      secondary: character.abilities.wis.value,
     },
   ];
 
@@ -201,7 +201,7 @@ export default function CharacterSheet({
         <TextField
           size="small"
           type="number"
-          value={character.gold}
+          value={character.coins}
           onChange={handleGoldChange}
         />
       ),
