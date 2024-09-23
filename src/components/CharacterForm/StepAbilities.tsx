@@ -1,53 +1,31 @@
 "use client";
 
-import { Character } from "@/types/character";
 import { getRemainingPoints, rollDice } from "@/utils/utils";
 import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import AbilityBox from "../AbilityBox";
 import { useCharacter } from "@/context/CharacterContext";
+import { Character } from "@/types/character";
 
 type StepAbilityProps = {};
 
 const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
   const { character, setCharacter } = useCharacter();
-  const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
-  const [remainingPoints, setRemainingPoints] = useState(
-    getRemainingPoints(character)
-  );
 
-  // Abilities array for easier mapping
+  // State to track rolled ability dice (optional feature)
+  const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
+
+  // Calculate remaining points based on current ability values
+  const remainingPoints = getRemainingPoints(character);
+
+  // List of abilities to be mapped over
   const abilities = [
-    {
-      name: "str", // Use ability keys directly
-      label: character.abilities.str.short,
-      value: character.abilities.str.value ?? 0, // Ensure value is never null
-    },
-    {
-      name: "dex",
-      label: character.abilities.dex.short,
-      value: character.abilities.dex.value ?? 0,
-    },
-    {
-      name: "con",
-      label: character.abilities.con.short,
-      value: character.abilities.con.value ?? 0,
-    },
-    {
-      name: "int",
-      label: character.abilities.int.short,
-      value: character.abilities.int.value ?? 0,
-    },
-    {
-      name: "wis",
-      label: character.abilities.wis.short,
-      value: character.abilities.wis.value ?? 0,
-    },
-    {
-      name: "cha",
-      label: character.abilities.cha.short,
-      value: character.abilities.cha.value ?? 0,
-    },
+    { name: "str", label: character.abilities.str.short },
+    { name: "dex", label: character.abilities.dex.short },
+    { name: "con", label: character.abilities.con.short },
+    { name: "int", label: character.abilities.int.short },
+    { name: "wis", label: character.abilities.wis.short },
+    { name: "cha", label: character.abilities.cha.short },
   ];
 
   // Handle rolling abilities (optional)
@@ -67,7 +45,6 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
     });
 
     setRolledAbilities(rolled);
-    setRemainingPoints(0); // No points left after rolling
 
     // Update character's abilities in state
     setCharacter((prevCharacter) => ({
@@ -87,30 +64,27 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
     }));
   };
 
+  // Define ability names type
+  type AbilityName = keyof Character["abilities"]; // "str" | "dex" | "con" | "int" | "wis" | "cha"
+
   // Handle ability point changes
-  const handleAbilityChange = (abilityName: string, newValue: string) => {
+  const handleAbilityChange = (abilityName: AbilityName, newValue: string) => {
     const newAbilityValue = parseInt(newValue);
 
-    const currentAbility = abilities.find(
-      (ability) => ability.name === abilityName
-    );
+    // Ensure valid point update
+    if (isNaN(newAbilityValue)) return;
 
-    if (!currentAbility) return;
+    const currentAbilityValue = character.abilities[abilityName].value || 0;
+    const pointDiff = newAbilityValue - currentAbilityValue;
 
-    const pointDiff = newAbilityValue - (currentAbility.value ?? 0); // Ensure currentAbility.value is not null
-
-    // Ensure total points do not exceed remainingPoints
     if (remainingPoints - pointDiff >= 0 && newAbilityValue >= 0) {
-      setRemainingPoints((prev) => prev - pointDiff); // Update remaining points
-
+      // Update the specific ability value
       setCharacter((prevCharacter) => ({
         ...prevCharacter,
         abilities: {
           ...prevCharacter.abilities,
           [abilityName]: {
-            ...prevCharacter.abilities[
-              abilityName as keyof Character["abilities"]
-            ],
+            ...prevCharacter.abilities[abilityName],
             value: newAbilityValue,
           },
         },
@@ -124,9 +98,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
         <Button variant="outlined" onClick={handleAbilitiesClick}>
           (Optional) Roll Abilities
         </Button>
-        <Typography className="text-lg">
-          <strong>{rolledAbilities.join(", ")}</strong>
-        </Typography>
+        {rolledAbilities.length > 0 && (
+          <Typography className="text-lg">
+            <strong>{rolledAbilities.join(", ")}</strong>
+          </Typography>
+        )}
       </div>
       <Typography className="text-lg">
         Points remaining: {remainingPoints}
@@ -139,9 +115,11 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
           {abilities.map((ability) => (
             <AbilityBox
               key={ability.name}
-              value={ability.value || 0}
+              value={
+                character.abilities[ability.name as AbilityName].value || 0
+              }
               onChange={(e) =>
-                handleAbilityChange(ability.name, e.target.value)
+                handleAbilityChange(ability.name as AbilityName, e.target.value)
               }
               label={ability.label}
             />

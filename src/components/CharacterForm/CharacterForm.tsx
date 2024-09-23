@@ -60,7 +60,7 @@ const CharacterFormSteps = () => {
   const isDisabled = () => {
     switch (activeStep) {
       case 0:
-        return !getRemainingPoints(character);
+        return !!getRemainingPoints(character);
       case 1:
         return !character.health;
       case 2:
