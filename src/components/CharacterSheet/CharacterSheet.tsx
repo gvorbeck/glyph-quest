@@ -22,7 +22,7 @@ import {
   TrendingUp,
 } from "@mui/icons-material";
 import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
-import { Alert, InputAdornment, TextField } from "@mui/material";
+import { Alert, Box, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
@@ -219,41 +219,38 @@ export default function CharacterSheet({
     };
 
   return (
-    <>
-      <Grid
-        container
-        spacing={2}
-        className={`${
-          backgroundClasses[character.settings.wallpaper] || ""
-        } bg-contain bg-no-repeat bg-darkGray`}
-      >
-        {!user && (
-          <Grid xs={12}>
-            <Alert severity="error">
-              You are not logged in. No changes will be saved.
-            </Alert>
-          </Grid>
-        )}
-        {user && user.uid !== userId && (
-          <Grid xs={12}>
-            <Alert severity="info">
-              You are viewing another user's character. No changes will be
-              saved.
-            </Alert>
-          </Grid>
-        )}
-        <Hero
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        />
-        <GQDivider />
-        {/* <Stats stats={tertiaryStats} xs={4} />
+    <Box
+      className={`${
+        backgroundClasses[character.settings.wallpaper] || ""
+      } bg-[length:100%] bg-no-repeat bg-darkGray grid grid-cols-12 gap-4 p-4`}
+    >
+      {!user && (
+        <Box className="col-span-full">
+          <Alert severity="error">
+            You are not logged in. No changes will be saved.
+          </Alert>
+        </Box>
+      )}
+      {user && user.uid !== userId && (
+        <Box className="col-span-full">
+          <Alert severity="info">
+            You are viewing another user's character. No changes will be saved.
+          </Alert>
+        </Box>
+      )}
+      <Hero
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
+      <GQDivider />
+      <Stats abilities={character.abilities} />
+      {/* <Stats stats={tertiaryStats} xs={4} />
         <Stats stats={primaryStats} xs={4} />
         <Stats stats={secondaryStats} xs={4} /> */}
-        {/* <GQDivider /> */}
-        {/* <Grid xs={6} className="p-0">
+      {/* <GQDivider /> */}
+      {/* <Grid xs={6} className="p-0">
           <Features
             character={character}
             setCharacter={
@@ -263,22 +260,21 @@ export default function CharacterSheet({
           />
           <Description details={character.details} xs={12} />
         </Grid> */}
-        {/* <Inventory
+      {/* <Inventory
           xs={6}
           character={character}
           setCharacter={
             setCharacter as React.Dispatch<React.SetStateAction<Character>>
           }
         /> */}
-        {/* <GQDivider /> */}
-        {/* <Notes
+      {/* <GQDivider /> */}
+      {/* <Notes
           xs={12}
           character={character}
           setCharacter={
             setCharacter as React.Dispatch<React.SetStateAction<Character>>
           }
         /> */}
-      </Grid>
-    </>
+    </Box>
   );
 }

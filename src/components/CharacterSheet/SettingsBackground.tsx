@@ -56,7 +56,7 @@ const SettingsBackground: React.FC<SettingsBackgroundProps> = ({
   return (
     <div>
       <Typography variant="h3">Background</Typography>
-      <div className="inline-grid gap-2 grid-cols-2 justify-items-center">
+      <div className="inline-grid gap-2 grid-cols-1 justify-items-center">
         {itemData.map((item) => (
           <button
             key={item.title}
