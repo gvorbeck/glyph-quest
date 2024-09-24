@@ -2,7 +2,7 @@ import Text from "../Text";
 
 type BorderedBoxProps = {
   top: React.ReactNode;
-  bottom: string;
+  bottom: string | React.ReactNode;
   bottomSize?: string;
 };
 

@@ -8,6 +8,7 @@ export type Item = {
   name: string;
   slots: number;
   type: TypeOption;
+  damage?: string;
   bonus?: number;
   armorPoints?: number;
   amount?: number | string;

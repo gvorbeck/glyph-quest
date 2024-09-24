@@ -1,14 +1,23 @@
 import { Character } from "@/types/character";
 import {
+  Box,
   Button,
+  Checkbox,
   IconButton,
   List,
   ListItem,
   ListItemText,
   Paper,
   SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Tooltip,
   Typography,
+  capitalize,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import InventoryLocationSelect from "../InventoryLocationSelect";
@@ -19,172 +28,124 @@ import InventoryErrors from "../InventoryErrors";
 import NewInventoryItem from "./NewInventoryItem";
 import { getAttackBonus, isCrit, rollDice } from "@/utils/utils";
 import useSnackbar from "@/hooks/useSnackbar";
+import Text from "../Text";
+import BorderedBox from "./BorderedBox";
 
 type InventoryProps = {
-  xs?: number;
-  character: Character;
+  items: Item[];
+  coins: Character["coins"];
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const Inventory: React.FC<InventoryProps> = ({
-  xs,
-  character,
-  setCharacter,
-}) => {
-  const [error, setError] = useState<number>(0);
-  const [newFormOpen, setNewFormOpen] = useState<[boolean, Item | undefined]>([
-    false,
-    undefined,
-  ]);
-  const { snackbar, showSnackbar } = useSnackbar();
+type RowsType = {
+  name: string;
+  type: string;
+  slots: number;
+  amount: string | number | undefined;
+  damage: string | undefined;
+  armorPoints: number | undefined;
+  description: string | undefined;
+}[];
 
-  const inventory = character.items.sort((a, b) =>
-    a.name.localeCompare(b.name)
+type RowKeys =
+  | "name"
+  | "type"
+  | "slots"
+  | "amount"
+  | "damage"
+  | "armorPoints"
+  | "description";
+
+const createData = (
+  name: string,
+  type: string,
+  slots: number,
+  amount: number | string | undefined,
+  damage: string | undefined,
+  armorPoints: number | undefined,
+  description: string | undefined
+) => {
+  return { name, type, slots, amount, damage, armorPoints, description };
+};
+
+// Determine if rows possess any of a specific column
+const has = (rows: RowsType, column: RowKeys) => {
+  return rows.some((row) => row[column] !== undefined);
+};
+
+const Inventory: React.FC<
+  InventoryProps & React.ComponentPropsWithRef<"div">
+> = ({ items, setCharacter, className }) => {
+  const classNames = [
+    "flex flex-col gap-2 bg-darkGray/75 p-2 rounded items-start",
+    className,
+  ].join(" ");
+
+  const rows: RowsType = items.map((item) =>
+    createData(
+      item.name,
+      item.type,
+      item.slots,
+      item.amount,
+      item.damage ? item.damage + "+" + item.bonus : undefined,
+      item.armorPoints,
+      item.description
+    )
   );
 
-  const handleItemLocationChange = (
-    event: SelectChangeEvent<Location>,
-    item: Item
-  ) => {
-    const value = event.target.value as Location;
-    const newItem = { ...item, location: value };
-    const oldItems = character.items.filter((i) => i.name !== item.name);
-    const items = [...oldItems, newItem].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items,
-    }));
-  };
-
-  const handleEditItemClick = (item: Item) => {
-    setNewFormOpen([true, item]);
-  };
-
-  const handleDeleteItemClick = (item: Item) => {
-    const items = character.items.filter((i) => i.name !== item.name);
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items,
-    }));
-  };
-
-  const handleAttackClick = (item: Item) => {
-    const attackBonus = getAttackBonus(character);
-    const attackRoll = rollDice(2, true) as number[];
-    const attackRollString = attackRoll.join(", ");
-    const attackRollTotal = attackRoll.reduce((a, b) => a + b, 0) + attackBonus;
-    const damageBonus = !!item.damage
-      ? ` (+${item.damage} damage on a hit)`
-      : "";
-    const message = `${item.name} Attack Roll (2d6+AB): [${attackRollString}] + ${attackBonus} = ${attackRollTotal}${damageBonus}`;
-
-    const copyToClipboard = () => {
-      navigator.clipboard.writeText(message);
-    };
-
-    const action = (
-      <Tooltip title="Copy attack message">
-        <IconButton
-          size="small"
-          aria-label="copy"
-          color="inherit"
-          onClick={copyToClipboard}
-        >
-          <ContentCopy fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    );
-
-    if (isCrit(attackRollTotal)) {
-      showSnackbar("Critical Hit!", "success", action);
-    } else {
-      showSnackbar(message, "info", action);
-    }
-  };
+  const hasDamage = has(rows, "damage");
+  const hasArmorPoints = has(rows, "armorPoints");
+  const hasDescription = has(rows, "description");
 
   return (
-    <Grid xs={xs}>
-      <Paper className="p-4 flex flex-col gap-4">
-        <Typography variant="h3" className="font-jaini-purva">
-          Inventory
-        </Typography>
-        <InventoryErrors items={inventory} setError={setError} />
-        <List>
-          {inventory.map((item, index) => (
-            <ListItem
-              key={index}
-              className={`items-start flex-col ${
-                index % 2 === 0 ? "bg-white/5" : ""
-              }`}
-            >
-              <ListItemText
-                primary={
-                  item.amount !== "1" && item.amount !== undefined
-                    ? `(${item.amount}) ${item.name}`
-                    : item.name
-                }
-                className="[&_span]:truncate w-full"
-                secondary={item.detail}
-                title={item.name}
-              />
-              <div className="flex gap-2 w-full justify-end">
-                {item.type.includes("weapon") && (
-                  <Button
-                    variant="text"
-                    startIcon={<Bolt />}
-                    size="small"
-                    className=" mr-auto"
-                    onClick={() => handleAttackClick(item)}
-                  >
-                    Attack
-                  </Button>
+    <Box className={classNames}>
+      <Text variant="h3" font className="text-3xl">
+        Inventory
+      </Text>
+      {/* <BorderedBox top={<Text>0</Text>} bottom="Coins" /> */}
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="right">Type</TableCell>
+              <TableCell align="right">Slots</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              {hasDamage && <TableCell align="right">Damage</TableCell>}
+              {hasArmorPoints && <TableCell align="right">AP</TableCell>}
+              {hasDescription && (
+                <TableCell align="right">Description</TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  <Tooltip title="Wound">
+                    <Checkbox />
+                  </Tooltip>
+                  {capitalize(row.name)}
+                </TableCell>
+                <TableCell align="right">{capitalize(row.type)}</TableCell>
+                <TableCell align="right">{row.slots}</TableCell>
+                <TableCell align="right">{row.amount ?? 1}</TableCell>
+                {hasDamage && <TableCell align="right">{row.damage}</TableCell>}
+                {hasArmorPoints && (
+                  <TableCell align="right">{row.armorPoints}</TableCell>
                 )}
-                <InventoryLocationSelect
-                  id={item.name.toLowerCase()}
-                  value={item.location}
-                  onChange={(e) => handleItemLocationChange(e, item)}
-                  size="small"
-                />
-                <IconButton
-                  aria-label="edit Item"
-                  color="primary"
-                  onClick={() => handleEditItemClick(item)}
-                >
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  aria-label="delete item"
-                  color="primary"
-                  href="#newItem"
-                  onClick={() => handleDeleteItemClick(item)}
-                >
-                  <Cancel />
-                </IconButton>
-              </div>
-            </ListItem>
-          ))}
-        </List>
-        {!newFormOpen[0] ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setNewFormOpen([true, undefined])}
-          >
-            Add Item
-          </Button>
-        ) : (
-          <NewInventoryItem
-            id="newItem"
-            onClose={() => setNewFormOpen([false, undefined])}
-            setCharacter={setCharacter}
-            editItem={newFormOpen[1]}
-          />
-        )}
-      </Paper>
-      {snackbar}
-    </Grid>
+                {hasDescription && (
+                  <TableCell align="right">{row.description}</TableCell>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

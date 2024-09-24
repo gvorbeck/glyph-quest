@@ -5,12 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import BorderedBox from "../CharacterSheet/BorderedBox";
 import AbilityBox from "../AbilityBox";
 import { Character } from "@/types/character";
+import { Item } from "@/types/items";
 
 type MetricsProps = {
   level: number;
   health: number;
   healthMax: number;
   xp: number;
+  items: Item[];
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
@@ -20,6 +22,7 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
   health,
   healthMax,
   xp,
+  items,
   setCharacter,
 }) => {
   const [editMode, setEditMode] = useState(false);
@@ -37,6 +40,14 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
 
   const abilityBoxClassNames =
     "w-full [&>div]:w-full h-full [&>div]:h-full [&_input]:font-jaini-purva [&_input]:text-2xl [&_input]:h-full [&_input]:text-center [&_input]:pt-0 [&_input]:pb-0 [&_label]:text-xs [&_label]:absolute [&_label]:-top-2 [&_label]:-left-2";
+
+  const armorPoints = items.reduce((acc, item) => {
+    if (item.type === "armor" && item.armorPoints) {
+      return acc + item.armorPoints;
+    }
+    return acc;
+  }, 0);
+  const armorClass = 11 + armorPoints;
 
   const toggleEditMode = () => setEditMode((prev) => !prev);
 
@@ -59,6 +70,10 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
   const handleCurrentXpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     setCharXp(value);
+  };
+
+  const handleCurrentXpBlur = () => {
+    setCharacter((prev) => ({ ...prev, xp: charXp }));
   };
 
   // UseEffect to trigger setCharacter only when `editMode` changes from true to false
@@ -121,11 +136,29 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
               label=""
               value={charXp}
               onChange={handleCurrentXpChange}
-              className={abilityBoxClassNames}
+              className={`${abilityBoxClassNames} [&_input]:text-lg`}
+              onBlur={handleCurrentXpBlur}
               max={500000}
             />
           }
           bottom="XP"
+        />
+        <BorderedBox
+          className="col-span-2"
+          top={
+            <div className="flex justify-between items-center [&_p]:w-1/2 [&_p]:text-center h-full">
+              <Text className="border-r border-r-solid border-r-amber">
+                {armorPoints}
+              </Text>
+              <Text>{armorClass}</Text>
+            </div>
+          }
+          bottom={
+            <div className="flex justify-between [&>div]:w-1/2">
+              <div>Armor Points</div>
+              <div>Armor Class</div>
+            </div>
+          }
         />
       </div>
     </Box>

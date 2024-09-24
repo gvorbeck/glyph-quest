@@ -265,6 +265,15 @@ export default function CharacterSheet({
         health={character.health}
         healthMax={character.healthMax}
         xp={character.xp}
+        items={character.items}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
+      <Inventory
+        className="col-span-12"
+        items={character.items}
+        coins={character.coins}
         setCharacter={
           setCharacter as React.Dispatch<React.SetStateAction<Character>>
         }

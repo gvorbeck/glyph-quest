@@ -11,7 +11,7 @@ const StepHitPoints: React.FC<StepHitPointsProps> = () => {
   const [hitPoints, setHitPoints] = useState<number>(character.health);
 
   const handleClick = () => {
-    const rolledHitPoints = rollDice(1, true) as number;
+    const rolledHitPoints = rollDice(1, 6, true) as number;
     setHitPoints(rolledHitPoints);
     setCharacter((prevCharacter) => ({
       ...prevCharacter,

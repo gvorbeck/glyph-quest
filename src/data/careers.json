@@ -1,402 +1,402 @@
 [
   {
-    "name": "acolyte",
-    "equipment": ["candlestick", "censer", "incense"]
+    "name": "Acolyte",
+    "equipment": ["Candlestick", "Censer", "Incense"]
   },
   {
-    "name": "acrobat",
-    "equipment": ["flash powder", "balls", "lamp oil"]
+    "name": "Acrobat",
+    "equipment": ["Flash powder", "Balls", "Lamp oil"]
   },
   {
-    "name": "actor",
-    "equipment": ["wig", "makeup", "costume"]
+    "name": "Actor",
+    "equipment": ["Wig", "Makeup", "Costume"]
   },
   {
-    "name": "alchemist",
-    "equipment": ["acid", "mortar/pestle", "6 vials"]
+    "name": "Alchemist",
+    "equipment": ["Acid", "Mortar/pestle", "6 vials"]
   },
   {
-    "name": "antiquarian",
-    "equipment": ["old coin", "flag", "lore book"]
+    "name": "Antiquarian",
+    "equipment": ["Old coin", "Flag", "Lore book"]
   },
   {
-    "name": "arcanist",
-    "equipment": ["spell book", "arcane robes", "chalk"]
+    "name": "Arcanist",
+    "equipment": ["Spell book", "Arcane robes", "Chalk"]
   },
   {
-    "name": "architect",
-    "equipment": ["plumb line", "level", "ruler"]
+    "name": "Architect",
+    "equipment": ["Plumb line", "Level", "Ruler"]
   },
   {
-    "name": "assassin",
-    "equipment": ["crossbow", "garrote", "soft boots"]
+    "name": "Assassin",
+    "equipment": ["Crossbow", "Garrote", "Soft boots"]
   },
   {
-    "name": "astrologer",
-    "equipment": ["star charts", "almanac", "telescope"]
+    "name": "Astrologer",
+    "equipment": ["Star charts", "Almanac", "Telescope"]
   },
   {
-    "name": "baker",
-    "equipment": ["rolling pin", "flour bag", "lard block"]
+    "name": "Baker",
+    "equipment": ["Rolling pin", "Flour bag", "Lard block"]
   },
   {
-    "name": "bandit",
-    "equipment": ["mask", "manacles", "caltrops"]
+    "name": "Bandit",
+    "equipment": ["Mask", "Manacles", "Caltrops"]
   },
   {
-    "name": "barber",
-    "equipment": ["scissors", "hair oil", "straight razor"]
+    "name": "Barber",
+    "equipment": ["Scissors", "Hair oil", "Straight razor"]
   },
   {
-    "name": "beast tamer",
-    "equipment": ["whip", "gloves", "leash"]
+    "name": "Beast tamer",
+    "equipment": ["Whip", "Gloves", "Leash"]
   },
   {
-    "name": "beekeeper",
-    "equipment": ["honey", "mask", "smoke bomb"]
+    "name": "Beekeeper",
+    "equipment": ["Honey", "Mask", "Smoke bomb"]
   },
   {
-    "name": "blacksmith",
-    "equipment": ["hammer", "bellows", "tongs"]
+    "name": "Blacksmith",
+    "equipment": ["Hammer", "Bellows", "Tongs"]
   },
   {
-    "name": "boatman",
-    "equipment": ["10' pole", "instrument", "paddle"]
+    "name": "Boatman",
+    "equipment": ["10' pole", "Instrument", "Paddle"]
   },
   {
-    "name": "bookbinder",
-    "equipment": ["sewing kit", "glue", "quill/ink"]
+    "name": "Bookbinder",
+    "equipment": ["Sewing kit", "Glue", "Quill/ink"]
   },
   {
-    "name": "brewer",
-    "equipment": ["mash paddle", "beer keg", "hops"]
+    "name": "Brewer",
+    "equipment": ["Mash paddle", "Beer keg", "Hops"]
   },
   {
-    "name": "burglar",
-    "equipment": ["lockpicks", "grappling hook", "rope"]
+    "name": "Burglar",
+    "equipment": ["Lockpicks", "Grappling hook", "Rope"]
   },
   {
-    "name": "butcher",
-    "equipment": ["cleaver", "meat hook", "bacon"]
+    "name": "Butcher",
+    "equipment": ["Cleaver", "Meat hook", "Bacon"]
   },
   {
-    "name": "candlemaker",
-    "equipment": ["10 candles", "lamp oil", "wax"]
+    "name": "Candlemaker",
+    "equipment": ["10 candles", "Lamp oil", "Wax"]
   },
   {
-    "name": "carpenter",
-    "equipment": ["hammer", "saw", "box of nails"]
+    "name": "Carpenter",
+    "equipment": ["Hammer", "Saw", "Box of nails"]
   },
   {
-    "name": "charlatan",
-    "equipment": ["costume", "fake elixir", "degree"]
+    "name": "Charlatan",
+    "equipment": ["Costume", "Fake elixir", "Degree"]
   },
   {
-    "name": "cobbler",
-    "equipment": ["leather roll", "fancy shoes", "tacks"]
+    "name": "Cobbler",
+    "equipment": ["Leather roll", "Fancy shoes", "Tacks"]
   },
   {
-    "name": "coachman",
-    "equipment": ["whip", "lockbox", "oilskin coat"]
+    "name": "Coachman",
+    "equipment": ["Whip", "Lockbox", "Oilskin coat"]
   },
   {
-    "name": "cook",
-    "equipment": ["frying pan", "salt", "olive oil"]
+    "name": "Cook",
+    "equipment": ["Frying pan", "Salt", "Olive oil"]
   },
   {
-    "name": "courier",
-    "equipment": ["oilskin bag", "local map", "lantern"]
+    "name": "Courier",
+    "equipment": ["Oilskin bag", "Local map", "Lantern"]
   },
   {
-    "name": "courtier",
-    "equipment": ["perfume", "wig", "fan"]
+    "name": "Courtier",
+    "equipment": ["Perfume", "Wig", "Fan"]
   },
   {
-    "name": "cultist",
-    "equipment": ["dagger", "ritual robes", "amulet"]
+    "name": "Cultist",
+    "equipment": ["Dagger", "Ritual robes", "Amulet"]
   },
   {
-    "name": "cutpurse",
-    "equipment": ["knife", "caltrops", "sack"]
+    "name": "Cutpurse",
+    "equipment": ["Knife", "Caltrops", "Sack"]
   },
   {
-    "name": "dyer",
-    "equipment": ["10' pole", "dyes", "soap"]
+    "name": "Dyer",
+    "equipment": ["10' pole", "Dyes", "Soap"]
   },
   {
-    "name": "explorer",
-    "equipment": ["sextant", "spyglass", "crampons"]
+    "name": "Explorer",
+    "equipment": ["Sextant", "Spyglass", "Crampons"]
   },
   {
-    "name": "falconer",
-    "equipment": ["bird cage", "gloves", "whistle"]
+    "name": "Falconer",
+    "equipment": ["Bird cage", "Gloves", "Whistle"]
   },
   {
-    "name": "fence",
-    "equipment": ["short sword", "file", "sealing wax"]
+    "name": "Fence",
+    "equipment": ["Short sword", "File", "Sealing wax"]
   },
   {
-    "name": "fisherman",
-    "equipment": ["spear", "net", "fishing tackle"]
+    "name": "Fisherman",
+    "equipment": ["Spear", "Net", "Fishing tackle"]
   },
   {
-    "name": "folklorist",
-    "equipment": ["prophecy", "bones", "scales"]
+    "name": "Folklorist",
+    "equipment": ["Prophecy", "Bones", "Scales"]
   },
   {
-    "name": "gambler",
-    "equipment": ["rapier", "card deck", "dice"]
+    "name": "Gambler",
+    "equipment": ["Rapier", "Card deck", "Dice"]
   },
   {
-    "name": "gamekeeper",
-    "equipment": ["sling", "horn", "rope ladder"]
+    "name": "Gamekeeper",
+    "equipment": ["Sling", "Horn", "Rope ladder"]
   },
   {
-    "name": "gardener",
-    "equipment": ["sickle", "shovel", "shears"]
+    "name": "Gardener",
+    "equipment": ["Sickle", "Shovel", "Shears"]
   },
   {
-    "name": "grave robber",
-    "equipment": ["saw", "crowbar", "pulleys"]
+    "name": "Grave robber",
+    "equipment": ["Saw", "Crowbar", "Pulleys"]
   },
   {
-    "name": "gravedigger",
-    "equipment": ["shovel", "pickaxe", "bucket"]
+    "name": "Gravedigger",
+    "equipment": ["Shovel", "Pickaxe", "Bucket"]
   },
   {
-    "name": "groom",
-    "equipment": ["oats", "horse brush", "blanket"]
+    "name": "Groom",
+    "equipment": ["Oats", "Horse brush", "Blanket"]
   },
   {
-    "name": "guard",
-    "equipment": ["halberd", "livery", "horn"]
+    "name": "Guard",
+    "equipment": ["Halberd", "Livery", "Horn"]
   },
   {
-    "name": "headsman",
-    "equipment": ["axe", "hood", "garrote"]
+    "name": "Headsman",
+    "equipment": ["Axe", "Hood", "Garrote"]
   },
   {
-    "name": "herbalist",
-    "equipment": ["herbs", "sickle", "herb manual"]
+    "name": "Herbalist",
+    "equipment": ["Herbs", "Sickle", "Herb manual"]
   },
   {
-    "name": "hermit",
-    "equipment": ["staff", "fungi", "basket"]
+    "name": "Hermit",
+    "equipment": ["Staff", "Fungi", "Basket"]
   },
   {
-    "name": "hunter",
-    "equipment": ["tent", "bearskin", "bear trap"]
+    "name": "Hunter",
+    "equipment": ["Tent", "Bearskin", "Bear trap"]
   },
   {
-    "name": "innkeeper",
-    "equipment": ["ladle", "10 candles", "cauldron"]
+    "name": "Innkeeper",
+    "equipment": ["Ladle", "10 candles", "Cauldron"]
   },
   {
-    "name": "inquisitor",
-    "equipment": ["manual", "vestments", "pliers"]
+    "name": "Inquisitor",
+    "equipment": ["Manual", "Vestments", "Pliers"]
   },
   {
-    "name": "investigator",
-    "equipment": ["journal", "manacles", "vial"]
+    "name": "Investigator",
+    "equipment": ["Journal", "Manacles", "Vial"]
   },
   {
-    "name": "jailer",
-    "equipment": ["padlock", "10' chain", "wine jug"]
+    "name": "Jailer",
+    "equipment": ["Padlock", "10' chain", "Wine jug"]
   },
   {
-    "name": "jester",
-    "equipment": ["scepter", "donkey head", "motley"]
+    "name": "Jester",
+    "equipment": ["Scepter", "Donkey head", "Motley"]
   },
   {
-    "name": "jeweler",
-    "equipment": ["pliers", "loupe", "tweezers"]
+    "name": "Jeweler",
+    "equipment": ["Pliers", "Loupe", "Tweezers"]
   },
   {
-    "name": "knight",
-    "equipment": ["lady's favor", "banner", "signet ring"]
+    "name": "Knight",
+    "equipment": ["Lady's favor", "Banner", "Signet ring"]
   },
   {
-    "name": "kidnapper",
-    "equipment": ["chloroform", "manacles", "hood"]
+    "name": "Kidnapper",
+    "equipment": ["Chloroform", "Manacles", "Hood"]
   },
   {
-    "name": "lawyer",
-    "equipment": ["fancy robe", "law book", "certificate"]
+    "name": "Lawyer",
+    "equipment": ["Fancy robe", "Law book", "Certificate"]
   },
   {
-    "name": "locksmith",
-    "equipment": ["crowbar", "picks", "padlock"]
+    "name": "Locksmith",
+    "equipment": ["Crowbar", "Picks", "Padlock"]
   },
   {
-    "name": "mason",
-    "equipment": ["chisel", "hammer", "chalk"]
+    "name": "Mason",
+    "equipment": ["Chisel", "Hammer", "Chalk"]
   },
   {
-    "name": "merchant",
-    "equipment": ["scales", "strongbox", "bag of spice"]
+    "name": "Merchant",
+    "equipment": ["Scales", "Strongbox", "Bag of spice"]
   },
   {
-    "name": "miner",
-    "equipment": ["pickaxe", "lantern", "pet canary"]
+    "name": "Miner",
+    "equipment": ["Pickaxe", "Lantern", "Pet canary"]
   },
   {
-    "name": "musician",
+    "name": "Musician",
     "equipment": ["3 instruments"]
   },
   {
-    "name": "naturalist",
-    "equipment": ["fossil", "insect case", "geode"]
+    "name": "Naturalist",
+    "equipment": ["Fossil", "Insect case", "Geode"]
   },
   {
-    "name": "officer",
-    "equipment": ["whip", "ledger", "pistol"]
+    "name": "Officer",
+    "equipment": ["Whip", "Ledger", "Pistol"]
   },
   {
-    "name": "oracle",
-    "equipment": ["tea leaves", "tarot deck", "crystal"]
+    "name": "Oracle",
+    "equipment": ["Tea leaves", "Tarot deck", "Crystal"]
   },
   {
-    "name": "orator",
-    "equipment": ["100 marbles", "bullhorn", "wax tablet"]
+    "name": "Orator",
+    "equipment": ["100 marbles", "Bullhorn", "Wax tablet"]
   },
   {
-    "name": "painter",
-    "equipment": ["linseed oil", "pigments", "brushes"]
+    "name": "Painter",
+    "equipment": ["Linseed oil", "Pigments", "Brushes"]
   },
   {
-    "name": "peddler",
-    "equipment": ["bucket", "300' twine", "mirror"]
+    "name": "Peddler",
+    "equipment": ["Bucket", "300' twine", "Mirror"]
   },
   {
-    "name": "philosopher",
-    "equipment": ["staff", "lantern", "chalk"]
+    "name": "Philosopher",
+    "equipment": ["Staff", "Lantern", "Chalk"]
   },
   {
-    "name": "physician",
-    "equipment": ["saw", "scalpel", "wine jug"]
+    "name": "Physician",
+    "equipment": ["Saw", "Scalpel", "Wine jug"]
   },
   {
-    "name": "pilgrim",
-    "equipment": ["staff", "relic", "letter of passage"]
+    "name": "Pilgrim",
+    "equipment": ["Staff", "Relic", "Letter of passage"]
   },
   {
-    "name": "pirate",
-    "equipment": ["sextant", "cannonball", "grappling hook"]
+    "name": "Pirate",
+    "equipment": ["Sextant", "Cannonball", "Grappling hook"]
   },
   {
-    "name": "pit fighter",
-    "equipment": ["net", "whip", "wine jug"]
+    "name": "Pit fighter",
+    "equipment": ["Net", "Whip", "Wine jug"]
   },
   {
-    "name": "playwright",
-    "equipment": ["quill/ink", "skull", "10 candles"]
+    "name": "Playwright",
+    "equipment": ["Quill/ink", "Skull", "10 candles"]
   },
   {
-    "name": "poacher",
-    "equipment": ["animal scent", "bow", "20 arrows"]
+    "name": "Poacher",
+    "equipment": ["Animal scent", "Bow", "20 arrows"]
   },
   {
-    "name": "poet",
-    "equipment": ["stationery", "bell", "perfume"]
+    "name": "Poet",
+    "equipment": ["Stationery", "Bell", "Perfume"]
   },
   {
-    "name": "priest",
-    "equipment": ["holy water", "10 stakes", "prayer book"]
+    "name": "Priest",
+    "equipment": ["Holy water", "10 stakes", "Prayer book"]
   },
   {
-    "name": "prospector",
-    "equipment": ["10 iron spikes", "pickaxe", "pan"]
+    "name": "Prospector",
+    "equipment": ["10 iron spikes", "Pickaxe", "Pan"]
   },
   {
-    "name": "puppeteer",
-    "equipment": ["confetti", "puppet", "sewing kit"]
+    "name": "Puppeteer",
+    "equipment": ["Confetti", "Puppet", "Sewing kit"]
   },
   {
-    "name": "rat catcher",
-    "equipment": ["cage", "10 rat traps", "sack"]
+    "name": "Rat catcher",
+    "equipment": ["Cage", "10 rat traps", "Sack"]
   },
   {
-    "name": "saboteur",
-    "equipment": ["air bladder", "crowbar", "bomb"]
+    "name": "Saboteur",
+    "equipment": ["Air bladder", "Crowbar", "Bomb"]
   },
   {
-    "name": "sailor",
-    "equipment": ["beeswax", "pulleys", "spyglass"]
+    "name": "Sailor",
+    "equipment": ["Beeswax", "Pulleys", "Spyglass"]
   },
   {
-    "name": "scout",
-    "equipment": ["signal flags", "black grease", "dice"]
+    "name": "Scout",
+    "equipment": ["Signal flags", "Black grease", "Dice"]
   },
   {
-    "name": "scribe",
-    "equipment": ["lamp oil", "quill/ink", "sealing wax"]
+    "name": "Scribe",
+    "equipment": ["Lamp oil", "Quill/ink", "Sealing wax"]
   },
   {
-    "name": "sculptor",
-    "equipment": ["chisel", "clay", "calipers"]
+    "name": "Sculptor",
+    "equipment": ["Chisel", "Clay", "Calipers"]
   },
   {
-    "name": "servant",
-    "equipment": ["sponge", "silverware", "poker"]
+    "name": "Servant",
+    "equipment": ["Sponge", "Silverware", "Poker"]
   },
   {
-    "name": "shepherd",
-    "equipment": ["crook", "instrument", "sling"]
+    "name": "Shepherd",
+    "equipment": ["Crook", "Instrument", "Sling"]
   },
   {
-    "name": "shipwright",
-    "equipment": ["drill", "hammer", "axe"]
+    "name": "Shipwright",
+    "equipment": ["Drill", "Hammer", "Axe"]
   },
   {
-    "name": "singer",
-    "equipment": ["mirror", "makeup", "locket"]
+    "name": "Singer",
+    "equipment": ["Mirror", "Makeup", "Locket"]
   },
   {
-    "name": "smuggler",
-    "equipment": ["pulleys", "rope", "makeup"]
+    "name": "Smuggler",
+    "equipment": ["Pulleys", "Rope", "Makeup"]
   },
   {
-    "name": "soldier",
-    "equipment": ["tent", "card deck", "shovel"]
+    "name": "Soldier",
+    "equipment": ["Tent", "Card deck", "Shovel"]
   },
   {
-    "name": "spy",
-    "equipment": ["caltrops", "poison", "forged papers"]
+    "name": "Spy",
+    "equipment": ["Caltrops", "Poison", "Forged papers"]
   },
   {
-    "name": "squire",
-    "equipment": ["torch", "armor polish", "trumpet"]
+    "name": "Squire",
+    "equipment": ["Torch", "Armor polish", "Trumpet"]
   },
   {
-    "name": "tailor",
-    "equipment": ["sewing kit", "scissors", "soap"]
+    "name": "Tailor",
+    "equipment": ["Sewing kit", "Scissors", "Soap"]
   },
   {
-    "name": "tattooist",
-    "equipment": ["soot pot", "needles", "10 tattoos"]
+    "name": "Tattooist",
+    "equipment": ["Soot pot", "Needles", "10 tattoos"]
   },
   {
-    "name": "thief-taker",
-    "equipment": ["bear trap", "manacles", "torch"]
+    "name": "Thief-taker",
+    "equipment": ["Bear trap", "Manacles", "Torch"]
   },
   {
-    "name": "thug",
-    "equipment": ["poison", "knife", "lamp oil"]
+    "name": "Thug",
+    "equipment": ["Poison", "Knife", "Lamp oil"]
   },
   {
-    "name": "torturer",
-    "equipment": ["drill", "hourglass", "10' chain"]
+    "name": "Torturer",
+    "equipment": ["Drill", "Hourglass", "10' chain"]
   },
   {
-    "name": "trapper",
-    "equipment": ["bear trap", "300' twine", "bear pelt"]
+    "name": "Trapper",
+    "equipment": ["Bear trap", "300' twine", "Bear pelt"]
   },
   {
-    "name": "watchman",
-    "equipment": ["lantern", "trumpet", "spear"]
+    "name": "Watchman",
+    "equipment": ["Lantern", "Trumpet", "Spear"]
   },
   {
-    "name": "woodcutter",
-    "equipment": ["axe", "firewood", "50' rope"]
+    "name": "Woodcutter",
+    "equipment": ["Axe", "Firewood", "50' rope"]
   }
 ]
