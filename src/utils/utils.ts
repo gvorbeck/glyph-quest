@@ -22,8 +22,6 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
  */
 
 // Misc
-export const capitalize: (s: string) => string = (s) =>
-  s.charAt(0).toUpperCase() + s.slice(1);
 
 export const copyToClipboard = (message: string) => {
   navigator.clipboard.writeText(message);
@@ -47,22 +45,25 @@ export const camelCaseToWords = (input: string) => {
 };
 
 // Dice
-export const rollDie: () => number = () => Math.floor(Math.random() * 6) + 1;
+export const rollDie: (sides?: number) => number = (sides = 6) => {
+  return Math.floor(Math.random() * sides) + 1;
+};
 
 export const rollDice: (
   numDice?: number,
+  sides?: number,
   arr?: boolean
-) => number | number[] = (numDice = 1, arr = false) => {
+) => number | number[] = (numDice = 1, sides = 6, arr = false) => {
   if (!arr) {
     let total = 0;
     for (let i = 0; i < numDice; i++) {
-      total += rollDie();
+      total += rollDie(sides);
     }
     return total;
   } else {
     const rolls = [];
     for (let i = 0; i < numDice; i++) {
-      rolls.push(rollDie());
+      rolls.push(rollDie(sides));
     }
     return rolls;
   }

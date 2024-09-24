@@ -1,13 +1,13 @@
 import { TextField } from "@mui/material";
-import { ChangeEventHandler } from "react";
 
 type AbilityBoxProps = {
   value: number;
-  onChange:
-    | ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
-    | undefined;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   max?: number;
+  className?: string;
+  disabled?: boolean;
+  onBlur?: () => void;
 };
 
 const AbilityBox: React.FC<AbilityBoxProps> = ({
@@ -15,6 +15,9 @@ const AbilityBox: React.FC<AbilityBoxProps> = ({
   onChange,
   label,
   max,
+  className,
+  disabled,
+  onBlur,
 }) => {
   return (
     <TextField
@@ -25,6 +28,9 @@ const AbilityBox: React.FC<AbilityBoxProps> = ({
       InputLabelProps={{ shrink: true }}
       value={value}
       onChange={onChange}
+      className={className}
+      disabled={disabled}
+      onBlur={onBlur}
     />
   );
 };

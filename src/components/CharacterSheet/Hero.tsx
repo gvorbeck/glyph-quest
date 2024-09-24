@@ -11,17 +11,22 @@ type HeroProps = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
+const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
+  character,
+  setCharacter,
+  className,
+}) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const classNames = ["relative", className].filter(Boolean).join(" ");
 
   const handleSettingsOpen = () => setSettingsOpen(true);
   const handleSettingsClose = () => setSettingsOpen(false);
 
   return (
-    <Box className="relative col-span-full">
+    <Box className={classNames}>
       <Text
         variant="h2"
-        className="text-amber text-7xl [text-shadow:2px_2px_#242120] pb-12"
+        className="text-amber text-7xl [text-shadow:2px_2px_#242120] pb-14"
         font
       >
         {character.name}

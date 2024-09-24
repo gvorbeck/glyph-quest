@@ -27,6 +27,7 @@ import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
 import LevelUp from "./LevelUp";
+import Metrics from "../CharacterForm/Metrics";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -243,9 +244,31 @@ export default function CharacterSheet({
         setCharacter={
           setCharacter as React.Dispatch<React.SetStateAction<Character>>
         }
+        className="col-span-full"
       />
-      <GQDivider />
-      <Stats abilities={character.abilities} />
+      <GQDivider className="col-span-full" />
+      <Stats
+        abilities={character.abilities}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+        className="col-span-full"
+      />
+      <Description
+        className="xs:col-span-12 sm:col-span-6"
+        details={character.details}
+        careers={character.careers}
+      />
+      <Metrics
+        className="xs:col-span-12 sm:col-span-6"
+        level={character.level}
+        health={character.health}
+        healthMax={character.healthMax}
+        xp={character.xp}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
       {/* <Stats stats={tertiaryStats} xs={4} />
         <Stats stats={primaryStats} xs={4} />
         <Stats stats={secondaryStats} xs={4} /> */}

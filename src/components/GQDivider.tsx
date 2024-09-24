@@ -2,9 +2,11 @@ import { Box, Divider } from "@mui/material";
 
 type GQDividerProps = {};
 
-const GQDivider: React.FC<GQDividerProps> = () => {
+const GQDivider: React.FC<
+  GQDividerProps & React.ComponentPropsWithRef<"div">
+> = ({ className }) => {
   return (
-    <Box className="col-span-full">
+    <Box className={className}>
       <Divider />
     </Box>
   );

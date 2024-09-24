@@ -36,7 +36,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
       value: 0, // Reset each ability's value to 0
     }));
 
-    const rolled = rollDice(3, true) as number[];
+    const rolled = rollDice(3, 6, true) as number[];
 
     // Add 1 point to each ability based on the die rolls
     rolled.forEach((die) => {

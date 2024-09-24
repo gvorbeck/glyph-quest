@@ -41,7 +41,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
             <Text
               variant="h1"
               noWrap
-              className="text-amber mr-4 xs:hidden md:block font-bold tracking-widest text-inherit decoration-0 text-3xl"
+              className="text-amber mr-4 xs:hidden md:block tracking-wide text-inherit decoration-0 text-3xl"
               font
             >
               Glyph.Quest
@@ -86,7 +86,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
             <Text
               variant="h1"
               noWrap
-              className="text-amber mr-4 xs:block md:hidden font-bold tracking-widest text-inherit decoration-0 text-3xl"
+              className="text-amber mr-4 xs:block md:hidden tracking-wide text-inherit decoration-0 text-3xl"
               font
             >
               Glyph.Quest
