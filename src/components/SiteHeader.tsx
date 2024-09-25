@@ -34,7 +34,10 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ user }) => {
   };
   return (
     <AppBar className="static">
-      <Container maxWidth="2xl">
+      <Container
+        maxWidth="2xl"
+        className="lg:max-w-[1000px] pl-1 sm:pl-3 md:pl-6"
+      >
         <Toolbar disableGutters>
           <Link href="/" className="flex gap-2 items-center">
             <Castle className="xs:hidden md:block" />

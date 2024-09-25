@@ -4,17 +4,15 @@ import { useEffect, useState } from "react";
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import CharacterList from "../components/CharacterList/CharacterList";
-import SignIn from "../components/SignIn";
-import SignUp from "../components/SignUp";
+import AuthForm from "@/components/AuthForm";
 import SiteHeader from "@/components/SiteHeader";
-import { Typography } from "@mui/material";
 import SiteFooter from "@/components/SiteFooter";
 import CharacterListPageSkeleton from "@/components/CharacterList/CharacterListPageSkeleton";
+import Text from "@/components/Text";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,10 +29,10 @@ export default function HomePage() {
     return (
       <>
         <SiteHeader user={user} />
-        <main className="container mx-auto">
-          <Typography variant="h2" className="font-jaini-purva">
+        <main className="container lg:max-w-[1000px] mx-auto p-4">
+          <Text font variant="h2" className="text-5xl">
             Your Characters
-          </Typography>
+          </Text>
           <CharacterList />
         </main>
         <SiteFooter />
@@ -43,42 +41,16 @@ export default function HomePage() {
   }
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold">Welcome to Glyph Quest!</h1>
-      <p className="mt-4">
-        Create and manage your Maze Rats characters effortlessly.
-      </p>
-
-      <div className="mt-8 space-y-6">
-        {showSignUp ? (
-          <>
-            <SignUp />
-            <p>
-              Already have an account?{" "}
-              <button
-                className="text-blue-500 underline"
-                onClick={() => setShowSignUp(false)}
-              >
-                Sign in here
-              </button>
-              .
-            </p>
-          </>
-        ) : (
-          <>
-            <SignIn />
-            <p>
-              Don't have an account?{" "}
-              <button
-                className="text-blue-500 underline"
-                onClick={() => setShowSignUp(true)}
-              >
-                Sign up here
-              </button>
-              .
-            </p>
-          </>
-        )}
+    <main className="lg:max-w-[1000px] container mx-auto p-4 flex flex-col gap-4">
+      <Text variant="h1" font className="text-3xl text-amber">
+        Welcome to Glyph.Quest!
+      </Text>
+      <Text>
+        A free resource to create and manage your{" "}
+        <strong>Knave: Second Edition</strong> characters effortlessly.
+      </Text>
+      <div className="flex flex-col gap-4">
+        <AuthForm />
       </div>
     </main>
   );

@@ -26,7 +26,7 @@ const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
     <Box className={classNames}>
       <Text
         variant="h2"
-        className="text-amber text-7xl [text-shadow:2px_2px_#242120] pb-14"
+        className="text-amber text-7xl [text-shadow:2px_2px_#242120] pb-14 truncate"
         font
       >
         {character.name}
