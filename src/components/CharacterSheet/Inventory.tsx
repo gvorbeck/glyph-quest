@@ -68,6 +68,7 @@ const has = (rows: RowsType, column: RowKeys) => {
 const Inventory: React.FC<
   InventoryProps & React.ComponentPropsWithRef<"div">
 > = ({ items, setCharacter, className, con }) => {
+  const [editItem, setEditItem] = useState<Item | undefined>();
   const sortedItems = [...items].sort((a, b) => {
     if (a.type < b.type) return -1;
     if (a.type > b.type) return 1;
@@ -133,6 +134,7 @@ const Inventory: React.FC<
 
   const handleFormClose = () => {
     setShowAddForm(false);
+    setEditItem(undefined);
   };
 
   const copyDescription = (description: string) => {
@@ -140,9 +142,10 @@ const Inventory: React.FC<
     // useSnackbar();
   };
 
-  console.error(
-    "change to show a row for every possible item. each row will either have a item, be a wound, or be empty. this is so that users can correctly identify when their character is dead."
-  );
+  const openEditItem = (item: Item) => {
+    setShowAddForm(true);
+    setEditItem(item);
+  };
 
   return (
     <Box className={classNames}>
@@ -197,8 +200,13 @@ const Inventory: React.FC<
                           }
                         />
                       </Tooltip>
-                      <Tooltip title="Edit item">
-                        <IconButton color="primary"></IconButton>
+                      <Tooltip
+                        title="Edit item"
+                        onClick={() => openEditItem(row)}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
                       </Tooltip>
                       {capitalize(row.name)}
                     </TableCell>
@@ -208,11 +216,7 @@ const Inventory: React.FC<
                       <TableCell align="right">{row.amount}</TableCell>
                     )}
                     {hasDamage && (
-                      <TableCell align="right">
-                        {row.damage && (
-                          <Button variant="outlined">{row.damage}</Button>
-                        )}
-                      </TableCell>
+                      <TableCell align="right">{row.damage}</TableCell>
                     )}
                     {hasArmorPoints && (
                       <TableCell align="right">{row.armorPoints}</TableCell>
@@ -244,6 +248,7 @@ const Inventory: React.FC<
           <NewInventoryItem
             setCharacter={setCharacter}
             onClose={handleFormClose}
+            editItem={editItem}
           />
         </div>
       )}

@@ -134,7 +134,7 @@ const AddItemForm: React.FC<
         <Button variant="contained" color="primary" onClick={handleAddItem}>
           Add Item
         </Button>
-        <Button variant="text" color="primary" onClick={onClose}>
+        <Button variant="text" color="primary" onClick={handleClose}>
           Cancel
         </Button>
       </div>
