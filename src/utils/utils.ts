@@ -86,6 +86,10 @@ export const getSlots = (items: Character["items"]) => {
   }, 0);
 };
 
+export const getMaxItems = (con: number | undefined | null) => {
+  return (con ?? 0) + 10;
+};
+
 // export const getModifier: (ability: number) => number = (ability) => {
 //   if (ability < 3) return 0;
 //   if (ability < 6) return 1;

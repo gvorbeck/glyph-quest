@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
-import { Character, InventoryType } from "@/types/character";
+import { Character } from "@/types/character";
+import { getMaxItems } from "@/utils/utils";
 
 // Create the context type
 type CharacterContextType = {
@@ -53,7 +54,7 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     notes: "",
   });
-  const maxItems = 10 + (character.abilities.con.value ?? 0);
+  const maxItems = getMaxItems(character.abilities.con.value);
 
   return (
     <CharacterContext.Provider

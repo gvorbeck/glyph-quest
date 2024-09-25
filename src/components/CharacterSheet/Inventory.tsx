@@ -22,7 +22,7 @@ import Text from "../Text";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { getSlots } from "@/utils/utils";
+import { getMaxItems, getSlots } from "@/utils/utils";
 
 type InventoryProps = {
   items: Item[];
@@ -83,7 +83,7 @@ const Inventory: React.FC<
   });
 
   const slots = getSlots(sortedItems);
-  const maxItems = 10 + (con ?? 0); // Max number of slots allowed based on Constitution
+  const maxItems = getMaxItems(con); // Max number of slots allowed based on Constitution
   const remainingSlots = maxItems - slots; // Remaining slots to fill with empty rows
 
   const classNames = [
