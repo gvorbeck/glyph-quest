@@ -43,7 +43,7 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
 
   const armorPoints = items.reduce((acc, item) => {
     if (item.type === "armor" && item.armorPoints) {
-      return acc + item.armorPoints;
+      return acc + +item.armorPoints;
     }
     return acc;
   }, 0);
@@ -146,11 +146,11 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
         <BorderedBox
           className="col-span-2"
           top={
-            <div className="flex justify-between items-center [&_p]:w-1/2 [&_p]:text-center h-full">
-              <Text className="border-r border-r-solid border-r-amber">
+            <div className="flex justify-between items-center [&_p]:w-1/2 [&_p]:text-center [&_p]:text-2xl h-full">
+              <Text font className="border-r border-r-solid border-r-amber">
                 {armorPoints}
               </Text>
-              <Text>{armorClass}</Text>
+              <Text font>{armorClass}</Text>
             </div>
           }
           bottom={

@@ -11,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Tooltip,
   capitalize,
 } from "@mui/material";
@@ -67,8 +68,13 @@ const has = (rows: RowsType, column: RowKeys) => {
 
 const Inventory: React.FC<
   InventoryProps & React.ComponentPropsWithRef<"div">
-> = ({ items, setCharacter, className, con }) => {
+> = ({ items, setCharacter, className, con, coins }) => {
   const [editItem, setEditItem] = useState<Item | undefined>();
+  const [charCoins, setCharCoins] = useState(coins);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const { showSnackbar, snackbar } = useSnackbar();
+  const formRef = useRef<HTMLDivElement>(null);
+
   const sortedItems = [...items].sort((a, b) => {
     if (a.type < b.type) return -1;
     if (a.type > b.type) return 1;
@@ -82,10 +88,6 @@ const Inventory: React.FC<
     "grid grid-cols-12 items-top gap-4 bg-darkGray/75 p-2 rounded items-start",
     className,
   ].join(" ");
-
-  // Create a ref for the new equipment form
-  const formRef = useRef<HTMLDivElement>(null);
-  const [showAddForm, setShowAddForm] = useState(false);
 
   // Scroll to form after it appears in the DOM
   useEffect(() => {
@@ -139,7 +141,7 @@ const Inventory: React.FC<
 
   const copyDescription = (description: string) => {
     navigator.clipboard.writeText(description);
-    // useSnackbar();
+    showSnackbar("Description copied to clipboard", "info");
   };
 
   const openEditItem = (item: Item) => {
@@ -147,9 +149,20 @@ const Inventory: React.FC<
     setEditItem(item);
   };
 
+  const handleCoinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharCoins(parseInt(e.target.value));
+  };
+
+  const handleCoinsBlur = () => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      coins: charCoins,
+    }));
+  };
+
   return (
     <Box className={classNames}>
-      <div className="flex gap-2 row-span-1 col-span-12">
+      <div className="flex xs:flex-col sm:flex-row xs:items-start gap-2 row-span-1 col-span-12 sm:items-center">
         <Text variant="h3" font className="text-3xl">
           Inventory ({slots}/{maxItems})
         </Text>
@@ -158,6 +171,15 @@ const Inventory: React.FC<
             Add Equipment
           </Button>
         )}
+        <TextField
+          label="Coins"
+          value={coins}
+          variant="filled"
+          size="small"
+          className="xs:ml-0 sm:ml-auto"
+          onChange={handleCoinsChange}
+          onBlur={handleCoinsBlur}
+        />
       </div>
       <TableContainer component={Paper} className="row-span-1 col-span-12">
         <Table className="min-w-[650px]" aria-label="simple table" size="small">
@@ -252,6 +274,7 @@ const Inventory: React.FC<
           />
         </div>
       )}
+      {snackbar}
     </Box>
   );
 };
