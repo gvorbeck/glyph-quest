@@ -17,7 +17,7 @@ const StepWrapper: React.FC<StepWrapperProps> = ({
   return (
     <Box className="flex flex-col gap-4">
       <Box>
-        <Text font level="h2">
+        <Text font variant="h2">
           {title}
         </Text>
         <Text>{description}</Text>

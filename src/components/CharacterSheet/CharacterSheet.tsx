@@ -3,30 +3,16 @@
 import { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../../lib/firebase";
 import { useAuth } from "../../context/AuthContext";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import { Character } from "@/types/character";
-import Features from "./Features";
 import Hero from "./Hero";
 import GQDivider from "../GQDivider";
 import Description from "./Description";
 import Stats from "./Stats";
-import {
-  DirectionsRun,
-  Favorite,
-  FitnessCenter,
-  Grade,
-  MilitaryTech,
-  Paid,
-  Psychology,
-  Shield,
-  TrendingUp,
-} from "@mui/icons-material";
 import { updateDocument } from "@/utils/utils";
-import { Alert, Box, InputAdornment, TextField } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
-import LevelUp from "./LevelUp";
 import Metrics from "./Metrics";
 
 interface CharacterSheetProps {
@@ -73,9 +59,12 @@ export default function CharacterSheet({
       subDocId: characterId,
       data: { ...character },
     });
+    // eslint-disable-next-line
   }, [character]);
 
   if (!character) return <SkeletonSheet />;
+
+  console.error("notes and spells!");
 
   // const handleXPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setCharacter(

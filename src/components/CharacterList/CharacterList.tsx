@@ -42,6 +42,7 @@ export default function CharacterList() {
 
   useEffect(() => {
     fetchCharacters();
+    // eslint-disable-next-line
   }, [user]);
 
   if (!user) return null;

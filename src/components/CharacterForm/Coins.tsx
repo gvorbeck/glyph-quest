@@ -30,7 +30,7 @@ const Coins: React.FC<CoinsProps> = ({ title, subtitle }) => {
     <InventorySection title={title} subtitle={subtitle}>
       <div className="flex gap-4 items-center">
         <Button variant="outlined" onClick={handleClick}>
-          Roll Starting Coins
+          Roll Coins
         </Button>
         <AbilityBox
           label="Coins"

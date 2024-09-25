@@ -43,7 +43,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
         ...spellBooks.filter((spellBook) => spellBook.name !== ""), // Only add valid spells
       ],
     }));
-  }, [spellBooks]);
+  }, [spellBooks, setCharacter]);
 
   const handleDeleteItem = (itemName: string) => {
     // Update character items and remove the item

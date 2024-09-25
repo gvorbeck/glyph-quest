@@ -40,9 +40,9 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({
     careers: [],
     items: [],
     details: {
-      personality: undefined,
-      detail: undefined,
-      mannerism: undefined,
+      personality: "",
+      detail: "",
+      mannerism: "",
     },
     name: "",
     level: 1,

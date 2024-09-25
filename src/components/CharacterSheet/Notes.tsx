@@ -38,6 +38,7 @@ const Notes: React.FC<NotesProps> = ({ xs, character, setCharacter }) => {
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line
   }, [pendingNotes]);
 
   return (

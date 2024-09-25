@@ -104,7 +104,7 @@ const StepName: React.FC<StepNameProps> = ({}) => {
         </Button>
       </div>
       <div>
-        <Text level="h3" font>
+        <Text variant="h3" font>
           Optional
         </Text>
         <Text>Give your character some description.</Text>

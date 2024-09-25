@@ -1,11 +1,12 @@
 "use client";
 
 import { getRemainingPoints, rollDice } from "@/utils/utils";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import AbilityBox from "../AbilityBox";
 import { useCharacter } from "@/context/CharacterContext";
 import { Character } from "@/types/character";
+import Text from "../Text";
 
 type StepAbilityProps = {};
 
@@ -65,7 +66,7 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
   };
 
   // Define ability names type
-  type AbilityName = keyof Character["abilities"]; // "str" | "dex" | "con" | "int" | "wis" | "cha"
+  type AbilityName = keyof Character["abilities"];
 
   // Handle ability point changes
   const handleAbilityChange = (abilityName: AbilityName, newValue: string) => {
@@ -96,22 +97,20 @@ const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
     <div className="flex flex-col gap-4">
       <div className="flex gap-4 items-center">
         <Button variant="outlined" onClick={handleAbilitiesClick}>
-          (Optional) Roll Abilities
+          Roll Abilities
         </Button>
         {rolledAbilities.length > 0 && (
-          <Typography className="text-lg">
+          <Text className="text-lg">
             <strong>{rolledAbilities.join(", ")}</strong>
-          </Typography>
+          </Text>
         )}
       </div>
-      <Typography className="text-lg">
-        Points remaining: {remainingPoints}
-      </Typography>
+      <Text className="text-lg">Points remaining: {remainingPoints}</Text>
       <div className="flex flex-col gap-4">
-        <Typography variant="h2" className="font-jaini-purva">
+        <Text font variant="h3">
           Ability Scores
-        </Typography>
-        <div className="flex gap-4">
+        </Text>
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
           {abilities.map((ability) => (
             <AbilityBox
               key={ability.name}

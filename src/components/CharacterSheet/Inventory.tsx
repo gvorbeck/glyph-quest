@@ -150,6 +150,7 @@ const Inventory: React.FC<
   };
 
   const handleCoinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setCharCoins(parseInt(e.target.value));
   };
 
@@ -173,9 +174,10 @@ const Inventory: React.FC<
         )}
         <TextField
           label="Coins"
-          value={coins}
+          value={charCoins}
           variant="filled"
           size="small"
+          type="number"
           className="xs:ml-0 sm:ml-auto"
           onChange={handleCoinsChange}
           onBlur={handleCoinsBlur}
@@ -210,7 +212,11 @@ const Inventory: React.FC<
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="flex items-center"
+                    >
                       <Tooltip title="Wound">
                         <Checkbox
                           checked={row.type === "wound"}
@@ -230,7 +236,7 @@ const Inventory: React.FC<
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-                      {capitalize(row.name)}
+                      <Text variant="body2">{capitalize(row.name)}</Text>
                     </TableCell>
                     <TableCell align="right">{capitalize(row.type)}</TableCell>
                     <TableCell align="right">{row.slots}</TableCell>

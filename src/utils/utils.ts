@@ -1,14 +1,5 @@
-import {
-  etherealEffects,
-  etherealElements,
-  etherealForms,
-  physicalEffects,
-  physicalElements,
-  physicalForms,
-} from "@/data/spellNames";
 import { db } from "@/lib/firebase";
 import { Character } from "@/types/character";
-import { Item } from "@/types/items";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 /**
@@ -74,7 +65,7 @@ export const rollTable: (table: string[]) => string = (table) => {
   return table[index];
 };
 
-export const isCrit: (roll: number) => boolean = (roll) => roll === 12;
+// export const isCrit: (roll: number) => boolean = (roll) => roll === 12;
 
 /**
  * * Stats
@@ -89,12 +80,12 @@ export const getRemainingPoints = (character: Character) => {
   );
 };
 
-export const getModifier: (ability: number) => number = (ability) => {
-  if (ability < 3) return 0;
-  if (ability < 6) return 1;
-  if (ability >= 6) return 2;
-  return 0;
-};
+// export const getModifier: (ability: number) => number = (ability) => {
+//   if (ability < 3) return 0;
+//   if (ability < 6) return 1;
+//   if (ability >= 6) return 2;
+//   return 0;
+// };
 
 // export const getAttackBonus: (character: Character) => number = (character) => {
 //   if (character.features && character.features.length > 0) {
@@ -179,57 +170,9 @@ export const getWeaponDamage = (weaponType: string, weaponHands: number) => {
   }
 };
 
-export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
-  items
-) => items.filter((item: Item) => item.type.includes("weapon"));
-
-// export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
-//   items
-// ) => items.find((item) => item.type === "armor" && item.location === "worn");
-
 /**
  * * Spells
  */
-const spellNames = [
-  [
-    [physicalEffects, physicalForms],
-    [etherealElements, physicalForms],
-  ],
-  [
-    [physicalEffects, etherealForms],
-    [etherealElements, etherealForms],
-  ],
-  [
-    [etherealEffects, physicalForms],
-    [physicalEffects, physicalElements],
-  ],
-  [
-    [etherealEffects, etherealForms],
-    [physicalEffects, etherealElements],
-  ],
-  [
-    [physicalElements, physicalForms],
-    [etherealEffects, physicalElements],
-  ],
-  [
-    [physicalElements, etherealForms],
-    [etherealEffects, etherealElements],
-  ],
-];
-
-export const getSpellName = (dice: number[]): string => {
-  const [firstDie, secondDie] = dice;
-  const rowIndex = firstDie - 1;
-  const columnIndex = secondDie > 3 ? 1 : 0;
-
-  const [firstOptions, secondOptions] = spellNames[rowIndex][columnIndex];
-  const firstWord =
-    firstOptions[Math.floor(Math.random() * firstOptions.length)];
-  const secondWord =
-    secondOptions[Math.floor(Math.random() * secondOptions.length)];
-
-  return `${firstWord} ${secondWord}`;
-};
 
 /**
  * * Firestore

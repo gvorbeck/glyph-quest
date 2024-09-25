@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, MenuItem, capitalize } from "@mui/material";
 import { Item } from "@/types/items";
 import { Character } from "@/types/character";
+import spellData from "@/data/spells.json";
 
 type AddItemFormProps = {
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
@@ -21,6 +22,7 @@ const AddItemForm: React.FC<
   const [newItem, setNewItem] = useState<Item>(
     editItem ?? (defaultNewItem as Item)
   );
+  const [spell, setSpell] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,6 +54,13 @@ const AddItemForm: React.FC<
     onClose();
   };
 
+  const handleChangeSpell = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const spell = spellData.find((spell) => spell.name === value);
+    setSpell(value);
+    setNewItem(spell as Item);
+  };
+
   return (
     <form className="flex flex-col gap-4 w-full">
       {/* Name */}
@@ -70,11 +79,25 @@ const AddItemForm: React.FC<
         value={newItem.type}
         onChange={handleChange}
         variant="filled"
-        defaultValue={"generic"}
       >
         {["armor", "career", "generic", "spell", "weapon"].map((type) => (
           <MenuItem key={type} value={type}>
             {capitalize(type)}
+          </MenuItem>
+        ))}
+      </TextField>
+      {/* Spells */}
+      <TextField
+        label="Spell books"
+        name="spellbooks"
+        select
+        value={spell}
+        onChange={handleChangeSpell}
+        variant="filled"
+      >
+        {spellData.map((spell) => (
+          <MenuItem key={spell.name} value={spell.name}>
+            {capitalize(spell.name)}
           </MenuItem>
         ))}
       </TextField>

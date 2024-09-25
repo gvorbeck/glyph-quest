@@ -53,19 +53,8 @@ export interface Character {
   notes: string;
 }
 
-export type CareersType = {
-  one: {
-    name: string;
-    inventory: string[];
-  };
-  two: {
-    name: string;
-    inventory: string[];
-  };
-};
-
 export type InventoryType = {
-  careers: CareersType;
+  careers: string[];
   coins: number;
   generic: {
     rations: boolean;

@@ -3,8 +3,8 @@
 import CharacterForm from "@/components/CharacterForm/CharacterForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import Text from "@/components/Text";
 import { auth } from "@/lib/firebase";
-import { Typography } from "@mui/material";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -36,9 +36,9 @@ export default function CharacterFormPage() {
     <>
       <SiteHeader user={user} />
       <main className="container mx-auto p-4">
-        <Typography variant="h1" className="font-jaini-purva">
+        <Text font variant="h1" className="text-5xl mb-4">
           Create a New Character
-        </Typography>
+        </Text>
         <CharacterForm />
       </main>
       <SiteFooter />
