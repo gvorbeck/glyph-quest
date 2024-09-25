@@ -21,13 +21,13 @@ import {
   Shield,
   TrendingUp,
 } from "@mui/icons-material";
-import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
+import { updateDocument } from "@/utils/utils";
 import { Alert, Box, InputAdornment, TextField } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
 import LevelUp from "./LevelUp";
-import Metrics from "../CharacterForm/Metrics";
+import Metrics from "./Metrics";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -274,6 +274,7 @@ export default function CharacterSheet({
         className="col-span-12"
         items={character.items}
         coins={character.coins}
+        con={character.abilities.con.value}
         setCharacter={
           setCharacter as React.Dispatch<React.SetStateAction<Character>>
         }

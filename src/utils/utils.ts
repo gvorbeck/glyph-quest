@@ -96,79 +96,96 @@ export const getModifier: (ability: number) => number = (ability) => {
   return 0;
 };
 
-export const getAttackBonus: (character: Character) => number = (character) => {
-  if (character.features && character.features.length > 0) {
-    return character.features.reduce((acc, feature) => {
-      if (feature === "attack-bonus") return acc + 1;
-      return acc;
-    }, 0);
-  }
-  return 0;
-};
+// export const getAttackBonus: (character: Character) => number = (character) => {
+//   if (character.features && character.features.length > 0) {
+//     return character.features.reduce((acc, feature) => {
+//       if (feature === "attack-bonus") return acc + 1;
+//       return acc;
+//     }, 0);
+//   }
+//   return 0;
+// };
 
-export const getArmorRating: (character: Character) => number = (character) => {
-  const baseArmor = 6;
-  const wornArmorBonuses = character.items.reduce((acc, item) => {
-    if (item.type === "armor" && item.location === "worn") {
-      return acc + item.armor!;
-    }
-    return acc;
-  }, 0);
-  const shieldInHand = character.items.reduce((acc, item) => {
-    if (item.type === "shield" && item.location === "hands") {
-      return acc + item.armor!;
-    }
-    return acc;
-  }, 0);
-  return baseArmor + wornArmorBonuses + shieldInHand;
-};
+// export const getArmorRating: (character: Character) => number = (character) => {
+//   const baseArmor = 6;
+//   const wornArmorBonuses = character.items.reduce((acc, item) => {
+//     if (item.type === "armor" && item.location === "worn") {
+//       return acc + item.armor!;
+//     }
+//     return acc;
+//   }, 0);
+//   const shieldInHand = character.items.reduce((acc, item) => {
+//     if (item.type === "shield" && item.location === "hands") {
+//       return acc + item.armor!;
+//     }
+//     return acc;
+//   }, 0);
+//   return baseArmor + wornArmorBonuses + shieldInHand;
+// };
 
-export const getFeatureTitle: (feature: Feature) => string = (feature) => {
-  switch (feature) {
-    case "attack-bonus":
-      return "+1 Attack Bonus";
-    case "spell-slot":
-      return "+1 Spell Slot";
-    case "path-briarborn":
-      return "Briarborn";
-    case "path-fingersmith":
-      return "Fingersmith";
-    case "path-roofrunner":
-      return "Roofrunner";
-    case "path-shadowjack":
-      return "Shadowjack";
-  }
-  return "";
-};
+// export const getFeatureTitle: (feature: Feature) => string = (feature) => {
+//   switch (feature) {
+//     case "attack-bonus":
+//       return "+1 Attack Bonus";
+//     case "spell-slot":
+//       return "+1 Spell Slot";
+//     case "path-briarborn":
+//       return "Briarborn";
+//     case "path-fingersmith":
+//       return "Fingersmith";
+//     case "path-roofrunner":
+//       return "Roofrunner";
+//     case "path-shadowjack":
+//       return "Shadowjack";
+//   }
+//   return "";
+// };
 
-export const getFeatureText: (feature: Feature) => string = (feature) => {
-  switch (feature) {
-    case "attack-bonus":
-      return "+1 to all attack rolls.";
-    case "spell-slot":
-      return "+1 to spells cast per day.";
-    case "path-briarborn":
-      return "Advantage on Danger Rolls relating to: Tracking, foraging, survival.";
-    case "path-fingersmith":
-      return "Advantage on Danger Rolls relating to: Tinkering, picking locks or pockets.";
-    case "path-roofrunner":
-      return "Advantage on Danger Rolls relating to: Climbing, leaping, balancing.";
-    case "path-shadowjack":
-      return "Advantage on Danger Rolls relating to: Moving silently, hiding in shadows.";
-  }
-  return "";
-};
+// export const getFeatureText: (feature: Feature) => string = (feature) => {
+//   switch (feature) {
+//     case "attack-bonus":
+//       return "+1 to all attack rolls.";
+//     case "spell-slot":
+//       return "+1 to spells cast per day.";
+//     case "path-briarborn":
+//       return "Advantage on Danger Rolls relating to: Tracking, foraging, survival.";
+//     case "path-fingersmith":
+//       return "Advantage on Danger Rolls relating to: Tinkering, picking locks or pockets.";
+//     case "path-roofrunner":
+//       return "Advantage on Danger Rolls relating to: Climbing, leaping, balancing.";
+//     case "path-shadowjack":
+//       return "Advantage on Danger Rolls relating to: Moving silently, hiding in shadows.";
+//   }
+//   return "";
+// };
 
 /**
  * * Items
  */
+// Get the default damage types for a weapon.
+export const getWeaponDamage = (weaponType: string, weaponHands: number) => {
+  if (weaponType === "Melee") {
+    if (weaponHands === 1) {
+      return "1d6";
+    } else {
+      return "1d8";
+    }
+  } else {
+    if (weaponHands === 1) {
+      return "1d4";
+    } else {
+      return "1d6";
+    }
+  }
+};
+
 export const getWeapons: (items: readonly Item[]) => readonly Item[] = (
   items
 ) => items.filter((item: Item) => item.type.includes("weapon"));
 
-export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
-  items
-) => items.find((item) => item.type === "armor" && item.location === "worn");
+// export const getWornArmor: (items: readonly Item[]) => Item | undefined = (
+//   items
+// ) => items.find((item) => item.type === "armor" && item.location === "worn");
 
 /**
  * * Spells

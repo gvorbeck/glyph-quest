@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Text from "../Text";
 import EditButton from "../EditButton";
 import { useEffect, useRef, useState } from "react";
-import BorderedBox from "../CharacterSheet/BorderedBox";
+import BorderedBox from "./BorderedBox";
 import AbilityBox from "../AbilityBox";
 import { Character } from "@/types/character";
 import { Item } from "@/types/items";

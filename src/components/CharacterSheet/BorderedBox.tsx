@@ -17,12 +17,11 @@ const BorderedBox: React.FC<
   return (
     <div className={classNames}>
       {top}
-      <Text
-        font
-        className={`${bottomSize} text-center font-bold bg-amber pb-1 text-darkGray`}
+      <div
+        className={`${bottomSize} font-jaini-purva text-center font-bold bg-amber pb-1 text-darkGray`}
       >
         {bottom}
-      </Text>
+      </div>
     </div>
   );
 };
