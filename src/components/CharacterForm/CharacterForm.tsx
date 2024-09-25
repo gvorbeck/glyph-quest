@@ -19,7 +19,7 @@ import StepName from "./StepName";
 import StepHitPoints from "./StepHitPoints";
 import useSnackbar from "@/hooks/useSnackbar";
 import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
-import { getRemainingPoints } from "@/utils/utils";
+import { getRemainingPoints, getSlots } from "@/utils/utils";
 import StepWrapper from "./StepWrapper";
 
 const CharacterFormSteps = () => {
@@ -66,7 +66,7 @@ const CharacterFormSteps = () => {
         return !character.health;
       case 2:
         return (
-          character.items.length > (character.abilities.con.value || 0) + 10
+          getSlots(character.items) > (character.abilities.con.value || 0) + 10
         );
       case 3:
         return character.name === "";

@@ -16,6 +16,7 @@ import Weapons from "./Weapons";
 import SpellBooks from "./SpellBooks";
 import { Item } from "@/types/items";
 import { Delete } from "@mui/icons-material";
+import { getSlots } from "@/utils/utils";
 
 type StepInventoryProps = {};
 
@@ -70,6 +71,8 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
     });
   };
 
+  const slots = getSlots(character.items);
+
   return (
     <div className="flex flex-col gap-6 relative">
       <Careers
@@ -95,7 +98,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
       {/* Render items */}
       <div>
         <Typography variant="h4" className="font-jaini-purva">
-          Current Items ({character.items.length}/{maxItems}):
+          Current Items ({slots}/{maxItems}):
         </Typography>
         <List>
           {character.items.map((item, index) =>
@@ -126,7 +129,7 @@ const StepInventory: React.FC<StepInventoryProps> = ({}) => {
           )}
         </List>
       </div>
-      {maxItems < character.items.length && (
+      {maxItems < slots && (
         <Alert severity="error" className="sticky bottom-2 z-10">
           You have exceeded your PC's maximum item limit!
         </Alert>

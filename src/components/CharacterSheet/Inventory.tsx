@@ -22,6 +22,7 @@ import Text from "../Text";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
+import { getSlots } from "@/utils/utils";
 
 type InventoryProps = {
   items: Item[];
@@ -80,9 +81,10 @@ const Inventory: React.FC<
     if (a.type > b.type) return 1;
     return 0;
   });
-  const slots = sortedItems.reduce((acc, item) => acc + +item.slots, 0);
-  const maxItems = 10 + (con ?? 0);
-  const showAddButton = slots < maxItems;
+
+  const slots = getSlots(sortedItems);
+  const maxItems = 10 + (con ?? 0); // Max number of slots allowed based on Constitution
+  const remainingSlots = maxItems - slots; // Remaining slots to fill with empty rows
 
   const classNames = [
     "grid grid-cols-12 items-top gap-4 bg-darkGray/75 p-2 rounded items-start",
@@ -150,7 +152,6 @@ const Inventory: React.FC<
   };
 
   const handleCoinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setCharCoins(parseInt(e.target.value));
   };
 
@@ -167,7 +168,7 @@ const Inventory: React.FC<
         <Text variant="h3" font className="text-3xl">
           Inventory ({slots}/{maxItems})
         </Text>
-        {showAddButton && (
+        {remainingSlots > 0 && (
           <Button variant="outlined" onClick={() => setShowAddForm(true)}>
             Add Equipment
           </Button>
@@ -199,77 +200,81 @@ const Inventory: React.FC<
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.from({ length: maxItems - slots + sortedItems.length }).map(
-              (_, index) => {
-                const row = sortedItems[index] || {
-                  type: "",
-                  name: "Empty",
-                  slots: 0,
-                }; // Fallback to empty row if no item
-
-                return (
-                  <TableRow
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      className="flex items-center"
-                    >
-                      <Tooltip title="Wound">
-                        <Checkbox
-                          checked={row.type === "wound"}
-                          onClick={(e) =>
-                            addWound(
-                              index,
-                              (e.target as HTMLInputElement).checked
-                            )
-                          }
-                        />
-                      </Tooltip>
-                      <Tooltip
-                        title="Edit item"
-                        onClick={() => openEditItem(row)}
-                      >
-                        <IconButton color="primary">
-                          <EditIcon />
+            {/* Render sorted items first */}
+            {sortedItems.map((item, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  className="flex items-center"
+                >
+                  <Tooltip title="Wound">
+                    <Checkbox
+                      checked={item.type === "wound"}
+                      onClick={(e) =>
+                        addWound(index, (e.target as HTMLInputElement).checked)
+                      }
+                    />
+                  </Tooltip>
+                  <Tooltip title="Edit item" onClick={() => openEditItem(item)}>
+                    <IconButton color="primary">
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Text variant="body2">{capitalize(item.name)}</Text>
+                </TableCell>
+                <TableCell align="right">{capitalize(item.type)}</TableCell>
+                <TableCell align="right">{item.slots}</TableCell>
+                {hasAmount && (
+                  <TableCell align="right">{item.amount}</TableCell>
+                )}
+                {hasDamage && (
+                  <TableCell align="right">{item.damage}</TableCell>
+                )}
+                {hasArmorPoints && (
+                  <TableCell align="right">{item.armorPoints}</TableCell>
+                )}
+                {hasDescription && (
+                  <TableCell align="right">
+                    {!!item.description && (
+                      <Tooltip title={item.description}>
+                        <IconButton
+                          color="primary"
+                          onClick={() => copyDescription(item.description!)}
+                        >
+                          <SearchIcon />
                         </IconButton>
                       </Tooltip>
-                      <Text variant="body2">{capitalize(row.name)}</Text>
-                    </TableCell>
-                    <TableCell align="right">{capitalize(row.type)}</TableCell>
-                    <TableCell align="right">{row.slots}</TableCell>
-                    {hasAmount && (
-                      <TableCell align="right">{row.amount}</TableCell>
                     )}
-                    {hasDamage && (
-                      <TableCell align="right">{row.damage}</TableCell>
-                    )}
-                    {hasArmorPoints && (
-                      <TableCell align="right">{row.armorPoints}</TableCell>
-                    )}
-                    {hasDescription && (
-                      <TableCell align="right">
-                        {!!row.description && (
-                          <Tooltip title={row.description}>
-                            <IconButton
-                              color="primary"
-                              onClick={() => copyDescription(row.description!)}
-                            >
-                              <SearchIcon />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                );
-              }
-            )}
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
+
+            {/* Fill remaining slots with empty rows */}
+            {Array.from({ length: remainingSlots }).map((_, index) => (
+              <TableRow key={`empty-${index}`}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  className="flex items-center"
+                >
+                  <Text variant="body2">Empty</Text>
+                </TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
+
       {/* New Equipment Form with the ref */}
       {showAddForm && (
         <div ref={formRef} className="xs:col-span-12 md:col-span-6">

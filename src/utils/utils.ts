@@ -80,6 +80,12 @@ export const getRemainingPoints = (character: Character) => {
   );
 };
 
+export const getSlots = (items: Character["items"]) => {
+  return items.reduce((acc, item) => {
+    return acc + +item.slots;
+  }, 0);
+};
+
 // export const getModifier: (ability: number) => number = (ability) => {
 //   if (ability < 3) return 0;
 //   if (ability < 6) return 1;
