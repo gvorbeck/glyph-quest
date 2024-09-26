@@ -1,79 +1,53 @@
 import { Character } from "@/types/character";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Typography,
-  capitalize,
-} from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
+import { Box, Chip, Tooltip, capitalize } from "@mui/material";
+import Text from "../Text";
 
 type DescriptionProps = {
   details: Character["details"];
-  xs?: number;
+  careers: Character["careers"];
 };
 
-const Description: React.FC<DescriptionProps> = ({ details, xs }) => {
-  const detailsArr = Object.keys(details).sort();
+const Description: React.FC<
+  DescriptionProps & React.ComponentPropsWithRef<"div">
+> = ({ details, careers, className }) => {
+  const classNames = [
+    "flex flex-col gap-2 bg-darkGray/75 p-2 rounded",
+    className,
+  ].join(" ");
+
+  // Filter out empty or undefined values from details
+  const detailsArr = Object.entries(details)
+    .filter(([key, value]) => value && value.trim() !== "")
+    .sort();
+
   return (
-    <Grid xs={xs}>
-      <Paper className="p-4">
-        <Typography variant="h3" className="font-jaini-purva">
-          Description
-        </Typography>
-        <List dense>
-          {details.appearance && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[0])}
-                secondary={capitalize(details.appearance)}
-              />
-            </ListItem>
-          )}
-          {details.background && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[1])}
-                secondary={capitalize(details.background)}
-              />
-            </ListItem>
-          )}
-          {details.clothing && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[2])}
-                secondary={capitalize(details.clothing)}
-              />
-            </ListItem>
-          )}
-          {details.mannerism && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[3])}
-                secondary={capitalize(details.mannerism)}
-              />
-            </ListItem>
-          )}
-          {details.personality && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[4])}
-                secondary={capitalize(details.personality)}
-              />
-            </ListItem>
-          )}
-          {details.physical && (
-            <ListItem>
-              <ListItemText
-                primary={capitalize(detailsArr[5])}
-                secondary={capitalize(details.physical)}
-              />
-            </ListItem>
-          )}
-        </List>
-      </Paper>
-    </Grid>
+    <Box className={classNames}>
+      {/* Careers Section */}
+      <Text variant="h3" font className="text-3xl">
+        Careers
+      </Text>
+      <div className="flex gap-2">
+        {careers.map((career: string) => (
+          <Chip label={capitalize(career)} key={career} />
+        ))}
+      </div>
+
+      {/* Only show details section if there are valid details */}
+      {detailsArr.length > 0 && (
+        <>
+          <Text variant="h3" font className="text-3xl">
+            Details
+          </Text>
+          <div className="flex gap-2 flex-wrap">
+            {detailsArr.map(([key, value]) => (
+              <Tooltip title={capitalize(key)} key={key}>
+                <Chip label={capitalize(value || "")} />
+              </Tooltip>
+            ))}
+          </div>
+        </>
+      )}
+    </Box>
   );
 };
 

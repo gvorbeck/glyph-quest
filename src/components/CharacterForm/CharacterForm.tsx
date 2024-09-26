@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { Character } from "@/types/character";
 import { useAuth } from "@/context/AuthContext";
 import { db, addDoc, collection } from "@/lib/firebase";
 import {
@@ -15,159 +14,89 @@ import {
   Typography,
 } from "@mui/material";
 import StepAbilities from "./StepAbilities";
-import StepFeature from "./StepFeature";
 import StepInventory from "./StepInventory";
-import { INVENTORYLOCATIONS, ITEMTYPES } from "@/utils/constants";
-import StepDetails from "./StepDetails";
 import StepName from "./StepName";
-import { Location, TypeOption } from "@/types/items";
+import StepHitPoints from "./StepHitPoints";
 import useSnackbar from "@/hooks/useSnackbar";
+import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
+import { getRemainingPoints, getSlots } from "@/utils/utils";
+import StepWrapper from "./StepWrapper";
 
-const characterBlank: Character = {
-  abilities: {
-    str: {
-      long: "Strength",
-      short: "STR",
-      value: null,
-    },
-    dex: {
-      long: "Dexterity",
-      short: "DEX",
-      value: null,
-    },
-    wil: {
-      long: "Will",
-      short: "WIL",
-      value: null,
-    },
-  },
-  health: 4,
-  healthMax: 4,
-  features: null,
-  items: [
-    {
-      name: "Light Armor",
-      hands: 1,
-      location: INVENTORYLOCATIONS.worn.value,
-      type: ITEMTYPES.armor.value as TypeOption,
-      armor: 1,
-    },
-    {
-      hands: 1,
-      location: INVENTORYLOCATIONS.hands.value,
-      name: "Shield",
-      type: ITEMTYPES.shield.value as TypeOption,
-      armor: 1,
-    },
-  ],
-  details: {
-    appearance: null,
-    background: null,
-    clothing: null,
-    mannerism: null,
-    personality: null,
-    physical: null,
-  },
-  name: "",
-  level: 1,
-  xp: 0,
-  spells: [],
-  gold: 0,
-  settings: {
-    wallpaper: "sheet-hero",
-  },
-  notes: "",
-};
-
-export default function CharacterForm() {
-  const [character, setCharacter] = useState<Character>(characterBlank);
+const CharacterFormSteps = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [error, setError] = useState<number>(0);
+  const { character } = useCharacter();
   const { user } = useAuth();
   const router = useRouter();
   const { snackbar, showSnackbar } = useSnackbar();
 
-  const steps = [
-    {
-      label: "Abilities",
-      description:
-        "Your PC has 3 abilities: Strength, Dexterity, and Will. Roll 1d to find their starting values, or simply choose a row (with GM permission). You may raise one of your PC's abilities by one point at levels 2, 4, and 6. A PC's abilities may never be raised higher than +4.",
-      content: (
-        <StepAbilities character={character} setCharacter={setCharacter} />
-      ),
-    },
-    {
-      label: "Feature",
-      description: "Your PC begins with one of the following features",
-      content: (
-        <StepFeature character={character} setCharacter={setCharacter} />
-      ),
-    },
-    {
-      label: "Inventory",
-      description:
-        "Choose six items. Record the location of all items, armor, and weapons on your character. Items can be stored in the following locations: hands, worn, belt, or in a backpack. Belts can hold up to two items, while backpacks can carry whatever a typical backpack could reasonably fit. PCs start with the following equipment: light armor (+1 armor), a shield (+1 armor, 1 hand), and two weapons.",
-      content: (
-        <StepInventory
-          character={character}
-          setCharacter={setCharacter}
-          setError={setError}
-        />
-      ),
-    },
-    {
-      label: "Details",
-      description: "Create your character's details.",
-      content: (
-        <StepDetails character={character} setCharacter={setCharacter} />
-      ),
-    },
-    {
-      label: "Name",
-      description: "Name your character.",
-      content: <StepName character={character} setCharacter={setCharacter} />,
-    },
-  ];
+  // Memoize steps for better performance
+  const steps = useMemo(
+    () => [
+      {
+        label: "Abilities",
+        description: "Assign 3 points to your PC's ability scores.",
+        content: <StepAbilities />,
+      },
+      {
+        label: "Hit Points",
+        description: "Your PC's Hit Points are determined by rolling a d6.",
+        content: <StepHitPoints />,
+      },
+      {
+        label: "Careers & Inventory",
+        description: "Select careers and manage your inventory.",
+        content: <StepInventory />,
+      },
+      {
+        label: "Finishing Touches",
+        description:
+          "Name your character and optionally give them some detail.",
+        content: <StepName />,
+      },
+    ],
+    []
+  );
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
+  // Helper to determine if the current step should be disabled
   const isDisabled = () => {
-    // Abilities
-    if (activeStep === 0) {
-      return (
-        character.abilities.str.value === null ||
-        character.abilities.dex.value === null ||
-        character.abilities.wil.value === null
-      );
+    switch (activeStep) {
+      case 0:
+        return !!getRemainingPoints(character);
+      case 1:
+        return !character.health;
+      case 2:
+        return (
+          getSlots(character.items) > (character.abilities.con.value || 0) + 10
+        );
+      case 3:
+        return character.name === "";
+      default:
+        return false;
     }
-    // Feature
-    if (activeStep === 1) {
-      return (
-        character.features === null ||
-        character.features[0] === "path" ||
-        (character.features[0] === "spell-slot" && !character.spells.length)
-      );
-    }
-    // Inventory
-    if (activeStep === 2) {
-      return (
-        character.items.find((item) => item.location === ("" as Location)) !==
-          undefined || error > 0
-      );
-    }
-    // Name
-    if (activeStep === 4) {
-      return character.name === "";
-    }
-    return false;
   };
 
+  // Generic button rendering function
+  const renderButtons = (index: number) => (
+    <Box className="flex gap-2">
+      <Button
+        variant="contained"
+        onClick={
+          index === steps.length - 1 ? handleCreateCharacter : handleNext
+        }
+        disabled={isDisabled()}
+      >
+        {index === steps.length - 1 ? "Finish" : "Continue"}
+      </Button>
+      <Button disabled={index === 0} onClick={handleBack} variant="outlined">
+        Back
+      </Button>
+    </Box>
+  );
+
+  const handleNext = () => setActiveStep((prev) => prev + 1);
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+
+  // Async function to create a character in Firestore
   const handleCreateCharacter = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -180,23 +109,17 @@ export default function CharacterForm() {
       const userCharactersCollection = collection(
         db,
         "users",
-        user.uid,
+        user?.uid,
         "characters"
       );
-      const docRef = await addDoc(userCharactersCollection, {
-        ...character,
-      });
+      const docRef = await addDoc(userCharactersCollection, { ...character });
       showSnackbar("Character created successfully.", "success");
-      router.push(`/characters/${user.uid}-${docRef.id}`);
+      router.push(`/characters/${user?.uid}-${docRef.id}`);
     } catch (err) {
       showSnackbar("Failed to create character.", "error");
       console.error("Failed to create character.", err);
     }
   };
-
-  useEffect(() => {
-    console.log(character);
-  }, [character]);
 
   return (
     <>
@@ -213,37 +136,26 @@ export default function CharacterForm() {
               {step.label}
             </StepLabel>
             <StepContent>
-              <div className="flex flex-col gap-4">
-                <Typography>{step.description}</Typography>
-                <Box>{step.content}</Box>
-                <Box>
-                  {index === steps.length - 1 ? (
-                    <Button
-                      variant="contained"
-                      onClick={handleCreateCharacter}
-                      disabled={isDisabled()}
-                    >
-                      Finish
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      onClick={handleNext}
-                      disabled={isDisabled()}
-                    >
-                      Continue
-                    </Button>
-                  )}
-                  <Button disabled={index === 0} onClick={handleBack}>
-                    Back
-                  </Button>
-                </Box>
-              </div>
+              <StepWrapper
+                title={step.label}
+                description={step.description}
+                content={step.content}
+                buttons={renderButtons(index)}
+              />
             </StepContent>
           </Step>
         ))}
       </Stepper>
       {snackbar}
     </>
+  );
+};
+
+// Wrap the form in the CharacterProvider
+export default function CharacterForm() {
+  return (
+    <CharacterProvider>
+      <CharacterFormSteps />
+    </CharacterProvider>
   );
 }

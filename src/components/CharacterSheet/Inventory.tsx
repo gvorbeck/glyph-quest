@@ -1,190 +1,292 @@
 import { Character } from "@/types/character";
 import {
+  Box,
   Button,
+  Checkbox,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Paper,
-  SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
   Tooltip,
-  Typography,
+  capitalize,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
-import InventoryLocationSelect from "../InventoryLocationSelect";
-import { Item, Location } from "@/types/items";
-import { Bolt, Cancel, Edit, ContentCopy } from "@mui/icons-material";
-import { useState } from "react";
-import InventoryErrors from "../InventoryErrors";
+import { Item, TypeOption } from "@/types/items";
 import NewInventoryItem from "./NewInventoryItem";
-import { getAttackBonus, isCrit, rollDice } from "@/utils/utils";
 import useSnackbar from "@/hooks/useSnackbar";
+import Text from "../Text";
+import SearchIcon from "@mui/icons-material/Search";
+import { useEffect, useRef, useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import { getMaxItems, getSlots } from "@/utils/utils";
 
 type InventoryProps = {
-  xs?: number;
-  character: Character;
+  items: Item[];
+  coins: Character["coins"];
+  con: Character["abilities"]["con"]["value"];
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
 };
 
-const Inventory: React.FC<InventoryProps> = ({
-  xs,
-  character,
-  setCharacter,
-}) => {
-  const [error, setError] = useState<number>(0);
-  const [newFormOpen, setNewFormOpen] = useState<[boolean, Item | undefined]>([
-    false,
-    undefined,
-  ]);
-  const { snackbar, showSnackbar } = useSnackbar();
+type RowsType = {
+  name: string;
+  type: string;
+  slots: number;
+  amount: string | number | undefined;
+  damage: string | undefined;
+  armorPoints: number | undefined;
+  description: string | undefined;
+}[];
 
-  const inventory = character.items.sort((a, b) =>
-    a.name.localeCompare(b.name)
+type RowKeys =
+  | "name"
+  | "type"
+  | "slots"
+  | "amount"
+  | "damage"
+  | "armorPoints"
+  | "description";
+
+const createData = (
+  name: string,
+  type: string,
+  slots: number,
+  amount: number | string | undefined,
+  damage: string | undefined,
+  armorPoints: number | undefined,
+  description: string | undefined
+) => {
+  return { name, type, slots, amount, damage, armorPoints, description };
+};
+
+// Determine if rows possess any of a specific column
+const has = (rows: RowsType, column: RowKeys) => {
+  return rows.some((row) => row[column] !== undefined);
+};
+
+const Inventory: React.FC<
+  InventoryProps & React.ComponentPropsWithRef<"div">
+> = ({ items, setCharacter, className, con, coins }) => {
+  const [editItem, setEditItem] = useState<Item | undefined>();
+  const [charCoins, setCharCoins] = useState(coins);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const { showSnackbar, snackbar } = useSnackbar();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const sortedItems = [...items].sort((a, b) => {
+    if (a.type < b.type) return -1;
+    if (a.type > b.type) return 1;
+    return 0;
+  });
+
+  const slots = getSlots(sortedItems);
+  const maxItems = getMaxItems(con); // Max number of slots allowed based on Constitution
+  const remainingSlots = maxItems - slots; // Remaining slots to fill with empty rows
+
+  const classNames = [
+    "grid grid-cols-12 items-top gap-4 bg-darkGray/75 p-2 rounded items-start",
+    className,
+  ].join(" ");
+
+  // Scroll to form after it appears in the DOM
+  useEffect(() => {
+    if (showAddForm && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showAddForm]);
+
+  const rows: RowsType = sortedItems.map((item) =>
+    createData(
+      item.name,
+      item.type,
+      item.slots,
+      item.amount,
+      item.damage ? item.damage : undefined,
+      item.armorPoints,
+      item.description
+    )
   );
 
-  const handleItemLocationChange = (
-    event: SelectChangeEvent<Location>,
-    item: Item
-  ) => {
-    const value = event.target.value as Location;
-    const newItem = { ...item, location: value };
-    const oldItems = character.items.filter((i) => i.name !== item.name);
-    const items = [...oldItems, newItem].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items,
-    }));
-  };
-
-  const handleEditItemClick = (item: Item) => {
-    setNewFormOpen([true, item]);
-  };
-
-  const handleDeleteItemClick = (item: Item) => {
-    const items = character.items.filter((i) => i.name !== item.name);
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      items,
-    }));
-  };
-
-  const handleAttackClick = (item: Item) => {
-    const attackBonus = getAttackBonus(character);
-    const attackRoll = rollDice(2, true) as number[];
-    const attackRollString = attackRoll.join(", ");
-    const attackRollTotal = attackRoll.reduce((a, b) => a + b, 0) + attackBonus;
-    const damageBonus = !!item.damage
-      ? ` (+${item.damage} damage on a hit)`
-      : "";
-    const message = `${item.name} Attack Roll (2d6+AB): [${attackRollString}] + ${attackBonus} = ${attackRollTotal}${damageBonus}`;
-
-    const copyToClipboard = () => {
-      navigator.clipboard.writeText(message);
-    };
-
-    const action = (
-      <Tooltip title="Copy attack message">
-        <IconButton
-          size="small"
-          aria-label="copy"
-          color="inherit"
-          onClick={copyToClipboard}
-        >
-          <ContentCopy fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    );
-
-    if (isCrit(attackRollTotal)) {
-      showSnackbar("Critical Hit!", "success", action);
+  const addWound = (index: number, checked: boolean) => {
+    if (checked) {
+      const wound = {
+        name: "WOUND",
+        type: "wound" as TypeOption,
+        slots: 1,
+      };
+      sortedItems.splice(index, 1, wound);
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: sortedItems,
+      }));
     } else {
-      showSnackbar(message, "info", action);
+      sortedItems.splice(index, 1);
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        items: sortedItems,
+      }));
     }
   };
 
+  const hasAmount = has(rows, "amount");
+  const hasDamage = has(rows, "damage");
+  const hasArmorPoints = has(rows, "armorPoints");
+  const hasDescription = has(rows, "description");
+
+  const handleFormClose = () => {
+    setShowAddForm(false);
+    setEditItem(undefined);
+  };
+
+  const copyDescription = (description: string) => {
+    navigator.clipboard.writeText(description);
+    showSnackbar("Description copied to clipboard", "info");
+  };
+
+  const openEditItem = (item: Item) => {
+    setShowAddForm(true);
+    setEditItem(item);
+  };
+
+  const handleCoinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCharCoins(parseInt(e.target.value));
+  };
+
+  const handleCoinsBlur = () => {
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      coins: charCoins,
+    }));
+  };
+
   return (
-    <Grid xs={xs}>
-      <Paper className="p-4 flex flex-col gap-4">
-        <Typography variant="h3" className="font-jaini-purva">
-          Inventory
-        </Typography>
-        <InventoryErrors items={inventory} setError={setError} />
-        <List>
-          {inventory.map((item, index) => (
-            <ListItem
-              key={index}
-              className={`items-start flex-col ${
-                index % 2 === 0 ? "bg-white/5" : ""
-              }`}
-            >
-              <ListItemText
-                primary={
-                  item.amount !== "1" && item.amount !== undefined
-                    ? `(${item.amount}) ${item.name}`
-                    : item.name
-                }
-                className="[&_span]:truncate w-full"
-                secondary={item.detail}
-                title={item.name}
-              />
-              <div className="flex gap-2 w-full justify-end">
-                {item.type.includes("weapon") && (
-                  <Button
-                    variant="text"
-                    startIcon={<Bolt />}
-                    size="small"
-                    className=" mr-auto"
-                    onClick={() => handleAttackClick(item)}
-                  >
-                    Attack
-                  </Button>
-                )}
-                <InventoryLocationSelect
-                  id={item.name.toLowerCase()}
-                  value={item.location}
-                  onChange={(e) => handleItemLocationChange(e, item)}
-                  size="small"
-                />
-                <IconButton
-                  aria-label="edit Item"
-                  color="primary"
-                  onClick={() => handleEditItemClick(item)}
-                >
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  aria-label="delete item"
-                  color="primary"
-                  href="#newItem"
-                  onClick={() => handleDeleteItemClick(item)}
-                >
-                  <Cancel />
-                </IconButton>
-              </div>
-            </ListItem>
-          ))}
-        </List>
-        {!newFormOpen[0] ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setNewFormOpen([true, undefined])}
-          >
-            Add Item
+    <Box className={classNames}>
+      <div className="flex xs:flex-col sm:flex-row xs:items-start gap-2 row-span-1 col-span-12 sm:items-center">
+        <Text variant="h3" font className="text-3xl">
+          Inventory ({slots}/{maxItems})
+        </Text>
+        {remainingSlots > 0 && (
+          <Button variant="outlined" onClick={() => setShowAddForm(true)}>
+            Add Equipment
           </Button>
-        ) : (
-          <NewInventoryItem
-            id="newItem"
-            onClose={() => setNewFormOpen([false, undefined])}
-            setCharacter={setCharacter}
-            editItem={newFormOpen[1]}
-          />
         )}
-      </Paper>
+        <TextField
+          label="Coins"
+          value={charCoins}
+          variant="filled"
+          size="small"
+          type="number"
+          className="xs:ml-0 sm:ml-auto"
+          onChange={handleCoinsChange}
+          onBlur={handleCoinsBlur}
+        />
+      </div>
+      <TableContainer component={Paper} className="row-span-1 col-span-12">
+        <Table className="min-w-[650px]" aria-label="simple table" size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="right">Type</TableCell>
+              <TableCell align="right">Slots</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              {hasDamage && <TableCell align="right">Damage</TableCell>}
+              {hasArmorPoints && <TableCell align="right">AP</TableCell>}
+              {hasDescription && (
+                <TableCell align="right">Description</TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* Render sorted items first */}
+            {sortedItems.map((item, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  className="flex items-center"
+                >
+                  <Tooltip title="Wound">
+                    <Checkbox
+                      checked={item.type === "wound"}
+                      onClick={(e) =>
+                        addWound(index, (e.target as HTMLInputElement).checked)
+                      }
+                    />
+                  </Tooltip>
+                  <Tooltip title="Edit item" onClick={() => openEditItem(item)}>
+                    <IconButton color="primary">
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Text variant="body2">{capitalize(item.name)}</Text>
+                </TableCell>
+                <TableCell align="right">{capitalize(item.type)}</TableCell>
+                <TableCell align="right">{item.slots}</TableCell>
+                {hasAmount && (
+                  <TableCell align="right">{item.amount}</TableCell>
+                )}
+                {hasDamage && (
+                  <TableCell align="right">{item.damage}</TableCell>
+                )}
+                {hasArmorPoints && (
+                  <TableCell align="right">{item.armorPoints}</TableCell>
+                )}
+                {hasDescription && (
+                  <TableCell align="right">
+                    {!!item.description && (
+                      <Tooltip title={item.description}>
+                        <IconButton
+                          color="primary"
+                          onClick={() => copyDescription(item.description!)}
+                        >
+                          <SearchIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
+
+            {/* Fill remaining slots with empty rows */}
+            {Array.from({ length: remainingSlots }).map((_, index) => (
+              <TableRow key={`empty-${index}`}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  className="flex items-center"
+                >
+                  <Text variant="body2">Empty</Text>
+                </TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* New Equipment Form with the ref */}
+      {showAddForm && (
+        <div ref={formRef} className="xs:col-span-12 md:col-span-6">
+          <NewInventoryItem
+            setCharacter={setCharacter}
+            onClose={handleFormClose}
+            editItem={editItem}
+          />
+        </div>
+      )}
       {snackbar}
-    </Grid>
+    </Box>
   );
 };
 

@@ -1,317 +1,131 @@
 "use client";
 
+import { getRemainingPoints, rollDice } from "@/utils/utils";
+import { Button } from "@mui/material";
+import { useState } from "react";
+import AbilityBox from "../AbilityBox";
+import { useCharacter } from "@/context/CharacterContext";
 import { Character } from "@/types/character";
-import { getModifier, rollDice } from "@/utils/utils";
-import {
-  Box,
-  Button,
-  Paper,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tabs,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useState, ChangeEvent } from "react";
+import Text from "../Text";
 
-// Constants for CSS classes
-const UNSELECTED_ROW_CLASSES = "cursor-pointer";
-const SELECTED_ROW_CLASSES = "bg-amber/50 cursor-pointer";
+type StepAbilityProps = {};
 
-// Utility function to create data rows
-const createData = (die: number, str: string, dex: string, wil: string) => ({
-  die,
-  str,
-  dex,
-  wil,
-});
+const StepAbilities: React.FC<StepAbilityProps> = ({}) => {
+  const { character, setCharacter } = useCharacter();
 
-// Predefined rows data
-const rows = [
-  createData(1, "+2", "+1", "+0"),
-  createData(2, "+2", "+0", "+1"),
-  createData(3, "+1", "+2", "+0"),
-  createData(4, "+0", "+2", "+1"),
-  createData(5, "+1", "+0", "+2"),
-  createData(6, "+0", "+1", "+2"),
-];
+  // State to track rolled ability dice (optional feature)
+  const [rolledAbilities, setRolledAbilities] = useState<number[]>([]);
 
-type StepAbilityProps = {
-  character: Character;
-  setCharacter: React.Dispatch<React.SetStateAction<Character>>;
-};
+  // Calculate remaining points based on current ability values
+  const remainingPoints = getRemainingPoints(character);
 
-const findAbilityIndex = (character: Character) => {
-  const { str, dex, wil } = character.abilities;
-  const index = rows.findIndex(
-    (row) =>
-      +row.str === str.value && +row.dex === dex.value && +row.wil === wil.value
-  );
-  return index >= 0 ? index + 1 : null;
-};
+  // List of abilities to be mapped over
+  const abilities = [
+    { name: "str", label: character.abilities.str.short },
+    { name: "dex", label: character.abilities.dex.short },
+    { name: "con", label: character.abilities.con.short },
+    { name: "int", label: character.abilities.int.short },
+    { name: "wis", label: character.abilities.wis.short },
+    { name: "cha", label: character.abilities.cha.short },
+  ];
 
-const StepAbilities: React.FC<StepAbilityProps> = ({
-  character,
-  setCharacter,
-}) => {
-  const [tabValue, setTabValue] = useState(0);
-  const [selectedRow, setSelectedRow] = useState<number | null>(
-    findAbilityIndex(character)
-  );
-  const [str, setStr] = useState<number | null>(character.abilities.str.value);
-  const [dex, setDex] = useState<number | null>(character.abilities.dex.value);
-  const [wil, setWil] = useState<number | null>(character.abilities.wil.value);
+  // Handle rolling abilities (optional)
+  const handleAbilitiesClick = () => {
+    // Reset all abilities to zero first
+    const resetAbilities = abilities.map((ability) => ({
+      ...ability,
+      value: 0, // Reset each ability's value to 0
+    }));
 
-  // Event handler for tab change
-  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
+    const rolled = rollDice(3, 6, true) as number[];
 
-  // Select ability set based on the index
-  const selectAbilitySet = (index: number) => {
-    const selectedRowData = rows[index - 1];
-    setStr(+selectedRowData.str);
-    setDex(+selectedRowData.dex);
-    setWil(+selectedRowData.wil);
+    // Add 1 point to each ability based on the die rolls
+    rolled.forEach((die) => {
+      const index = die - 1;
+      resetAbilities[index].value += 1;
+    });
+
+    setRolledAbilities(rolled);
+
+    // Update character's abilities in state
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
-      abilities: {
-        str: {
-          ...prevCharacter.abilities.str,
-          value: +selectedRowData.str,
-        },
-        dex: {
-          ...prevCharacter.abilities.dex,
-          value: +selectedRowData.dex,
-        },
-        wil: {
-          ...prevCharacter.abilities.wil,
-          value: +selectedRowData.wil,
-        },
-      },
+      abilities: resetAbilities.reduce(
+        (acc, ability) => ({
+          ...acc,
+          [ability.name]: {
+            ...prevCharacter.abilities[
+              ability.name as keyof Character["abilities"]
+            ],
+            value: ability.value, // Use the updated value
+          },
+        }),
+        prevCharacter.abilities
+      ),
     }));
   };
 
-  // Handle group roll click
-  const handleGroupRollAllClick = () => {
-    const value = rollDice();
-    setSelectedRow(value as number);
-    selectAbilitySet(value as number);
-  };
+  // Define ability names type
+  type AbilityName = keyof Character["abilities"];
 
-  // Set a specific ability value
-  const setSpecificAbility = (
-    ability: "str" | "dex" | "wil",
-    value: number
-  ) => {
-    if (ability === "str") setStr(value);
-    if (ability === "dex") setDex(value);
-    if (ability === "wil") setWil(value);
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      abilities: {
-        ...prevCharacter.abilities,
-        [ability]: {
-          ...prevCharacter.abilities[ability],
-          value,
+  // Handle ability point changes
+  const handleAbilityChange = (abilityName: AbilityName, newValue: string) => {
+    const newAbilityValue = parseInt(newValue);
+
+    // Ensure valid point update
+    if (isNaN(newAbilityValue)) return;
+
+    const currentAbilityValue = character.abilities[abilityName].value || 0;
+    const pointDiff = newAbilityValue - currentAbilityValue;
+
+    if (remainingPoints - pointDiff >= 0 && newAbilityValue >= 0) {
+      // Update the specific ability value
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        abilities: {
+          ...prevCharacter.abilities,
+          [abilityName]: {
+            ...prevCharacter.abilities[abilityName],
+            value: newAbilityValue,
+          },
         },
-      },
-    }));
-  };
-
-  // Handle individual roll click
-  const handleIndRollClick = (ability: "str" | "dex" | "wil") => {
-    const value = getModifier(rollDice() as number);
-    setSpecificAbility(ability, value);
-  };
-
-  // Handle group table row click
-  const handleGroupTableRowClick = (die: number) => {
-    setSelectedRow(die);
-    selectAbilitySet(die);
-  };
-
-  // Handle input change for group roll
-  const handleGroupInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const value = +e.target.value;
-    setSelectedRow(value);
-    selectAbilitySet(value);
-  };
-
-  // Handle input change for individual ability
-  const handleIndInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ability: "str" | "dex" | "wil"
-  ) => {
-    const value = +e.target.value;
-    setSelectedRow(null);
-    setSpecificAbility(ability, value);
+      }));
+    }
   };
 
   return (
-    <>
-      <Tabs
-        value={tabValue}
-        onChange={handleTabChange}
-        aria-label="Types of ability rolls"
-      >
-        <Tab label="Group Ability Rolls" />
-        <Tab label="Individual Ability Rolls" />
-      </Tabs>
-      <Box
-        role="tabpanel"
-        hidden={tabValue !== 0}
-        id="tabpanel-0"
-        aria-labelledby="tab-0"
-      >
-        <Box className="flex flex-col gap-4">
-          <Box className="flex items-center gap-4 mt-4">
-            <Button variant="contained" onClick={handleGroupRollAllClick}>
-              Roll All Abilities
-            </Button>
-            <TextField
-              className="pr-8"
-              label="Ability Roll"
-              type="number"
-              InputProps={{ inputProps: { min: 1, max: 6 } }}
-              InputLabelProps={{ shrink: true }}
-              value={selectedRow !== null ? selectedRow : ""}
-              onChange={handleGroupInputChange}
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-4 items-center">
+        <Button variant="outlined" onClick={handleAbilitiesClick}>
+          Roll Abilities
+        </Button>
+        {rolledAbilities.length > 0 && (
+          <Text className="text-lg">
+            <strong>{rolledAbilities.join(", ")}</strong>
+          </Text>
+        )}
+      </div>
+      <Text className="text-lg">Points remaining: {remainingPoints}</Text>
+      <div className="flex flex-col gap-4">
+        <Text font variant="h3">
+          Ability Scores
+        </Text>
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+          {abilities.map((ability) => (
+            <AbilityBox
+              key={ability.name}
+              value={
+                character.abilities[ability.name as AbilityName].value || 0
+              }
+              onChange={(e) =>
+                handleAbilityChange(ability.name as AbilityName, e.target.value)
+              }
+              label={ability.label}
             />
-          </Box>
-          <TableContainer component={Paper}>
-            <Table aria-label="ability table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>1d</TableCell>
-                  <TableCell>Strength</TableCell>
-                  <TableCell>Dexterity</TableCell>
-                  <TableCell>Will</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.die}
-                    onClick={() => handleGroupTableRowClick(row.die)}
-                    className={
-                      selectedRow === row.die
-                        ? SELECTED_ROW_CLASSES
-                        : UNSELECTED_ROW_CLASSES
-                    }
-                  >
-                    <TableCell>{row.die}</TableCell>
-                    <TableCell>{row.str}</TableCell>
-                    <TableCell>{row.dex}</TableCell>
-                    <TableCell>{row.wil}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Box>
-      <Box
-        role="tabpanel"
-        hidden={tabValue !== 1}
-        id="tabpanel-1"
-        aria-labelledby="tab-1"
-      >
-        <Box className="flex flex-col gap-4 mt-4">
-          <Typography variant="body2">
-            If you want your abilities to be more randomized (and possibly
-            unbalanced), the GM may also allow you to roll 1d for each ability
-            separately.
-          </Typography>
-          <Box className="flex gap-4">
-            <TableContainer component={Paper} className="w-fit">
-              <Table aria-label="ability table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>1d</TableCell>
-                    <TableCell>Ability Score</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>1-2</TableCell>
-                    <TableCell>+0</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>3-5</TableCell>
-                    <TableCell>+1</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>6</TableCell>
-                    <TableCell>+2</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Box className="flex flex-col gap-4">
-              <div className="flex gap-4">
-                <Button
-                  variant="contained"
-                  onClick={() => handleIndRollClick("str")}
-                >
-                  Roll STR
-                </Button>
-                <TextField
-                  className="pr-8"
-                  label="Strength"
-                  type="number"
-                  InputProps={{ inputProps: { min: 0, max: 2 } }}
-                  InputLabelProps={{ shrink: true }}
-                  value={str !== null ? str : ""}
-                  onChange={(e) => handleIndInputChange(e, "str")}
-                />
-              </div>
-              <div className="flex gap-4">
-                <Button
-                  variant="contained"
-                  onClick={() => handleIndRollClick("dex")}
-                >
-                  Roll DEX
-                </Button>
-                <TextField
-                  className="pr-8"
-                  label="Dexterity"
-                  type="number"
-                  InputProps={{ inputProps: { min: 0, max: 2 } }}
-                  InputLabelProps={{ shrink: true }}
-                  value={dex !== null ? dex : ""}
-                  onChange={(e) => handleIndInputChange(e, "dex")}
-                />
-              </div>
-              <div className="flex gap-4">
-                <Button
-                  variant="contained"
-                  onClick={() => handleIndRollClick("wil")}
-                >
-                  Roll WIL
-                </Button>
-                <TextField
-                  className="pr-8"
-                  label="Will"
-                  type="number"
-                  InputProps={{ inputProps: { min: 0, max: 2 } }}
-                  InputLabelProps={{ shrink: true }}
-                  value={wil !== null ? wil : ""}
-                  onChange={(e) => handleIndInputChange(e, "wil")}
-                />
-              </div>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

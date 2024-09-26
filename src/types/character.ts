@@ -1,29 +1,5 @@
 import { Item } from "./items";
 
-export type AbilityLongName = "Strength" | "Dexterity" | "Will";
-
-export type AbilityShortName = "STR" | "DEX" | "WIL";
-
-export interface Ability {
-  long: AbilityLongName;
-  short: AbilityShortName;
-  value: number | null;
-}
-
-export type Feature =
-  | "attack-bonus"
-  | "spell-slot"
-  | "path"
-  | "path-briarborn"
-  | "path-fingersmith"
-  | "path-roofrunner"
-  | "path-shadowjack";
-
-export type Spell = {
-  name: string;
-  description: string;
-};
-
 export type Settings = {
   wallpaper:
     | "sheet-hero"
@@ -34,30 +10,70 @@ export type Settings = {
     | "sheet-thief";
 };
 
+export type AbilityLongName =
+  | "Strength"
+  | "Dexterity"
+  | "Constitution"
+  | "Intelligence"
+  | "Wisdom"
+  | "Charisma";
+
+export type AbilityShortName = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
+
+export interface Ability {
+  long: AbilityLongName;
+  short: AbilityShortName;
+  value: number | null;
+}
+
 export interface Character {
   id?: string;
   abilities: {
     str: Ability;
     dex: Ability;
-    wil: Ability;
+    con: Ability;
+    int: Ability;
+    wis: Ability;
+    cha: Ability;
   };
   health: number;
   healthMax: number;
-  features: Feature[] | null;
+  careers: string[];
   items: Item[];
   details: {
-    appearance: string | null;
-    background: string | null;
-    clothing: string | null;
-    mannerism: string | null;
-    personality: string | null;
-    physical: string | null;
+    personality: string | undefined;
+    detail: string | undefined;
+    mannerism: string | undefined;
   };
   name: string;
   level: number;
   xp: number;
-  spells: Spell[];
-  gold: number;
+  coins: number;
   settings: Settings;
   notes: string;
 }
+
+export type InventoryType = {
+  careers: string[];
+  coins: number;
+  generic: {
+    rations: boolean;
+    rope: boolean;
+    torches: boolean;
+    arrows: boolean;
+  };
+  armor: {
+    shield: boolean;
+    helmet: boolean;
+    gambeson: boolean;
+    mailShirt: boolean;
+    breastplate: boolean;
+    armPlate: boolean;
+    legPlate: boolean;
+  };
+  weapons: {
+    name: string;
+    slots: 1 | 2;
+    type: "weapon";
+  }[];
+};

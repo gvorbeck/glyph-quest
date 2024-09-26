@@ -1,51 +1,79 @@
 import { Character } from "@/types/character";
-import { IconButton, Tooltip, Typography } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
+import { Box, Button, Drawer, IconButton, Tooltip } from "@mui/material";
 import { useState } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
-import GQModal from "../GQModal";
-import ModalSettings from "./ModalSettings";
+import Text from "../Text";
+import { LEVELS } from "@/utils/constants";
+import SettingsDrawer from "./SettingsDrawer";
+import LevelUpDrawer from "./LevelUpDrawer";
 
 type HeroProps = {
   character: Character;
   setCharacter: React.Dispatch<React.SetStateAction<Character>>;
+  drawerOpen: boolean;
+  setDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Hero: React.FC<HeroProps> = ({ character, setCharacter }) => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
+const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
+  character,
+  setCharacter,
+  className,
+  drawerOpen,
+  setDrawerOpen,
+}) => {
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const classNames = ["relative", className].filter(Boolean).join(" ");
 
-  const handleSettingsOpen = () => setSettingsOpen(true);
-  const handleSettingsClose = () => setSettingsOpen(false);
+  const toggleDrawerOpen = () => {
+    setDrawerOpen((prevDrawerOpen) => !prevDrawerOpen);
+  };
+
+  const toggleLevelUpOpen = () => {
+    setLevelUpOpen((prevLevelUpOpen) => !prevLevelUpOpen);
+  };
 
   return (
-    <>
-      <Grid xs={12} className="relative">
-        <Typography
-          variant="h2"
-          className="font-jaini-purva text-amber pl-4 text-7xl [text-shadow:2px_2px_#242120] h-[300px]"
-        >
-          {character.name}
-        </Typography>
+    <Box className={classNames}>
+      <Text
+        variant="h2"
+        className="text-amber text-7xl [text-shadow:2px_2px_#242120] pb-14 truncate"
+        font
+      >
+        {character.name}
+      </Text>
+      <div className="absolute bottom-0 -left-2 flex items-center gap-4">
         <Tooltip title="Settings">
           <IconButton
             aria-label="close"
-            onClick={handleSettingsOpen}
-            className="absolute bottom-0 left-4 bg-darkGray"
+            onClick={toggleDrawerOpen}
+            className="bg-darkGray"
           >
             <SettingsIcon color="primary" className="w-10 h-10" />
           </IconButton>
         </Tooltip>
-        <GQModal
-          handleClose={handleSettingsClose}
-          id="settings"
-          open={settingsOpen}
-          title="Settings"
-          width={600}
-        >
-          <ModalSettings character={character} setCharacter={setCharacter} />
-        </GQModal>
-      </Grid>
-    </>
+        <Drawer open={drawerOpen} onClose={toggleDrawerOpen}>
+          <SettingsDrawer
+            setCharacter={setCharacter}
+            toggleDrawerOpen={toggleDrawerOpen}
+            character={character}
+          />
+        </Drawer>
+        {character.xp >= LEVELS[character.level] && (
+          <>
+            <Button variant="contained" onClick={toggleLevelUpOpen}>
+              Level up
+            </Button>
+            <Drawer open={levelUpOpen} onClose={toggleLevelUpOpen} anchor="top">
+              <LevelUpDrawer
+                character={character}
+                setCharacter={setCharacter}
+                setLevelUpOpen={setLevelUpOpen}
+              />
+            </Drawer>
+          </>
+        )}
+      </div>
+    </Box>
   );
 };
 

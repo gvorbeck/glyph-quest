@@ -1,27 +1,18 @@
-export type WeaponTypes = "heavy-weapon" | "light-weapon" | "ranged-weapon";
-
 export type TypeOption =
-  | WeaponTypes
   | "armor"
-  | "shield"
-  | "item"
-  | "animal"
-  | "transport"
-  | "property"
-  | "hireling"
-  | "other";
-
-export type Location = "hands" | "belt" | "worn" | "backpack" | null;
+  | "generic"
+  | "spell"
+  | "weapon"
+  | "career"
+  | "wound";
 
 export type Item = {
-  hands: number | null;
-  location: Location;
   name: string;
+  slots: number;
   type: TypeOption;
+  damage?: string;
+  armorPoints?: number;
   amount?: number | string;
-  armor?: number;
-  damage?: number;
-  detail?: string;
-  starter?: boolean;
-  value?: number;
+  description?: string;
+  source?: string;
 };

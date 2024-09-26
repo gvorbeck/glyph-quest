@@ -1,33 +1,24 @@
-import { Link, Typography } from "@mui/material";
+import { Link } from "@mui/material";
+import Text from "./Text";
 
 type SiteFooterProps = {};
 
 const SiteFooter: React.FC<SiteFooterProps> = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="lg:max-w-[1000px] mx-auto w-full pt-4 pl-8 pr-4">
-      <Typography variant="body2">
-        © {currentYear}{" "}
+    <footer className="lg:max-w-[1000px] mx-auto w-full py-4 px-4">
+      <Text variant="body2">© {currentYear} Glyph.Quest</Text>
+      <Text variant="body2">
+        Glyph.Quest is an independent production of{" "}
         <Link
           href="https://iamgarrett.com"
           rel="noopener noreferrer"
           target="_blank"
         >
           J. Garrett Vorbeck
-        </Link>
-        . GLYPH.QUEST
-      </Typography>
-      <Typography variant="body2">
-        This site is based on the game{" "}
-        <Link
-          href="https://questingblog.com/maze-rats/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Maze Rats
-        </Link>
-        .
-      </Typography>
+        </Link>{" "}
+        and is not affiliated with Questing Beast LLC.
+      </Text>
     </footer>
   );
 };

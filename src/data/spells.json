@@ -1,0 +1,602 @@
+[
+  {
+    "name": "Adhere",
+    "description": "INT objects become sticky enough to hold a PC to a ceiling. Lasts until washed.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Animal Friendship",
+    "description": "INT animals obey your orders as well as a trained dog for one day.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Animate Object",
+    "description": "INT objects obey your orders. They move 15' per round.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Anthropomorphize",
+    "description": "INT animals gain human intelligence for one day.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Arcane Eye",
+    "description": "You create a magic eye that flies around under your control for INT turns. You can see through it as well as your normal eyes.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Astral Prison",
+    "description": "An object is frozen in time and space within an invulnerable crystal shell for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Attract",
+    "description": "INT + 1 objects are strongly magnetically attracted to each other if they come within 10'.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Auditory Illusion",
+    "description": "You can create illusory sounds that seem to come from INT directions of your choice.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Babble",
+    "description": "INT creatures must loudly and clearly repeat everything you think. They are otherwise mute.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Beast Form",
+    "description": "You and your possessions turn into an animal for up to INT days.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Befuddle",
+    "description": "A creature is unable to form short-term memories for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Bend Fate",
+    "description": "Roll INT + 1d20s. After this point, when any creature you can see makes a check, use and discard one of the rolled results until they are all gone.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Body Swap",
+    "description": "You switch bodies with a creature you touch for INT turns. If one body dies, the other dies as well.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Catherine",
+    "description": "A woman wearing a blue dress appears for INT hours. She will obey polite, safe requests.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Charm",
+    "description": "INT humanoids believe they are close friends with you until proven otherwise.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Command",
+    "description": "A creature obeys a single, INT-word command that doesn't harm it.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Comprehend",
+    "description": "You are fluent in all languages for INT hours.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Control Plants",
+    "description": "Plants within INT × 10' obey you. They move 5' per round.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Control Weather",
+    "description": "You control your hex's weather for INT hours.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Detect Magic",
+    "description": "Anything magical within line of sight glows and reveals its properties on request. Lasts 1 day or until you make INT requests.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Disassemble",
+    "description": "INT body parts may be detached at will. You can still control them. Lasts until they are reattached.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Disguise",
+    "description": "You may alter the look of INT humanoids as long as they remain humanoid. Lasts until the subjects speak.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Displace",
+    "description": "An object appears to be up to INT × 10' from its actual position.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Duplicate",
+    "description": "Create INT fragile, porcelain copies of items you can see.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Earthquake",
+    "description": "The ground shakes violently for INT rounds.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Elasticity",
+    "description": "Your body can stretch up to INT × 10'.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Elemental Wall",
+    "description": "Creates a wall of ice or fire INT × 40' long, 5' wide and 10' tall. The wall can curve however you want.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Filch",
+    "description": "INT visible items teleport to your hands.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Fog Cloud",
+    "description": "Fog spreads out in an INT × 10' radius from you. Fades in one turn.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Gravity Shift",
+    "description": "INT creatures can alter their “down” direction at will.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Greed",
+    "description": "INT creatures become obsessed with possessing a visible item.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Haste",
+    "description": "INT creatures have their movement speed tripled.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Hatred",
+    "description": "INT creatures start attacking each other for one turn or until one dies.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Hear Whispers",
+    "description": "A creature can hear all sounds up to 120' away for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Hover",
+    "description": "Make INT objects hover 2' above the ground, frictionless. They can support the weight of up to INT people.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Hypnotize",
+    "description": "A creature enters a trance and will answer INT yes or no questions.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Icy Touch",
+    "description": "An ice layer spreads across a surface, up to INT × 10' in radius.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Increase Gravity",
+    "description": "The gravity within INT × 10' of you triples.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Invisible Tether",
+    "description": "INT objects within 10' of each other cannot be moved more than 10' apart from each other.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Knock",
+    "description": "INT locks unlock.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Leap",
+    "description": "You can jump up to INT × 10'.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Liquid Air",
+    "description": "The air within INT × 10' of you becomes swimmable.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Lock",
+    "description": "A door cannot be opened by mundane means for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Magic Suppressor",
+    "description": "All magic is nullified while within INT × 10' of you.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Manse",
+    "description": "A furnished house with INT rooms appears for 1 day. It has no food or gear and does not count as a safe haven.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Marble Madness",
+    "description": "Your pockets refill with marbles every round for INT rounds.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Masquerade",
+    "description": "All creatures within INT × 10' of you are compelled to dance.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Miniaturize",
+    "description": "You and INT other touched creatures become mouse-sized.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Mirror Image",
+    "description": "INT illusory copies of you, under your control, appear.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Mirrorwalk",
+    "description": "A mirror becomes a gate to another mirror you touched today.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Multiarm",
+    "description": "You gain INT extra arms.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Night Sphere",
+    "description": "An INT × 40' wide sphere of total darkness appears.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Objectify",
+    "description": "INT willing creatures become inanimate, immobile objects of your choice for as long as they wish. They can still hear and see.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Ooze Form",
+    "description": "Your body and gear become living slime for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Pacify",
+    "description": "INT creatures develop an intense hatred of violence unless attacked.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Phantom Coach",
+    "description": "A coach scoops up INT creatures (who are outdoors) and deposits them in a random adjacent hex.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Phobia",
+    "description": "INT creatures become terrified of an object.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Pit",
+    "description": "A pit 10' wide and INT × 10' deep opens in the ground.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Primeval Surge",
+    "description": "An object grows to the size of an elephant for INT turns. If it is a creature, it is enraged.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Psychometry",
+    "description": "The GM answers INT yes or no questions about an object.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Pull",
+    "description": "An object of any size is pulled directly towards you with the force of INT men for one round.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Push",
+    "description": "An object of any size is pushed directly away from you with the force of INT men for one round.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Raise Dead",
+    "description": "INT unarmed skeletons rise from the ground to serve you.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Read Mind",
+    "description": "You can hear the surface thoughts of creatures for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Repel",
+    "description": "INT + 1 objects are strongly magnetically repelled from each other if they come within 10'.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Scry",
+    "description": "You can share the vision of a creature you touched today for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Sculpt Elements",
+    "description": "Inanimate material acts like clay in your hands for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Shroud",
+    "description": "INT creatures are invisible for as long as they can hold their breath (CON × 3 rounds).",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Shuffle",
+    "description": "INT creatures switch places randomly.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Silence",
+    "description": "All sound is deadened within 10' of you for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Sleep",
+    "description": "INT creatures fall asleep.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Smoke Form",
+    "description": "Your body and gear become living smoke for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Snail Knight",
+    "description": "In 10 minutes, a knight atop a giant snail rides into view. He may aid you for INT days if he finds you worthy. The snail cannot move faster than a walk.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Sniff",
+    "description": "A creature can smell all scents up to 120' away for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Sort",
+    "description": "Inanimate items sort themselves according to INT categories you set. The categories must be visually verifiable.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Speak with Dead",
+    "description": "The spirit of a touched dead body appears and will answer INT questions (if it can).",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Spectacle",
+    "description": "A clearly unreal illusion appears under your control for INT days. It may be up to the size of a palace and has full motion and sound.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Spellseize",
+    "description": "Cast this as a reaction to another spell of level INT or less being cast to make a temporary copy of it that you can cast within 1 day.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Spider Climb",
+    "description": "You can climb surfaces like a spider for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Summon Cube",
+    "description": "You may summon or banish a 5' cube of earth 5 times per round for INT rounds. Cubes must be affixed to the earth or to other cubes.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Summon Idol",
+    "description": "A carved stone statue up to INT × 10' tall rises from the ground.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Swarm",
+    "description": "You become a swarm of crows, rats, or piranhas for INT turns. You only take damage from area effects.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Telekinesis",
+    "description": "You may mentally manipulate items (one at a time) up to 10 feet away for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Telepathy",
+    "description": "You can project your thoughts into a mind within INT hexes.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Teleport",
+    "description": "An object teleports to a clear patch of ground up to INT × 40' away from its origin point.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Thaumaturgic Anchor",
+    "description": "An object becomes the target of every spell cast within 120' of it for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Thicket",
+    "description": "A thicket of trees and dense brush up to INT × 40' wide sprouts up over the course of one round.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Time Jump",
+    "description": "An object disappears as it jumps INT turns into the future. When it returns, it destroys any matter in its space.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Time Rush",
+    "description": "Time within INT × 10' of you goes 10 times faster than the rest of the world. Lasts 10 rounds (for you).",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Time Slow",
+    "description": "Time within INT × 10' of you goes 10 times slower than the rest of the world. Lasts 10 rounds (for you).",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Truth Sense",
+    "description": "You can detect lies for INT hours.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Unravel",
+    "description": "Cast this as a reaction to another spell of level INT or less going off to nullify it.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Upwell",
+    "description": "A spring of seawater erupts, producing a thousand cubic feet of water per turn for INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Vision",
+    "description": "You create an illusory object with full motion and sound that only one creature can sense. Lasts INT turns.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Visual Illusion",
+    "description": "You create INT silent, immobile, illusory objects that last until they are touched.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Ward",
+    "description": "A silver circle 40' across appears on the ground around you. Until you leave the circle, INT types of things that you name cannot cross it.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Web",
+    "description": "You can shoot INT × 40' of strong, sticky web. Lasts until burned.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Whirlwind",
+    "description": "You create a vortex of air INT × 10' wide that can deflect missiles.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "Wizard Mark",
+    "description": "Your finger produces ultra-colored paint for INT hours. This paint is only visible to you, and can be seen at any distance, even through objects.",
+    "slots": 1,
+    "type": "spell"
+  },
+  {
+    "name": "X-Ray Vision",
+    "description": "You can see through INT feet of material.",
+    "slots": 1,
+    "type": "spell"
+  }
+]

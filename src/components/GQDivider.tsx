@@ -1,13 +1,14 @@
-import { Divider } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
+import { Box, Divider } from "@mui/material";
 
 type GQDividerProps = {};
 
-const GQDivider: React.FC<GQDividerProps> = () => {
+const GQDivider: React.FC<
+  GQDividerProps & React.ComponentPropsWithRef<"div">
+> = ({ className }) => {
   return (
-    <Grid xs={12}>
+    <Box className={className}>
       <Divider />
-    </Grid>
+    </Box>
   );
 };
 

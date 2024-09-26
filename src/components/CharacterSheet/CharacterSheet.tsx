@@ -3,30 +3,17 @@
 import { useEffect, useState } from "react";
 import { db, doc, getDoc } from "../../lib/firebase";
 import { useAuth } from "../../context/AuthContext";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 (unstable)
 import { Character } from "@/types/character";
-import Features from "./Features";
 import Hero from "./Hero";
 import GQDivider from "../GQDivider";
 import Description from "./Description";
 import Stats from "./Stats";
-import {
-  DirectionsRun,
-  Favorite,
-  FitnessCenter,
-  Grade,
-  MilitaryTech,
-  Paid,
-  Psychology,
-  Shield,
-  TrendingUp,
-} from "@mui/icons-material";
-import { getArmorRating, getAttackBonus, updateDocument } from "@/utils/utils";
-import { Alert, InputAdornment, TextField } from "@mui/material";
+import { updateDocument } from "@/utils/utils";
+import { Alert, Box } from "@mui/material";
 import Inventory from "./Inventory";
 import Notes from "./Notes";
 import SkeletonSheet from "./SkeletonSheet";
-import LevelUp from "./LevelUp";
+import Metrics from "./Metrics";
 
 interface CharacterSheetProps {
   characterId: string;
@@ -38,6 +25,7 @@ export default function CharacterSheet({
   userId,
 }: CharacterSheetProps) {
   const [character, setCharacter] = useState<Character | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { user } = useAuth();
 
   /**
@@ -72,141 +60,12 @@ export default function CharacterSheet({
       subDocId: characterId,
       data: { ...character },
     });
+    // eslint-disable-next-line
   }, [character]);
 
   if (!character) return <SkeletonSheet />;
 
-  const handleXPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCharacter(
-      (prevCharacter) =>
-        ({
-          ...prevCharacter,
-          xp: parseInt(e.target.value),
-        } as Character)
-    );
-  };
-
-  const handleGoldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCharacter(
-      (prevCharacter) =>
-        ({
-          ...prevCharacter,
-          gold: parseInt(e.target.value),
-        } as Character)
-    );
-  };
-
-  const handleHealthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (!setCharacter || !character) return;
-    setCharacter(
-      (prevCharacter) =>
-        ({
-          ...prevCharacter,
-          health: parseInt(value),
-        } as Character)
-    );
-  };
-
-  const iconSizeClassNames = "w-10 h-10";
-
-  const primaryStats = [
-    {
-      icon: <FitnessCenter className={iconSizeClassNames} />,
-      button: true,
-      primary: character.abilities.str.short,
-      secondary: character.abilities.str.value,
-    },
-    {
-      icon: <DirectionsRun className={iconSizeClassNames} />,
-      button: true,
-      primary: character.abilities.dex.short,
-      secondary: character.abilities.dex.value,
-    },
-    {
-      icon: <Psychology className={iconSizeClassNames} />,
-      button: true,
-      primary: character.abilities.wil.short,
-      secondary: character.abilities.wil.value,
-    },
-  ];
-
-  const secondaryStats = [
-    {
-      icon: <MilitaryTech className={iconSizeClassNames} />,
-      primary: "Attack",
-      secondary: `+${getAttackBonus(character)}`,
-    },
-    {
-      icon: <Shield className={iconSizeClassNames} />,
-      primary: "Armor",
-      secondary: getArmorRating(character),
-    },
-    {
-      icon: <Favorite className={iconSizeClassNames} />,
-      primary: "Health",
-      secondary: (
-        <TextField
-          size="small"
-          type="number"
-          // className="[&_input]:py-1 [&_input]:w-12 [&_input]:text-xl"
-          value={character.health}
-          onChange={handleHealthChange}
-          InputProps={{
-            inputProps: { min: 0 },
-            endAdornment: (
-              <InputAdornment
-                position="end"
-                className="opacity-70 text-xl"
-                component="span"
-              >
-                /{character.healthMax}
-              </InputAdornment>
-            ),
-          }}
-        />
-      ),
-    },
-  ];
-
-  const tertiaryStats = [
-    {
-      icon: <Grade className={iconSizeClassNames} />,
-      primary: "Level",
-      secondary: (
-        <LevelUp
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        />
-      ),
-    },
-    {
-      icon: <TrendingUp className={iconSizeClassNames} />,
-      primary: "XP",
-      secondary: (
-        <TextField
-          size="small"
-          type="number"
-          value={character.xp}
-          onChange={handleXPChange}
-        />
-      ),
-    },
-    {
-      icon: <Paid className={iconSizeClassNames} />,
-      primary: "Gold",
-      secondary: (
-        <TextField
-          size="small"
-          type="number"
-          value={character.gold}
-          onChange={handleGoldChange}
-        />
-      ),
-    },
-  ];
+  console.error("notes and spells!");
 
   const backgroundClasses: Record<Character["settings"]["wallpaper"], string> =
     {
@@ -219,66 +78,73 @@ export default function CharacterSheet({
     };
 
   return (
-    <>
-      <Grid
-        container
-        spacing={2}
-        className={`${
-          backgroundClasses[character.settings.wallpaper] || ""
-        } bg-contain bg-no-repeat bg-darkGray`}
-      >
-        {!user && (
-          <Grid xs={12}>
-            <Alert severity="error">
-              You are not logged in. No changes will be saved.
-            </Alert>
-          </Grid>
-        )}
-        {user && user.uid !== userId && (
-          <Grid xs={12}>
-            <Alert severity="info">
-              You are viewing another user's character. No changes will be
-              saved.
-            </Alert>
-          </Grid>
-        )}
-        <Hero
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        />
-        <GQDivider />
-        <Stats stats={tertiaryStats} xs={4} />
-        <Stats stats={primaryStats} xs={4} />
-        <Stats stats={secondaryStats} xs={4} />
-        <GQDivider />
-        <Grid xs={6} className="p-0">
-          <Features
-            character={character}
-            setCharacter={
-              setCharacter as React.Dispatch<React.SetStateAction<Character>>
-            }
-            xs={12}
-          />
-          <Description details={character.details} xs={12} />
-        </Grid>
-        <Inventory
-          xs={6}
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        />
-        <GQDivider />
-        <Notes
-          xs={12}
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        />
-      </Grid>
-    </>
+    <Box
+      className={`${
+        backgroundClasses[character.settings.wallpaper] || ""
+      } bg-[length:100%] bg-no-repeat bg-darkGray grid grid-cols-12 gap-4 p-4`}
+    >
+      {!user && (
+        <Box className="col-span-full">
+          <Alert severity="error">
+            You are not logged in. No changes will be saved.
+          </Alert>
+        </Box>
+      )}
+      {user && user.uid !== userId && (
+        <Box className="col-span-full">
+          <Alert severity="info">
+            You are viewing another user's character. No changes will be saved.
+          </Alert>
+        </Box>
+      )}
+      <Hero
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        className="col-span-full"
+      />
+      <Stats
+        abilities={character.abilities}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+        className="col-span-full"
+      />
+      <Description
+        className="xs:col-span-12 sm:col-span-6"
+        details={character.details}
+        careers={character.careers}
+      />
+      <Metrics
+        className="xs:col-span-12 sm:col-span-6"
+        level={character.level}
+        health={character.health}
+        healthMax={character.healthMax}
+        xp={character.xp}
+        items={character.items}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
+      <Inventory
+        className="col-span-12"
+        items={character.items}
+        coins={character.coins}
+        con={character.abilities.con.value}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
+      <Notes
+        className="col-span-12"
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
+    </Box>
   );
 }

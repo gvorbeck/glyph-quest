@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Acolyte",
+    "equipment": ["Candlestick", "Censer", "Incense"]
+  },
+  {
+    "name": "Acrobat",
+    "equipment": ["Flash powder", "Balls", "Lamp oil"]
+  },
+  {
+    "name": "Actor",
+    "equipment": ["Wig", "Makeup", "Costume"]
+  },
+  {
+    "name": "Alchemist",
+    "equipment": ["Acid", "Mortar/pestle", "6 vials"]
+  },
+  {
+    "name": "Antiquarian",
+    "equipment": ["Old coin", "Flag", "Lore book"]
+  },
+  {
+    "name": "Arcanist",
+    "equipment": ["Spell book", "Arcane robes", "Chalk"]
+  },
+  {
+    "name": "Architect",
+    "equipment": ["Plumb line", "Level", "Ruler"]
+  },
+  {
+    "name": "Assassin",
+    "equipment": ["Crossbow", "Garrote", "Soft boots"]
+  },
+  {
+    "name": "Astrologer",
+    "equipment": ["Star charts", "Almanac", "Telescope"]
+  },
+  {
+    "name": "Baker",
+    "equipment": ["Rolling pin", "Flour bag", "Lard block"]
+  },
+  {
+    "name": "Bandit",
+    "equipment": ["Mask", "Manacles", "Caltrops"]
+  },
+  {
+    "name": "Barber",
+    "equipment": ["Scissors", "Hair oil", "Straight razor"]
+  },
+  {
+    "name": "Beast tamer",
+    "equipment": ["Whip", "Gloves", "Leash"]
+  },
+  {
+    "name": "Beekeeper",
+    "equipment": ["Honey", "Mask", "Smoke bomb"]
+  },
+  {
+    "name": "Blacksmith",
+    "equipment": ["Hammer", "Bellows", "Tongs"]
+  },
+  {
+    "name": "Boatman",
+    "equipment": ["10' pole", "Instrument", "Paddle"]
+  },
+  {
+    "name": "Bookbinder",
+    "equipment": ["Sewing kit", "Glue", "Quill/ink"]
+  },
+  {
+    "name": "Brewer",
+    "equipment": ["Mash paddle", "Beer keg", "Hops"]
+  },
+  {
+    "name": "Burglar",
+    "equipment": ["Lockpicks", "Grappling hook", "Rope"]
+  },
+  {
+    "name": "Butcher",
+    "equipment": ["Cleaver", "Meat hook", "Bacon"]
+  },
+  {
+    "name": "Candlemaker",
+    "equipment": ["10 candles", "Lamp oil", "Wax"]
+  },
+  {
+    "name": "Carpenter",
+    "equipment": ["Hammer", "Saw", "Box of nails"]
+  },
+  {
+    "name": "Charlatan",
+    "equipment": ["Costume", "Fake elixir", "Degree"]
+  },
+  {
+    "name": "Cobbler",
+    "equipment": ["Leather roll", "Fancy shoes", "Tacks"]
+  },
+  {
+    "name": "Coachman",
+    "equipment": ["Whip", "Lockbox", "Oilskin coat"]
+  },
+  {
+    "name": "Cook",
+    "equipment": ["Frying pan", "Salt", "Olive oil"]
+  },
+  {
+    "name": "Courier",
+    "equipment": ["Oilskin bag", "Local map", "Lantern"]
+  },
+  {
+    "name": "Courtier",
+    "equipment": ["Perfume", "Wig", "Fan"]
+  },
+  {
+    "name": "Cultist",
+    "equipment": ["Dagger", "Ritual robes", "Amulet"]
+  },
+  {
+    "name": "Cutpurse",
+    "equipment": ["Knife", "Caltrops", "Sack"]
+  },
+  {
+    "name": "Dyer",
+    "equipment": ["10' pole", "Dyes", "Soap"]
+  },
+  {
+    "name": "Explorer",
+    "equipment": ["Sextant", "Spyglass", "Crampons"]
+  },
+  {
+    "name": "Falconer",
+    "equipment": ["Bird cage", "Gloves", "Whistle"]
+  },
+  {
+    "name": "Fence",
+    "equipment": ["Short sword", "File", "Sealing wax"]
+  },
+  {
+    "name": "Fisherman",
+    "equipment": ["Spear", "Net", "Fishing tackle"]
+  },
+  {
+    "name": "Folklorist",
+    "equipment": ["Prophecy", "Bones", "Scales"]
+  },
+  {
+    "name": "Gambler",
+    "equipment": ["Rapier", "Card deck", "Dice"]
+  },
+  {
+    "name": "Gamekeeper",
+    "equipment": ["Sling", "Horn", "Rope ladder"]
+  },
+  {
+    "name": "Gardener",
+    "equipment": ["Sickle", "Shovel", "Shears"]
+  },
+  {
+    "name": "Grave robber",
+    "equipment": ["Saw", "Crowbar", "Pulleys"]
+  },
+  {
+    "name": "Gravedigger",
+    "equipment": ["Shovel", "Pickaxe", "Bucket"]
+  },
+  {
+    "name": "Groom",
+    "equipment": ["Oats", "Horse brush", "Blanket"]
+  },
+  {
+    "name": "Guard",
+    "equipment": ["Halberd", "Livery", "Horn"]
+  },
+  {
+    "name": "Headsman",
+    "equipment": ["Axe", "Hood", "Garrote"]
+  },
+  {
+    "name": "Herbalist",
+    "equipment": ["Herbs", "Sickle", "Herb manual"]
+  },
+  {
+    "name": "Hermit",
+    "equipment": ["Staff", "Fungi", "Basket"]
+  },
+  {
+    "name": "Hunter",
+    "equipment": ["Tent", "Bearskin", "Bear trap"]
+  },
+  {
+    "name": "Innkeeper",
+    "equipment": ["Ladle", "10 candles", "Cauldron"]
+  },
+  {
+    "name": "Inquisitor",
+    "equipment": ["Manual", "Vestments", "Pliers"]
+  },
+  {
+    "name": "Investigator",
+    "equipment": ["Journal", "Manacles", "Vial"]
+  },
+  {
+    "name": "Jailer",
+    "equipment": ["Padlock", "10' chain", "Wine jug"]
+  },
+  {
+    "name": "Jester",
+    "equipment": ["Scepter", "Donkey head", "Motley"]
+  },
+  {
+    "name": "Jeweler",
+    "equipment": ["Pliers", "Loupe", "Tweezers"]
+  },
+  {
+    "name": "Knight",
+    "equipment": ["Lady's favor", "Banner", "Signet ring"]
+  },
+  {
+    "name": "Kidnapper",
+    "equipment": ["Chloroform", "Manacles", "Hood"]
+  },
+  {
+    "name": "Lawyer",
+    "equipment": ["Fancy robe", "Law book", "Certificate"]
+  },
+  {
+    "name": "Locksmith",
+    "equipment": ["Crowbar", "Picks", "Padlock"]
+  },
+  {
+    "name": "Mason",
+    "equipment": ["Chisel", "Hammer", "Chalk"]
+  },
+  {
+    "name": "Merchant",
+    "equipment": ["Scales", "Strongbox", "Bag of spice"]
+  },
+  {
+    "name": "Miner",
+    "equipment": ["Pickaxe", "Lantern", "Pet canary"]
+  },
+  {
+    "name": "Musician",
+    "equipment": ["3 instruments"]
+  },
+  {
+    "name": "Naturalist",
+    "equipment": ["Fossil", "Insect case", "Geode"]
+  },
+  {
+    "name": "Officer",
+    "equipment": ["Whip", "Ledger", "Pistol"]
+  },
+  {
+    "name": "Oracle",
+    "equipment": ["Tea leaves", "Tarot deck", "Crystal"]
+  },
+  {
+    "name": "Orator",
+    "equipment": ["100 marbles", "Bullhorn", "Wax tablet"]
+  },
+  {
+    "name": "Painter",
+    "equipment": ["Linseed oil", "Pigments", "Brushes"]
+  },
+  {
+    "name": "Peddler",
+    "equipment": ["Bucket", "300' twine", "Mirror"]
+  },
+  {
+    "name": "Philosopher",
+    "equipment": ["Staff", "Lantern", "Chalk"]
+  },
+  {
+    "name": "Physician",
+    "equipment": ["Saw", "Scalpel", "Wine jug"]
+  },
+  {
+    "name": "Pilgrim",
+    "equipment": ["Staff", "Relic", "Letter of passage"]
+  },
+  {
+    "name": "Pirate",
+    "equipment": ["Sextant", "Cannonball", "Grappling hook"]
+  },
+  {
+    "name": "Pit fighter",
+    "equipment": ["Net", "Whip", "Wine jug"]
+  },
+  {
+    "name": "Playwright",
+    "equipment": ["Quill/ink", "Skull", "10 candles"]
+  },
+  {
+    "name": "Poacher",
+    "equipment": ["Animal scent", "Bow", "20 arrows"]
+  },
+  {
+    "name": "Poet",
+    "equipment": ["Stationery", "Bell", "Perfume"]
+  },
+  {
+    "name": "Priest",
+    "equipment": ["Holy water", "10 stakes", "Prayer book"]
+  },
+  {
+    "name": "Prospector",
+    "equipment": ["10 iron spikes", "Pickaxe", "Pan"]
+  },
+  {
+    "name": "Puppeteer",
+    "equipment": ["Confetti", "Puppet", "Sewing kit"]
+  },
+  {
+    "name": "Rat catcher",
+    "equipment": ["Cage", "10 rat traps", "Sack"]
+  },
+  {
+    "name": "Saboteur",
+    "equipment": ["Air bladder", "Crowbar", "Bomb"]
+  },
+  {
+    "name": "Sailor",
+    "equipment": ["Beeswax", "Pulleys", "Spyglass"]
+  },
+  {
+    "name": "Scout",
+    "equipment": ["Signal flags", "Black grease", "Dice"]
+  },
+  {
+    "name": "Scribe",
+    "equipment": ["Lamp oil", "Quill/ink", "Sealing wax"]
+  },
+  {
+    "name": "Sculptor",
+    "equipment": ["Chisel", "Clay", "Calipers"]
+  },
+  {
+    "name": "Servant",
+    "equipment": ["Sponge", "Silverware", "Poker"]
+  },
+  {
+    "name": "Shepherd",
+    "equipment": ["Crook", "Instrument", "Sling"]
+  },
+  {
+    "name": "Shipwright",
+    "equipment": ["Drill", "Hammer", "Axe"]
+  },
+  {
+    "name": "Singer",
+    "equipment": ["Mirror", "Makeup", "Locket"]
+  },
+  {
+    "name": "Smuggler",
+    "equipment": ["Pulleys", "Rope", "Makeup"]
+  },
+  {
+    "name": "Soldier",
+    "equipment": ["Tent", "Card deck", "Shovel"]
+  },
+  {
+    "name": "Spy",
+    "equipment": ["Caltrops", "Poison", "Forged papers"]
+  },
+  {
+    "name": "Squire",
+    "equipment": ["Torch", "Armor polish", "Trumpet"]
+  },
+  {
+    "name": "Tailor",
+    "equipment": ["Sewing kit", "Scissors", "Soap"]
+  },
+  {
+    "name": "Tattooist",
+    "equipment": ["Soot pot", "Needles", "10 tattoos"]
+  },
+  {
+    "name": "Thief-taker",
+    "equipment": ["Bear trap", "Manacles", "Torch"]
+  },
+  {
+    "name": "Thug",
+    "equipment": ["Poison", "Knife", "Lamp oil"]
+  },
+  {
+    "name": "Torturer",
+    "equipment": ["Drill", "Hourglass", "10' chain"]
+  },
+  {
+    "name": "Trapper",
+    "equipment": ["Bear trap", "300' twine", "Bear pelt"]
+  },
+  {
+    "name": "Watchman",
+    "equipment": ["Lantern", "Trumpet", "Spear"]
+  },
+  {
+    "name": "Woodcutter",
+    "equipment": ["Axe", "Firewood", "50' rope"]
+  }
+]
