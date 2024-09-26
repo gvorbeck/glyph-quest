@@ -9,7 +9,9 @@ import {
 import { TextField, Button } from "@mui/material";
 import Text from "./Text";
 
-export default function AuthForm() {
+const AuthForm: React.FC<React.ComponentPropsWithRef<"div">> = ({
+  className,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -33,8 +35,10 @@ export default function AuthForm() {
     }
   };
 
+  const classNames = ["flex flex-col gap-4 items-start", className].join(" ");
+
   return (
-    <form onSubmit={handleAuth} className="flex flex-col gap-4 items-start">
+    <form onSubmit={handleAuth} className={classNames}>
       <TextField
         type="email"
         label="Email"
@@ -74,4 +78,6 @@ export default function AuthForm() {
       </div>
     </form>
   );
-}
+};
+
+export default AuthForm;

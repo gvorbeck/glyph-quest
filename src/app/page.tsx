@@ -9,6 +9,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CharacterListPageSkeleton from "@/components/CharacterList/CharacterListPageSkeleton";
 import Text from "@/components/Text";
+import { Box } from "@mui/material";
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -41,17 +42,59 @@ export default function HomePage() {
   }
 
   return (
-    <main className="lg:max-w-[1000px] container mx-auto p-4 flex flex-col gap-4">
-      <Text variant="h1" font className="text-3xl text-amber">
-        Welcome to Glyph.Quest!
-      </Text>
-      <Text>
-        A free resource to create and manage your{" "}
-        <strong>Knave: Second Edition</strong> characters effortlessly.
-      </Text>
-      <div className="flex flex-col gap-4">
-        <AuthForm />
-      </div>
-    </main>
+    <>
+      <main className="lg:max-w-[1000px] container mx-auto p-4 grid grid-cols-12 gap-4">
+        <div className="col-span-12">
+          <Text variant="h1" font className="text-3xl text-amber">
+            Welcome to Glyph.Quest!
+          </Text>
+          <Text>
+            A free resource to create and manage your{" "}
+            <strong>Knave: Second Edition</strong> characters effortlessly.
+          </Text>
+        </div>
+        <img
+          src="/images/mfk.png"
+          alt="Made for Knave"
+          className="xs:row-start-3 sm:row-start-2 sm:col-span-6 xs:col-span-12"
+        />
+        <AuthForm className="xs:col-span-12 sm:col-span-6" />
+        <Box className="xs:col-span-12 sm:col-span-4">
+          <ul className="list-disc pl-4">
+            <li>Create characters according to the Knave 2e ruleset.</li>
+            <li>Share your characters with their unique URLs.</li>
+            <li>
+              Level-up your characters as they journey through your adventures.
+            </li>
+          </ul>
+        </Box>
+        <img
+          src="/images/character_sheet.png"
+          alt="Sample character sheet"
+          className="xs:col-span-12 sm:col-span-8"
+        />
+      </main>
+      <SiteFooter />
+      {/* <main className="lg:max-w-[1000px] container mx-auto p-4 flex flex-col gap-4">
+        <Text variant="h1" font className="text-3xl text-amber">
+          Welcome to Glyph.Quest!
+        </Text>
+        <Text>
+          A free resource to create and manage your{" "}
+          <strong>Knave: Second Edition</strong> characters effortlessly.
+        </Text>
+        <div className="flex flex-col gap-4">
+          <AuthForm />
+          <div className="grid xs:grid-cols-1 sm:grid-cols-2 gap-4">
+            <img src="/images/mfk.png" alt="Made for Knave" />
+            <img
+              src="/images/character_sheet.png"
+              alt="Sample character sheet"
+            />
+          </div>
+        </div>
+      </main>
+      <SiteFooter /> */}
+    </>
   );
 }

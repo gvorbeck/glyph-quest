@@ -6,7 +6,7 @@ type SiteFooterProps = {};
 const SiteFooter: React.FC<SiteFooterProps> = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="lg:max-w-[1000px] mx-auto w-full pt-4 px-4">
+    <footer className="lg:max-w-[1000px] mx-auto w-full py-4 px-4">
       <Text variant="body2">© {currentYear} Glyph.Quest</Text>
       <Text variant="body2">
         Glyph.Quest is an independent production of{" "}

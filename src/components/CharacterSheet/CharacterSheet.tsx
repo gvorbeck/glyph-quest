@@ -106,7 +106,6 @@ export default function CharacterSheet({
         setDrawerOpen={setDrawerOpen}
         className="col-span-full"
       />
-      <GQDivider className="col-span-full" />
       <Stats
         abilities={character.abilities}
         setCharacter={
@@ -139,13 +138,13 @@ export default function CharacterSheet({
           setCharacter as React.Dispatch<React.SetStateAction<Character>>
         }
       />
-      {/* <Notes
-          xs={12}
-          character={character}
-          setCharacter={
-            setCharacter as React.Dispatch<React.SetStateAction<Character>>
-          }
-        /> */}
+      <Notes
+        className="col-span-12"
+        character={character}
+        setCharacter={
+          setCharacter as React.Dispatch<React.SetStateAction<Character>>
+        }
+      />
     </Box>
   );
 }

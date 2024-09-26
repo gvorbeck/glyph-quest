@@ -20,11 +20,15 @@ const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
   drawerOpen,
   setDrawerOpen,
 }) => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
   const classNames = ["relative", className].filter(Boolean).join(" ");
 
   const toggleDrawerOpen = () => {
     setDrawerOpen((prevDrawerOpen) => !prevDrawerOpen);
+  };
+
+  const toggleLevelUpOpen = () => {
+    setLevelUpOpen((prevLevelUpOpen) => !prevLevelUpOpen);
   };
 
   return (
@@ -54,7 +58,14 @@ const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
           />
         </Drawer>
         {character.xp >= LEVELS[character.level] && (
-          <Button variant="contained">Level up</Button>
+          <>
+            <Button variant="contained" onClick={toggleLevelUpOpen}>
+              Level up
+            </Button>
+            <Drawer open={levelUpOpen} onClose={toggleLevelUpOpen} anchor="top">
+              <div>level up stuff goes here.</div>
+            </Drawer>
+          </>
         )}
       </div>
     </Box>
