@@ -26,8 +26,7 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
   setCharacter,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  // Local versions of character values to aid in preventing unnecessary db writes.
-  // These values can be written to the db when the user exits edit mode.
+  // Synchronize local state with the character's health, max health, and XP from props
   const [charCurrHealth, setCharCurrHealth] = useState(health);
   const [charMaxHealth, setCharMaxHealth] = useState(healthMax);
   const [charXp, setCharXp] = useState(xp);
@@ -75,6 +74,13 @@ const Metrics: React.FC<MetricsProps & React.ComponentPropsWithRef<"div">> = ({
   const handleCurrentXpBlur = () => {
     setCharacter((prev) => ({ ...prev, xp: charXp }));
   };
+
+  // Synchronize local state with the parent character's health and XP when props change
+  useEffect(() => {
+    setCharCurrHealth(health);
+    setCharMaxHealth(healthMax);
+    setCharXp(xp);
+  }, [health, healthMax, xp]);
 
   // UseEffect to trigger setCharacter only when `editMode` changes from true to false
   useEffect(() => {

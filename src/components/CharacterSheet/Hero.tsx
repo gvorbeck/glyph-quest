@@ -5,6 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Text from "../Text";
 import { LEVELS } from "@/utils/constants";
 import SettingsDrawer from "./SettingsDrawer";
+import LevelUpDrawer from "./LevelUpDrawer";
 
 type HeroProps = {
   character: Character;
@@ -63,7 +64,11 @@ const Hero: React.FC<HeroProps & React.ComponentPropsWithRef<"div">> = ({
               Level up
             </Button>
             <Drawer open={levelUpOpen} onClose={toggleLevelUpOpen} anchor="top">
-              <div>level up stuff goes here.</div>
+              <LevelUpDrawer
+                character={character}
+                setCharacter={setCharacter}
+                setLevelUpOpen={setLevelUpOpen}
+              />
             </Drawer>
           </>
         )}

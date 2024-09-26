@@ -1,5 +1,15 @@
 import { Item } from "./items";
 
+export type Settings = {
+  wallpaper:
+    | "sheet-hero"
+    | "sheet-wizard"
+    | "sheet-dwarf"
+    | "sheet-cleric"
+    | "sheet-ranger"
+    | "sheet-thief";
+};
+
 export type AbilityLongName =
   | "Strength"
   | "Dexterity"
@@ -15,16 +25,6 @@ export interface Ability {
   short: AbilityShortName;
   value: number | null;
 }
-
-export type Settings = {
-  wallpaper:
-    | "sheet-hero"
-    | "sheet-wizard"
-    | "sheet-dwarf"
-    | "sheet-cleric"
-    | "sheet-ranger"
-    | "sheet-thief";
-};
 
 export interface Character {
   id?: string;
