@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import React, { useRef } from "react";
 
 type AbilityBoxProps = {
   value: number;
@@ -19,6 +20,14 @@ const AbilityBox: React.FC<AbilityBoxProps> = ({
   disabled,
   onBlur,
 }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && inputRef.current) {
+      inputRef.current.blur(); // Blur the input on "Enter" key press
+    }
+  };
+
   return (
     <TextField
       label={label}
@@ -31,6 +40,8 @@ const AbilityBox: React.FC<AbilityBoxProps> = ({
       className={className}
       disabled={disabled}
       onBlur={onBlur}
+      inputRef={inputRef} // Assign ref to the input element
+      onKeyDown={handleKeyDown} // Handle "Enter" key press
     />
   );
 };
