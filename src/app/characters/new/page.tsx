@@ -1,6 +1,7 @@
 "use client";
 
 import CharacterForm from "@/components/CharacterForm/CharacterForm";
+import SkeletonSheet from "@/components/CharacterSheet/SkeletonSheet";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import Text from "@/components/Text";
@@ -30,7 +31,12 @@ export default function CharacterFormPage() {
   }, [user, loading, router]);
 
   // Show a loading state while checking auth
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <main className="container mx-auto p-4">
+        <SkeletonSheet />
+      </main>
+    );
 
   return (
     <>
