@@ -65,8 +65,6 @@ export default function CharacterSheet({
 
   if (!character) return <SkeletonSheet />;
 
-  console.error("notes and spells!");
-
   const backgroundClasses: Record<Character["settings"]["wallpaper"], string> =
     {
       "sheet-hero": "bg-sheet-hero",

@@ -21,9 +21,11 @@ import useSnackbar from "@/hooks/useSnackbar";
 import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
 import { getRemainingPoints, getSlots } from "@/utils/utils";
 import StepWrapper from "./StepWrapper";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 
 const CharacterFormSteps = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
   const { character } = useCharacter();
   const { user } = useAuth();
   const router = useRouter();
@@ -83,11 +85,16 @@ const CharacterFormSteps = () => {
         onClick={
           index === steps.length - 1 ? handleCreateCharacter : handleNext
         }
-        disabled={isDisabled()}
+        disabled={isDisabled() || loading}
+        startIcon={loading && <HourglassEmptyIcon />}
       >
         {index === steps.length - 1 ? "Finish" : "Continue"}
       </Button>
-      <Button disabled={index === 0} onClick={handleBack} variant="outlined">
+      <Button
+        disabled={index === 0 || loading}
+        onClick={handleBack}
+        variant="outlined"
+      >
         Back
       </Button>
     </Box>
@@ -99,7 +106,7 @@ const CharacterFormSteps = () => {
   // Async function to create a character in Firestore
   const handleCreateCharacter = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!user) {
       console.error("You must be logged in to create a character.");
       return;
@@ -119,6 +126,7 @@ const CharacterFormSteps = () => {
       showSnackbar("Failed to create character.", "error");
       console.error("Failed to create character.", err);
     }
+    setLoading(false);
   };
 
   return (
