@@ -9,6 +9,11 @@ type SettingsBackgroundProps = {
 
 const itemData = [
   {
+    img: null,
+    className: "sheet-none",
+    title: "None",
+  },
+  {
     img: "/images/hero_sm.webp",
     className: "sheet-hero",
     title: "Bam",
@@ -59,20 +64,26 @@ const SettingsBackground: React.FC<SettingsBackgroundProps> = ({
         {itemData.map((item) => (
           <button
             key={item.title}
-            className={`rounded border-2 border-solid ${
+            className={`rounded border-2 border-solid w-full ${
               item.className === character.settings.wallpaper
                 ? "border-amber"
                 : "border-darkGray"
             }`}
             onClick={() => handleBackgroundChange(item.className || "")}
           >
-            <Image
-              className="rounded"
-              src={item.img}
-              alt={item.title}
-              width={200}
-              height={200}
-            />
+            {item.img ? (
+              <Image
+                className="rounded"
+                src={item.img}
+                alt={item.title}
+                width={200}
+                height={200}
+              />
+            ) : (
+              <div className="border border-solid rounded border-white p-4 ">
+                Blank
+              </div>
+            )}
           </button>
         ))}
       </div>
