@@ -147,8 +147,20 @@ const Inventory: React.FC<
   };
 
   const openEditItem = (item: Item) => {
-    setShowAddForm(true);
-    setEditItem(item);
+    if (editItem?.name === item.name) {
+      // If the same item is clicked again, do nothing.
+      return;
+    }
+
+    // Close the form, reset the state, and then open it again to force re-render
+    setShowAddForm(false);
+    setEditItem(undefined);
+
+    // Set a timeout to delay the form opening and ensure the state is reset
+    setTimeout(() => {
+      setShowAddForm(true);
+      setEditItem(item);
+    }, 0); // Using a small timeout allows React to update the state properly
   };
 
   const handleCoinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
