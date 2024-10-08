@@ -16,7 +16,7 @@ const Jaini = localFont({
 
 export const metadata: Metadata = {
   title: "Glyph Quest",
-  description: "Create and Manage your Maze Rats characters with ease.",
+  description: "Create and Manage your Knave characters with ease.",
 };
 
 export default function RootLayout({
