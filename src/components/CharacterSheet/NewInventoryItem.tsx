@@ -61,6 +61,21 @@ const AddItemForm: React.FC<
     setNewItem(spell as Item);
   };
 
+  const disableAddButton = () => {
+    if (!newItem.name) {
+      return true;
+    }
+    if (newItem.slots < 1) {
+      return true;
+    }
+    if (newItem.type === "armor" && !newItem.armorPoints) {
+      return true;
+    }
+    if (newItem.type === "weapon" && !newItem.damage) {
+      return true;
+    }
+  };
+
   return (
     <form className="flex flex-col gap-4 w-full">
       {/* Name */}
@@ -165,7 +180,12 @@ const AddItemForm: React.FC<
         variant="filled"
       />
       <div className="flex gap-2">
-        <Button variant="contained" color="primary" onClick={handleAddItem}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddItem}
+          disabled={disableAddButton()}
+        >
           Add Item
         </Button>
         <Button variant="text" color="primary" onClick={handleClose}>
