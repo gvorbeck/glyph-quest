@@ -87,20 +87,22 @@ const AddItemForm: React.FC<
         ))}
       </TextField>
       {/* Spells */}
-      <TextField
-        label="Spell books"
-        name="spellbooks"
-        select
-        value={spell}
-        onChange={handleChangeSpell}
-        variant="filled"
-      >
-        {spellData.map((spell) => (
-          <MenuItem key={spell.name} value={spell.name}>
-            {capitalize(spell.name)}
-          </MenuItem>
-        ))}
-      </TextField>
+      {newItem.type === "spell" && (
+        <TextField
+          label="Spell books"
+          name="spellbooks"
+          select
+          value={spell}
+          onChange={handleChangeSpell}
+          variant="filled"
+        >
+          {spellData.map((spell) => (
+            <MenuItem key={spell.name} value={spell.name}>
+              {capitalize(spell.name)}
+            </MenuItem>
+          ))}
+        </TextField>
+      )}
       {/* Slots */}
       <TextField
         label="Slots"
