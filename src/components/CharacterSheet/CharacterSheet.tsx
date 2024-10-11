@@ -62,6 +62,13 @@ export default function CharacterSheet({
     // eslint-disable-next-line
   }, [character]);
 
+  // Set document title to character name
+  useEffect(() => {
+    if (character) {
+      document.title = `${character.name} | Glyph.Quest`;
+    }
+  }, [character]);
+
   if (!character) return <SkeletonSheet />;
 
   const backgroundClasses: Record<Character["settings"]["wallpaper"], string> =
