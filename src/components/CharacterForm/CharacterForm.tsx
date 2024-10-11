@@ -22,6 +22,7 @@ import { useCharacter, CharacterProvider } from "@/context/CharacterContext";
 import { getRemainingPoints, getSlots } from "@/utils/utils";
 import StepWrapper from "./StepWrapper";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import { AbilityShortNameLow } from "@/types/character";
 
 const CharacterFormSteps = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -111,6 +112,12 @@ const CharacterFormSteps = () => {
       console.error("You must be logged in to create a character.");
       return;
     }
+    // Check if any character.abilities[ability].value is null and set it to 0
+    Object.keys(character.abilities).forEach((ability) => {
+      if (character.abilities[ability as AbilityShortNameLow].value === null) {
+        character.abilities[ability as AbilityShortNameLow].value = 0;
+      }
+    });
 
     try {
       const userCharactersCollection = collection(

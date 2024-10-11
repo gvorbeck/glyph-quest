@@ -5,7 +5,6 @@ import { db, doc, getDoc } from "../../lib/firebase";
 import { useAuth } from "../../context/AuthContext";
 import { Character } from "@/types/character";
 import Hero from "./Hero";
-import GQDivider from "../GQDivider";
 import Description from "./Description";
 import Stats from "./Stats";
 import { updateDocument } from "@/utils/utils";

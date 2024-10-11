@@ -19,6 +19,7 @@ export type AbilityLongName =
   | "Charisma";
 
 export type AbilityShortName = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
+export type AbilityShortNameLow = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
 export interface Ability {
   long: AbilityLongName;
