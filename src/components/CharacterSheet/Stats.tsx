@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import CopySnackbarAction from "../SnackbarActions/CopySnackbarAction";
-import { Character } from "@/types/character";
+import { AbilityShortNameLow, Character } from "@/types/character";
 import Text from "../Text";
 import EditButton from "../EditButton";
 import AbilityBox from "../AbilityBox";
@@ -56,6 +56,22 @@ const Stats: React.FC<StatsProps & React.ComponentPropsWithRef<"div">> = ({
       setCharacter((prevCharacter) => ({
         ...prevCharacter,
         abilities: charAbilities,
+      }));
+    }
+
+    // go through the abilities and check if the value is a number, if not set it to 0
+    const newAbilities = { ...charAbilities };
+    Object.keys(newAbilities).forEach((key) => {
+      if (typeof newAbilities[key as AbilityShortNameLow].value !== "number") {
+        newAbilities[key as AbilityShortNameLow].value = 0;
+      }
+    });
+    // check if the new abilities are different from the old ones
+    if (JSON.stringify(newAbilities) !== JSON.stringify(charAbilities)) {
+      setCharAbilities(newAbilities);
+      setCharacter((prevCharacter) => ({
+        ...prevCharacter,
+        abilities: newAbilities,
       }));
     }
 
